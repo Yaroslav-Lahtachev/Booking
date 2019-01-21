@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Info</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
+</head>
+<body>
+
+<th:block th:include="/_header"></th:block>
+<th:block th:include="/_menu"></th:block>
+
+<div class="page-title">Account Info</div>
+<div class="account-container">
+    <ul>
+        <li>User Name: <span th:utext="${#request.userPrincipal.name}"></span></li>
+        <li>
+            Role:
+            <ul>
+                <li th:each="auth : ${userDetails.authorities}" th:utext="${auth.authority}"></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<table>
+    <tr>
+        <th>
+            <a th:href="@{/buyerOrders(type=(reserved))}">Active user's orders| &nbsp; </a>
+        </th>
+        <th>
+            <a th:href="@{/buyerOrders(type=(performed))}">History user's orders| &nbsp; </a>
+        </th>
+        <th>
+            <a th:href="@{/sellerOrders(type=(active))}">Active user's offers| &nbsp;</a>
+        </th>
+        <th>
+            <a th:href="@{/sellerOrders(type=(reserved))}">Reserved user's offers| &nbsp; </a>
+        </th>
+        <th>
+            <a th:href="@{/sellerOrders(type=(performed))}">History user's offers| &nbsp; </a>
+        </th>
+        <th th:if="${userInfo.isAdmin()}">
+            <a th:href="@{/admin/usersList}">Manage Users</a>
+        </th>
+    </tr>
+
+</table>
+
+</body>
+</html>

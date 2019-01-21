@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cancel</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
+</head>
+<body>
+
+<form th:object="${utilForm}" th:action="@{/cancelOrder}"
+      method="POST" enctype="multipart/form-data">
+
+    <table style="text-align:left;">
+        <td>
+            <span text="">To cancel type 'CONFIRM'</span>
+            <input th:field="${utilForm.textField}"/>
+        </td>
+        <td>
+
+            <input type="hidden" th:field="${utilForm.intField}"/>
+
+        </td>
+
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+                <input type="submit" value="Accept"/>
+                <a href="/admin/userInfo">
+                    <input type="button" value="Cancel"/>
+                </a>
+            </td>
+        </tr>
+    </table>
+</form>
+
+</body>
+</html>

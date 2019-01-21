@@ -1,0 +1,23 @@
+<div class="header-container"
+     xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <div class="site-name">Booking service</div>
+
+    <div class="header-bar">
+        <th:block sec:authorize="isAuthenticated()">
+            Hello
+            <li th:if="${#request.getUserPrincipal()!=null}">
+                <a th:href="@{/admin/userInfo}" th:utext="${#request.getUserPrincipal().getName()}">..</a>
+                &nbsp;|&nbsp;
+                <a th:href="@{/admin/logout}">Logout</a>
+            </li>
+
+        </th:block>
+
+        <th:block th:if="${#request.getUserPrincipal()==null}" sec:authorize="!isAuthenticated()">
+            <a th:href="@{/admin/login}">Login</a>
+        </th:block>
+    </div>
+
+</div>

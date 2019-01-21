@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User's orders</title>
+
+    <style>
+        th, td {
+            padding: 5px;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
+</head>
+
+<body>
+<!-- Include _menu.html -->
+<th:block th:include="/_header"></th:block>
+<th:block th:include="/_menu"></th:block>
+
+<h2>Orders</h2>
+<div>Total orders Count: <span th:utext="${paginationResult.totalRecords}"></span></div>
+<table border="1" , style="width: 100%">
+    <tr>
+        <th>ID Order</th>
+        <th>ID Offer</th>
+        <th>ID Seller</th>
+        <th>Login Seller</th>
+        <th>Address</th>
+        <th>Date Start Order</th>
+        <th>Date Finish Order</th>
+        <th>Status</th>
+    </tr>
+    <tr th:each="ordersInfo : ${paginationResult.list}">
+        <td th:utext="${ordersInfo.idOrder}">..</td>
+        <td th:utext="${ordersInfo.idOffer}">..</td>
+        <td th:utext="${ordersInfo.idUser}">..</td>
+        <td th:utext="${ordersInfo.loginSeller}">..</td>
+        <td th:utext="${ordersInfo.address}">..</td>
+        <td th:utext="${ordersInfo.dateStart}">..</td>
+        <td th:utext="${ordersInfo.dateFinish}">..</td>
+        <td th:utext="${ordersInfo.status}">..</td>
+        <td th:if="${Reserved}"><a th:href="@{|/cancelOrder?id=${ordersInfo.idOrder}|}"> cancel </a></td>
+    </tr>
+
+</table>
+<div class="page-navigator" th:if="${paginationResult.totalPages > 1}">
+    <th:block th:each="page: ${paginationResult.navigationPages}">
+        <a th:if="${page != -1}" class="nav-item"
+           th:href="@{/buyerOrders(page=${page}, type=${type})}" th:utext="${page}"></a>
+
+        <span th:if="${page == -1}" class="nav-item"> ... </span>
+    </th:block>
+</div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Users List</title>
+
+    <style>
+        th, td {
+            padding: 5px;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
+</head>
+
+<body>
+<!-- Include _menu.html -->
+<th:block th:include="/_header"></th:block>
+<th:block th:include="/_menu"></th:block>
+
+<h2>Users</h2>
+<div>Total Users Count: <span th:utext="${paginationResult.totalRecords}"></span></div>
+<table border="1" , style="width: 100%">
+    <tr>
+        <th>ID User</th>
+        <th>Login</th>
+        <!--<th>Password</th>-->
+        <th>Status</th>
+    </tr>
+    <tr th:each="usersInfo : ${paginationResult.list}">
+        <td th:utext="${usersInfo.idUser}">..</td>
+        <td th:utext="${usersInfo.login}">..</td>
+        <!-- <td th:utext="${usersInfo.password}">..</td>-->
+        <td th:utext="${usersInfo.status}">..</td>
+        <td><a th:href="@{|/admin/viewUserOrdersForAdmin?id=${usersInfo.idUser}|}"> view orders </a></td>
+        <td th:if="${usersInfo.isSeller()}"><a th:href="@{|/admin/viewUserOffersForAdmin?id=${usersInfo.idUser}|}"> view
+            offers </a></td>
+        <td th:unless="${usersInfo.isSeller()}"> empty offers</td>
+        <td th:if="${usersInfo.isUser()} or ${usersInfo.isSeller()}"><a
+                th:href="@{/admin/blockPage(id=${usersInfo.idUser},status=-1)}"> block </a></td>
+        <td th:if="${usersInfo.isBlocked()}"><a th:href="@{/admin/blockPage(id=${usersInfo.idUser}, status=1)}">
+            unblock </a></td>
+    </tr>
+
+</table>
+<div class="page-navigator" th:if="${paginationResult.totalPages > 1}">
+    <th:block th:each="page: ${paginationResult.navigationPages}">
+        <a th:if="${page != -1}" class="nav-item"
+           th:href="@{|/admin/usersList?page=${page}|}" th:utext="${page}"></a>
+
+        <span th:if="${page == -1}" class="nav-item"> ... </span>
+    </th:block>
+</div>
+</body>
+</html>
