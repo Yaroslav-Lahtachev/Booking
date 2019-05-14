@@ -56,7 +56,7 @@ public class  UsersDAO {
         user.setLogin(newUser.getLogin());
         user.setPassword(encrPass);
         user.setRole("USER");
-        user.setEmail(newUser.getEmail());
+        user.setEmail(newUser.getEmail()); //newUser.getLogin()+"@mail.com"
         session.persist(user);
         session.flush();
 

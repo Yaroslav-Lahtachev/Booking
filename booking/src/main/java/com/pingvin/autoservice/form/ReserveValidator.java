@@ -1,6 +1,6 @@
 package com.pingvin.autoservice.form;
 
-import com.pingvin.autoservice.dao.OrderHistoryDAO;
+import com.pingvin.autoservice.dao.OrderDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -11,25 +11,25 @@ import org.springframework.validation.Validator;
 public class ReserveValidator implements Validator {
 
     @Autowired
-    private OrderHistoryDAO orderHistoryDAO;
+    private OrderDAO orderDAO;
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return clazz == ReserveForm.class;
+        return clazz == SignUpForm.class;
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        ReserveForm reserveForm = (ReserveForm) target;
+        SignUpForm signUpForm = (SignUpForm) target;
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "idOffer", "NotEmpty.reserveForm.idOffer");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dateStart", "NotEmpty.reserveForm.dateStart");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dateFinish", "NotEmpty.reserveForm.dateFinish");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "idOffer", "NotEmpty.signUpForm.idOffer");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dateStart", "NotEmpty.signUpForm.dateStart");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dateFinish", "NotEmpty.signUpForm.dateFinish");
 
         if (!errors.hasFieldErrors("dateStart")) {
-            if (!orderHistoryDAO.CheckReserveOfferByIdAndDate(reserveForm.getIdOffer(), reserveForm.getDateStart(), reserveForm.getDateFinish())) {
+            //if (!orderHistoryDAO.CheckReserveOfferByIdAndDate(signUpForm.getIdOffer(), signUpForm.getDateStart(), signUpForm.getDateFinish())) {
                 errors.rejectValue("dateStart", "Duplicate.reserveForm.dateStart");
-            }
+           // }
         }
     }
 

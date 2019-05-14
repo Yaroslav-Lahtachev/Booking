@@ -1,6 +1,5 @@
 package com.pingvin.autoservice.model;
 
-import com.pingvin.autoservice.form.ReserveForm;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Calendar;

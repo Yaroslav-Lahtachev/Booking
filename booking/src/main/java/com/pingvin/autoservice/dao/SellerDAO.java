@@ -25,19 +25,19 @@ public class SellerDAO {
         return session.createCriteria(Parts.class).add(Restrictions.eq("idSeller", idSeller)).list();
     }
 
-    public Parts addNewOffer(User idSeller){
-        Session session = this.sessionFactory.getCurrentSession();
-        if (idSeller.getStatus()!= "ROLE_BLOCKED") {
-            if (idSeller.getStatus() == "ROLE_USER")
-                idSeller.setStatus("ROLE_SELLER");
-            Parts seller = new Parts();
-            seller.setIdUser(idSeller);
-            session.persist(seller);
-            session.flush();
-            return seller;
-        }
-        return null;
-    }
+   //public Parts addNewOffer(User idSeller){
+   //    Session session = this.sessionFactory.getCurrentSession();
+   //    if (idSeller.getStatus()!= "ROLE_BLOCKED") {
+   //        if (idSeller.getStatus() == "ROLE_USER")
+   //            idSeller.setStatus("ROLE_SELLER");
+   //        Parts seller = new Parts();
+   //        seller.setIdUser(idSeller);
+   //        session.persist(seller);
+   //        session.flush();
+   //        return seller;
+   //    }
+   //    return null;
+   //}
 
     public Parts findSellerByOffer(int idOffer){
         Session session = this.sessionFactory.getCurrentSession();

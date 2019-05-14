@@ -27,7 +27,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("User " + username + " was not found in the database");
         }
 
-        String role = user.getStatus();
+        String role = user.getRole();
 
         List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
 
@@ -35,7 +35,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         grantList.add(authority);
         boolean flag = false;
-        if (!user.getStatus().equals("ROLE_BLOCKED"))
+        if (!user.getRole().equals("ROLE_BLOCKED"))
             flag = true;
         boolean enabled = flag;
         boolean accountNonExpired = true;

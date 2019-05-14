@@ -29,6 +29,7 @@ public class Order {
     @JoinColumn(name = "master", referencedColumnName = "id")
     private Master masterId;
 
+    @OneToOne
     @JoinColumn(name = "kit", referencedColumnName = "id")
     private Parts kitId;
 
@@ -80,7 +81,7 @@ public class Order {
         this.masterId = masterId;
     }
 
-    public Master getKitId() {
+    public Parts getKitId() {
         return kitId;
     }
 

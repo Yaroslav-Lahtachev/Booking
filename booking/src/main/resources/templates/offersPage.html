@@ -18,6 +18,7 @@
 
 <h2>Offers</h2>
 
+<!--
 <form th:object="${searchOffer}" th:action="@{/offersPage}"
       method="POST" enctype="multipart/form-data">
     <table style="text-align:left;">
@@ -25,12 +26,12 @@
         <tr>
             <td>City</td>
             <td>
-                <!--<th:block th:if="${!searchOffer.newOffer}">
+                &lt;!&ndash;<th:block th:if="${!searchOffer.newOffer}">
                     <span th:utext="${searchOffer.city}"></span>
                     <input type="hidden" th:field="*{city}"/>
                 </th:block>
                 <input th:if="${searchOffer.newOffer}" type="text"
-                       th:field="*{city}" />-->
+                       th:field="*{city}" />&ndash;&gt;
                 <input th:field="*{city}"/>
             </td>
         </tr>
@@ -86,43 +87,38 @@
         </tr>
     </table>
 </form>
+-->
 
 
 <div>Total Offers Count: <span th:utext="${paginationResult.totalRecords}"></span></div>
 <table border="1" , style="width: 100%">
     <tr>
         <th>ID Offer</th>
-        <th>City</th>
-        <th>Address</th>
-        <th>Max People</th>
+        <th>Name</th>
+        <th>Profession</th>
         <th>Price</th>
-        <th>Parking</th>
-        <th>Wi-Fi</th>
-        <th>Animals</th>
-        <th>Smoking</th>
+        <th>Time</th>
+
     </tr>
     <tr th:each="offersInfo : ${paginationResult.list}">
         <td th:utext="${offersInfo.idOffer}">..</td>
-        <td th:utext="${offersInfo.city}">..</td>
-        <td th:utext="${offersInfo.address}">..</td>
-        <td th:utext="${offersInfo.maxPeopleCount}">..</td>
+        <td th:utext="${offersInfo.name}">..</td>
+        <td th:utext="${offersInfo.prof}">..</td>
         <td th:utext="${offersInfo.price}">..</td>
-        <td th:utext="${offersInfo.parking}">..</td>
-        <td th:utext="${offersInfo.wifi}">..</td>
-        <td th:utext="${offersInfo.animal}">..</td>
-        <td th:utext="${offersInfo.smoking}">..</td>
-        <td><a th:href="@{|/reserve?id=${offersInfo.idOffer}|}">Reserve</a></td>
+        <td th:utext="${offersInfo.time}">..</td>
+
+        <td><a th:href="@{|/signUp?id=${offersInfo.idOffer}|}">Reserve</a></td>
     </tr>
 
 </table>
 <div class="page-navigator" th:if="${paginationResult.totalPages > 1}">
     <th:block th:each="page: ${paginationResult.navigationPages}">
-        <a th:if="${page != -1}" class="nav-item"
-           th:href="@{/offersPage(page=${page}, search=${searchOffer.isNewOffer()} , city=${searchOffer.getCity()},
+        <a th:if="${page != -1}" class="nav-item" th:href="@{/offersPage(page=${page})}" th:utext="${page}">
+           <!--th:href="@{/offersPage(page=${page}, search=${searchOffer.isNewOffer()} , city=${searchOffer.getCity()},
            address=${searchOffer.getAddress()},mpc=${searchOffer.getMaxPeopleCount()},
            price=${searchOffer.getPrice()}, parking=${searchOffer.isParking()},
            wifi=${searchOffer.isWifi()},animal=${searchOffer.isAnimal()}, smoking=${searchOffer.isSmoking()})}"
-           th:utext="${page}">
+           th:utext="${page}">-->
         </a>
 
         <span th:if="${page == -1}" class="nav-item"> ... </span>

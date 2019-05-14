@@ -34,18 +34,18 @@ public class OfferForm {
         this.idSeller = idSeller;
     }
 
-    public OfferForm(OffersInfo offersInfo) {
-        this.idOffer = offersInfo.getIdOffer();
-        this.city = offersInfo.getCity();
-        this.address = offersInfo.getAddress();
-        this.maxPeopleCount = offersInfo.getMaxPeopleCount();
-        this.price = offersInfo.getPrice();
-        this.parking = offersInfo.isParking();
-        this.wifi = offersInfo.isWifi();
-        this.animal = offersInfo.isAnimal();
-        this.smoking = offersInfo.isSmoking();
-        this.idSeller = offersInfo.getIdSeller();
-    }
+    //public OfferForm(OffersInfo offersInfo) {
+    //    this.idOffer = offersInfo.getIdOffer();
+    //    this.city = offersInfo.getCity();
+    //    this.address = offersInfo.getAddress();
+    //    this.maxPeopleCount = offersInfo.getMaxPeopleCount();
+    //    this.price = offersInfo.getPrice();
+    //    this.parking = offersInfo.isParking();
+    //    this.wifi = offersInfo.isWifi();
+    //    this.animal = offersInfo.isAnimal();
+    //    this.smoking = offersInfo.isSmoking();
+    //    this.idSeller = offersInfo.getIdSeller();
+    //}
 
 
     public int getIdOffer() {

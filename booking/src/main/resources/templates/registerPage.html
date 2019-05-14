@@ -49,6 +49,11 @@
             <td><span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">..</span></td>
         </tr>
         <tr>
+            <td>E-Mail</td>
+            <td><input type="email" th:field="*{email}"/></td>
+            <td> <!--<span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">..</span>--></td>
+        </tr>
+        <tr>
             <td>&nbsp;</td>
             <td><input type="submit" value="Submit"/>
                 <a th:href="@{/}">Cancel</a></td>

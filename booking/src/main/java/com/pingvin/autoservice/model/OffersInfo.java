@@ -36,13 +36,13 @@ public class OffersInfo {
         this.time = offer.getTime();
     }
 
-    public OffersInfo(OfferForm offerForm) {
-        this.id = offerForm.getIdOffer();
-        this.name = offerForm.getName();
-        this.prof = offerForm.getProf();
-        this.price = offerForm.getPrice();
-        this.time = offerForm.getTime();
-    }
+   //public OffersInfo(OfferForm offerForm) {
+   //    this.id = offerForm.getIdOffer();
+   //    this.name = offerForm.getName();
+   //    this.prof = offerForm.getProf();
+   //    this.price = offerForm.getPrice();
+   //    this.time = offerForm.getTime();
+   //}
 
     public int getIdOffer() {
         return id;

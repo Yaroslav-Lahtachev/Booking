@@ -15,11 +15,11 @@ public class Offer implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "price", nullable = false)
-    private double price;
-
     @Column(name = "prof", nullable = false)
     private String prof;
+
+    @Column(name = "price", nullable = false)
+    private double price;
 
     @Column(name = "time", nullable = false)
     private int time;
