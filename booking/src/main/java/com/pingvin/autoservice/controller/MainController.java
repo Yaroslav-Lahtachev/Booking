@@ -1,10 +1,8 @@
 package com.pingvin.autoservice.controller;
 
 
-import com.pingvin.autoservice.dao.OfferDAO;
-import com.pingvin.autoservice.dao.OrderDAO;
-import com.pingvin.autoservice.dao.SellerDAO;
-import com.pingvin.autoservice.dao.UsersDAO;
+import com.pingvin.autoservice.dao.*;
+import com.pingvin.autoservice.entity.Master;
 import com.pingvin.autoservice.entity.Offer;
 import com.pingvin.autoservice.entity.Parts;
 import com.pingvin.autoservice.entity.User;
@@ -40,6 +38,10 @@ public class MainController {
     private OfferDAO offerDAO;
     @Autowired
     private OrderDAO orderDAO;
+    @Autowired
+    private PartsDAO partsDAO;
+    @Autowired
+    private MasterDAO masterDAO;
 
     final int MAX_RESULT = 3;
     final int MAX_NAVIGATION_PAGE = 10;
@@ -100,7 +102,6 @@ public class MainController {
         model.addAttribute("userInfo", userInfo);
         return "userInfo";
     }
-
 
     //
     //      Offer
@@ -367,20 +368,25 @@ public class MainController {
         //    model.addAttribute("error", new Boolean(true));
         //    return "signUp";
         //}
-        OrderInfo orderHistoryInfo = new OrderInfo(signUpForm);
+        OrderInfo orderInfo = new OrderInfo(signUpForm.getIdOffer(), signUpForm.getDateStart(), signUpForm.getDateFinish());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         //if (orderDAO.CheckReserveOfferByIdAndDate(orderHistoryInfo.getIdOffer(), orderHistoryInfo.getDateStart(), orderHistoryInfo.getDateFinish())) {
             User buyer = usersDAO.findByLogin(authentication.getName());
-            Parts parts = sellerDAO.findSellerByOffer(orderHistoryInfo.getIdOffer());
+            Offer offer = offerDAO.findByIdOffer(orderInfo.getOffer());
+            Master master = masterDAO.findByIdMaster(getFreeMaster(offer.getIdOffer()));
+            int isNeedParts = 1;
             //if (orderDAO.checkOnOwnership(buyer, seller)) {
-                orderDAO.reserve(buyer, parts, orderHistoryInfo.getDateStart(), orderHistoryInfo.getDateFinish());
+                orderDAO.reserve(buyer, master, offer, isNeedParts, orderInfo.getDateStart(), orderInfo.getDateFinish());
                 return "redirect:/buyerOrders";
             //} else return "itsYourOwnOfferDude";
         //} else return "index";
 
     }
 
+    private int getFreeMaster(int IdOffer){
+        return 1;
+    }
     //
     //admin controller
     //

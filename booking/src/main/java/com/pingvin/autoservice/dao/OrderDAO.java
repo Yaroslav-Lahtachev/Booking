@@ -1,9 +1,7 @@
 package com.pingvin.autoservice.dao;
 
-import com.pingvin.autoservice.entity.Offer;
+import com.pingvin.autoservice.entity.*;
 //import com.pingvin.autoservice.entity.OrderHistory;
-import com.pingvin.autoservice.entity.Parts;
-import com.pingvin.autoservice.entity.User;
 //import com.pingvin.autoservice.model.OrderHistoryInfo;
 import com.pingvin.autoservice.pagination.PaginationResult;
 import org.hibernate.Session;
@@ -12,7 +10,6 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import com.pingvin.autoservice.entity.Order;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -147,14 +144,15 @@ public class OrderDAO {
 //       } else return false;
 //   }
 
-    public void reserve(User customer, Parts seller, Date dateStart, Date dateFinish) {
+    public void reserve(User customer, Master master, Offer offer, int needParts, Date dateStart, Date dateFinish) {
         Session session = this.sessionFactory.getCurrentSession();
         Order order = new Order();
         order.setCustomer(customer);
-        order.setOffer(seller);
+        order.setOffer(offer);
+        order.setMaster(master);
+        order.setNeedKit(needParts);
         order.setDateStart(dateStart);
         order.setDateFinish(dateFinish);
-        order.setStatus("reserve");
         session.persist(order);
         session.flush();
     }

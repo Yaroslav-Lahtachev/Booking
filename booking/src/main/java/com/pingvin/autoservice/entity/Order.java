@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 public class Order {
 
     @Id
@@ -20,18 +20,19 @@ public class Order {
     @JoinColumn(name = "offer", referencedColumnName = "id")
     private Offer offer;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "dateStart", nullable = true)
     private Date dateStart;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "dateFinish", nullable = true)
     private Date dateFinish;
 
     @JoinColumn(name = "master", referencedColumnName = "id")
-    private Master masterId;
+    private Master master;
 
-    @OneToOne
-    @JoinColumn(name = "kit", referencedColumnName = "id")
-    private Parts kitId;
+    @Column(name = "needKit", nullable = false)
+    private int needKit;
 
     public int getIdOrder() {
         return id;
@@ -74,31 +75,31 @@ public class Order {
     }
 
     public Master getMaster() {
-        return masterId;
+        return master;
     }
 
-    public void setMaster(Master masterId) {
-        this.masterId = masterId;
+    public void setMaster(Master master) {
+        this.master = master;
     }
 
-    public Parts getKitId() {
-        return kitId;
+    public int getNeedKit() {
+        return needKit;
     }
 
-    public void setKitId(Parts kitId) {
-        this.kitId = kitId;
+    public void setNeedKit(int needKit) {
+        this.needKit = needKit;
     }
 
     public Order() {
     }
 
-    public Order(int id, User customer, Offer offer, Date dateStart, Date dateFinish, Master masterId, Parts kitId) {
+    public Order(int id, User customer, Offer offer, Date dateStart, Date dateFinish, Master master, int needKit) {
         this.id = id;
         this.customer = customer;
         this.offer = offer;
         this.dateStart = dateStart;
         this.dateFinish = dateFinish;
-        this.masterId = masterId;
-        this.kitId = kitId;
+        this.master = master;
+        this.needKit = needKit;
     }
 }

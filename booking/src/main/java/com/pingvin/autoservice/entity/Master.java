@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "master")
+@Table(name = "masters")
 public class Master implements Serializable {
 
     @Id
@@ -21,11 +21,11 @@ public class Master implements Serializable {
     @Column(name = "occupied", nullable = false)
     private String occupied;
 
-    public int getIdMaster() {
+    public int getMaster() {
         return id;
     }
 
-    public void setIdMaster(int id) {
+    public void setMaster(int id) {
         this.id = id;
     }
 

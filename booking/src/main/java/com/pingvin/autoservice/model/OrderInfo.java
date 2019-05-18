@@ -81,6 +81,12 @@ public class OrderInfo {
         this.dateFinish = dateFinish;
     }
 
+    public OrderInfo(int offer, Date dateStart, Date dateFinish) {
+        this.offer = offer;
+        this.dateStart = dateStart;
+        this.dateFinish = dateFinish;
+    }
+
     public OrderInfo(int id, int customer, int offer, int masterId, int kitId, Date dateStart, Date dateFinish) {
         this.id = id;
         this.customer = customer;

@@ -2,9 +2,8 @@ package com.pingvin.autoservice.entity;
 
 import javax.persistence.*;
 
-//TODO: why all our tables named as single entity? user, offer, order, should it be users, orders, offers?
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
 
     public static final String ROLE_BLOCKED = "BLOCKED";
@@ -41,10 +40,6 @@ public class User {
     }
 
     public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public void setFullName(String login) {
         this.login = login;
     }
 

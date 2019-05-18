@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "offer")
+@Table(name = "offers")
 public class Offer implements Serializable {
 
     @Id
@@ -24,12 +24,23 @@ public class Offer implements Serializable {
     @Column(name = "time", nullable = false)
     private int time;
 
+    @OneToOne
+    @JoinColumn(name = "kit", referencedColumnName = "id")
+    private Parts kit;
+
     public int getIdOffer() {
         return id;
     }
 
     public void setIdOffer(int id) {
         this.id = id;
+    }
+
+    public Parts getKit() {
+        return kit;
+    }
+    public void setKit(Parts kit) {
+        this.kit = kit;
     }
 
     public String getName() {
@@ -67,12 +78,13 @@ public class Offer implements Serializable {
     public Offer() {
     }
 
-    public Offer(int id, String name, int price, String prof, int time) {
+    public Offer(int id, String name, int price, String prof, int time, Parts kit) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.prof = prof;
         this.time = time;
+        this.kit = kit;
     }
 }
 
