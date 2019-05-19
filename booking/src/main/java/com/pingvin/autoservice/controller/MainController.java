@@ -3,7 +3,6 @@ package com.pingvin.autoservice.controller;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import com.pingvin.autoservice.config.Consts;
-import com.pingvin.autoservice.Sender;
 import com.pingvin.autoservice.dao.*;
 import com.pingvin.autoservice.entity.*;
 import com.pingvin.autoservice.form.*;
