@@ -37,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // Requires login with role ROLE_EMPLOYEE or ROLE_MANAGER.
         // If not, it will redirect to /admin/login.
         http.authorizeRequests().antMatchers( "/reserve", "/cancelOrder","/sellerOrders", "/buyerOrders", "/newOffer", "/admin/userInfo")//
-                .access("hasAnyRole('ROLE_USER', 'ROLE_SELLER', 'ROLE_ADMIN')");
+                .access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
 
         // Pages only for MANAGER
         http.authorizeRequests().antMatchers("/admin/usersList","/admin/viewAllUsersOrdersForAdmin","/admin/viewUserOrdersForAdmin","/admin/blockPage").access("hasRole('ROLE_ADMIN')");

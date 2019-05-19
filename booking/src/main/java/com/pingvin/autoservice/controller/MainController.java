@@ -1,11 +1,11 @@
 package com.pingvin.autoservice.controller;
 
-
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import com.pingvin.autoservice.config.Consts;
+import com.pingvin.autoservice.Sender;
 import com.pingvin.autoservice.dao.*;
-import com.pingvin.autoservice.entity.Master;
-import com.pingvin.autoservice.entity.Offer;
-import com.pingvin.autoservice.entity.Parts;
-import com.pingvin.autoservice.entity.User;
+import com.pingvin.autoservice.entity.*;
 import com.pingvin.autoservice.form.*;
 import com.pingvin.autoservice.model.OffersInfo;
 //import com.pingvin.autoservice.model.OrderHistoryInfo;
@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Controller
@@ -43,6 +42,8 @@ public class MainController {
     private PartsDAO partsDAO;
     @Autowired
     private MasterDAO masterDAO;
+    @Autowired
+    public JavaMailSender emailSender;
 
     final int MAX_RESULT = 3;
     final int MAX_NAVIGATION_PAGE = 10;
@@ -386,6 +387,43 @@ public class MainController {
 
     }
 
+    @RequestMapping(value = "/changeOrderTime", method = RequestMethod.GET)               //todo
+    public String changeOrderTime(Model model,
+                          @RequestParam(value = "id", defaultValue = "0") String id) {
+        int idOrder = 0;
+        try {
+            idOrder = Integer.parseInt(id);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        Order order = null;
+        if (idOrder != 0)
+            order = orderDAO.findOrderByIdOrder(idOrder);
+        OrderInfo orderInfo = null;
+        SignUpForm signUpForm = null;
+        if (order != null) {
+            orderInfo = new OrderInfo(order);
+            signUpForm = new SignUpForm();
+            signUpForm.setDateStart(new Date());
+            signUpForm.setDateFinish(new Date());
+            model.addAttribute("orderInfo", orderInfo);
+            model.addAttribute("signUpForm", signUpForm);
+            model.addAttribute("error", new Boolean(false));
+        } else return "redirect:/admin/usersList";
+        return "changeOrderTime";
+    }
+
+    @RequestMapping(value = "/changeOrderTime", method = RequestMethod.POST)
+    public String changeOrderTime(Model model,
+                                 @ModelAttribute("signUpForm")
+                                 @Validated SignUpForm signUpForm,
+                                 BindingResult result,
+                                 final RedirectAttributes redirectAttributes,
+                                 @ModelAttribute("orderInfo") OrderInfo orderInfo)
+    {
+        sendSimpleMessage(Consts.MESSAGE_ABOUT_CHANGING_TIME, "intriganchik27@gmail.com", "intriganchik27@gmail.com");
+        return "redirect:/admin/usersList";
+    }
 
     //
     //admin controller
@@ -439,6 +477,15 @@ public class MainController {
             model.addAttribute("id", id);
         } else return "redirect:/usersList";
         return "viewUserOrdersForAdmin";
+    }
+
+    private void sendSimpleMessage(
+            String text, String to, String subject) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText(text);
+        emailSender.send(message);
     }
 
     private String calculateStatus(OrderInfo orderInfo) {

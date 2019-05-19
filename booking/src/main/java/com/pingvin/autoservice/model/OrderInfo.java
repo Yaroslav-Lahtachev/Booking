@@ -1,5 +1,6 @@
 package com.pingvin.autoservice.model;
 
+import com.pingvin.autoservice.entity.Order;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Calendar;
@@ -13,7 +14,9 @@ public class OrderInfo {
     private double price;
     private int masterId;
     private boolean needKit;
+    private String status;
     private String masterName;
+    private String customerName;
     private String orderStatus;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -27,6 +30,14 @@ public class OrderInfo {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public int getCustomer() {
@@ -101,6 +112,14 @@ public class OrderInfo {
         return masterName;
     }
 
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
     public void setMasterName(String masterName) {
         this.masterName = masterName;
     }
@@ -148,6 +167,16 @@ public class OrderInfo {
     }
 
 
+    public OrderInfo(Order order) {
+        this.id = order.getIdOrder();
+        this.offer = order.getOffer().getIdOffer();
+        this.nameOffer = order.getOffer().getName();
+        this.price = order.getOffer().getPrice();
+        this.masterName = order.getMaster().getName();
+        this.dateStart = timeCut(order.getDateStart());
+        this.dateFinish = timeCut(order.getDateFinish());
+        this.customerName = order.getCustomer().getLogin();
+    }
 
     @Override
     public String toString() {
