@@ -420,7 +420,7 @@ public class MainController {
                                  final RedirectAttributes redirectAttributes,
                                  @ModelAttribute("orderInfo") OrderInfo orderInfo)
     {
-        sendSimpleMessage(Consts.MESSAGE_ABOUT_CHANGING_TIME, "intriganchik27@gmail.com", "intriganchik27@gmail.com");
+        sendSimpleMessage(Consts.MESSAGE_ABOUT_CHANGING_TIME, "AmaGenius1337@gmail.com", "intriganchik27@gmail.com");
         return "redirect:/admin/usersList";
     }
 
