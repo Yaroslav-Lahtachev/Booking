@@ -22,20 +22,25 @@
 <table border="1" , style="width: 100%">
     <tr>
         <th>ID Order</th>
-        <th>ID Buyer</th>
         <th>ID Offer</th>
+        <th>Offer Name</th>
+        <th>Price</th>
+        <th>Master name</th>
         <th>Date Start Order</th>
         <th>Date Finish Order</th>
-        <th>Status</th>
+        <th>Order Status</th>
     </tr>
     <tr th:each="ordersInfo : ${paginationResult.list}">
-        <td th:utext="${ordersInfo.idOrder}">..</td>
-        <td th:utext="${ordersInfo.idUser}">..</td>
-        <td th:utext="${ordersInfo.idOffer}">..</td>
+        <td th:utext="${ordersInfo.id}">..</td>
+        <td th:utext="${ordersInfo.offer}">..</td>
+        <td th:utext="${ordersInfo.nameOffer}">..</td>
+        <td th:utext="${ordersInfo.price}">..</td>
+        <td th:utext="${ordersInfo.masterName}">..</td>
         <td th:utext="${ordersInfo.dateStart}">..</td>
         <td th:utext="${ordersInfo.dateFinish}">..</td>
-        <td th:utext="${ordersInfo.status}">..</td>
-        <td><a th:href="@{|/newOffer?id=${ordersInfo.idOrder}|}"> cancel </a></td>
+        <td th:utext="${ordersInfo.orderStatus}">..</td>
+
+        <td th:if="${ordersInfo.orderStatus=='Actual'}"><a th:href="@{|/newOffer?id=${ordersInfo.id}|}"> cancel </a></td>  <!--todo манагерские фичи здеся-->
     </tr>
 
 

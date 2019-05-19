@@ -9,8 +9,12 @@ public class OrderInfo {
     private int id;
     private int customer;
     private int offer;
+    private String nameOffer;
+    private double price;
     private int masterId;
-    private int kitId;
+    private boolean needKit;
+    private String masterName;
+    private String orderStatus;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateStart;
@@ -49,12 +53,12 @@ public class OrderInfo {
         this.masterId = masterId;
     }
 
-    public int getKitId() {
-        return kitId;
+    public boolean getNeedKit() {
+        return needKit;
     }
 
-    public void setKitId(int kitId) {
-        this.kitId = kitId;
+    public void setNeedKit(boolean needKit) {
+        this.needKit = needKit;
     }
 
     public Date getDateStart() {
@@ -73,6 +77,42 @@ public class OrderInfo {
         this.dateFinish = timeCut(dateFinish);
     }
 
+    public String getNameOffer() {
+        return nameOffer;
+    }
+
+    public void setNameOffer(String nameOffer) {
+        this.nameOffer = nameOffer;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public boolean isNeedKit() {
+        return needKit;
+    }
+
+    public String getMasterName() {
+        return masterName;
+    }
+
+    public void setMasterName(String masterName) {
+        this.masterName = masterName;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
     public OrderInfo() {
     }
 
@@ -87,15 +127,27 @@ public class OrderInfo {
         this.dateFinish = dateFinish;
     }
 
-    public OrderInfo(int id, int customer, int offer, int masterId, int kitId, Date dateStart, Date dateFinish) {
+    public OrderInfo(int id, int customer, int offer, int masterId, boolean needKit, Date dateStart, Date dateFinish) {
         this.id = id;
         this.customer = customer;
         this.offer = offer;
         this.masterId = masterId;
-        this.kitId = kitId;
+        this.needKit = needKit;
         this.dateStart = timeCut(dateStart);
         this.dateFinish = timeCut(dateFinish);
     }
+
+    public OrderInfo(int id, int offer, String nameOffer, double price, String masterName, Date dateStart, Date dateFinish) {
+        this.id = id;
+        this.offer = offer;
+        this.nameOffer = nameOffer;
+        this.price = price;
+        this.masterName = masterName;
+        this.dateStart = timeCut(dateStart);
+        this.dateFinish = timeCut(dateFinish);
+    }
+
+
 
     @Override
     public String toString() {
@@ -104,7 +156,7 @@ public class OrderInfo {
                 ", customer=" + customer +
                 ", offer='" + offer + '\'' +
                 ", masterId=" + masterId +
-                ", kitId='" + kitId + '\'' +
+                ", kitId='" + needKit + '\'' +
                 ", dateStart=" + dateStart +
                 ", dateFinish=" + dateFinish +
                 '}';

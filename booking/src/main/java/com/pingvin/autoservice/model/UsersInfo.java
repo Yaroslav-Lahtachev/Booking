@@ -77,20 +77,20 @@ public class UsersInfo {
     }
 
     public boolean isAdmin() {
-        if (this.role.equals("ADMIN"))
+        if (this.role.equals("ROLE_ADMIN"))
             return true;
         return false;
     }
 
     public boolean isBlocked() {
-        if (this.role.equals("BLOCKED"))
+        if (this.role.equals("ROLE_BLOCKED"))
             return true;
         return false;
     }
 
     public boolean isUser() {
 
-        if (this.role.equals("USER")) {
+        if (this.role.equals("ROLE_USER")) {
             return true;
         }
         return false;

@@ -16,7 +16,7 @@ public class Order {
     @JoinColumn(name = "customer", referencedColumnName = "id")
     private User customer;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "offer", referencedColumnName = "id")
     private Offer offer;
 
@@ -28,11 +28,12 @@ public class Order {
     @Column(name = "dateFinish", nullable = true)
     private Date dateFinish;
 
+    @ManyToOne
     @JoinColumn(name = "master", referencedColumnName = "id")
     private Master master;
 
     @Column(name = "needKit", nullable = false)
-    private int needKit;
+    private boolean needKit;
 
     public int getIdOrder() {
         return id;
@@ -82,18 +83,18 @@ public class Order {
         this.master = master;
     }
 
-    public int getNeedKit() {
+    public boolean getNeedKit() {
         return needKit;
     }
 
-    public void setNeedKit(int needKit) {
+    public void setNeedKit(boolean needKit) {
         this.needKit = needKit;
     }
 
     public Order() {
     }
 
-    public Order(int id, User customer, Offer offer, Date dateStart, Date dateFinish, Master master, int needKit) {
+    public Order(int id, User customer, Offer offer, Date dateStart, Date dateFinish, Master master, boolean needKit) {
         this.id = id;
         this.customer = customer;
         this.offer = offer;

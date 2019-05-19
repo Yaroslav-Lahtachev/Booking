@@ -26,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 public class MainController {
@@ -374,19 +375,18 @@ public class MainController {
         //if (orderDAO.CheckReserveOfferByIdAndDate(orderHistoryInfo.getIdOffer(), orderHistoryInfo.getDateStart(), orderHistoryInfo.getDateFinish())) {
             User buyer = usersDAO.findByLogin(authentication.getName());
             Offer offer = offerDAO.findByIdOffer(orderInfo.getOffer());
-            Master master = masterDAO.findByIdMaster(getFreeMaster(offer.getIdOffer()));
-            int isNeedParts = 1;
+            Master master = masterDAO.findByIdMaster(masterDAO.getFreeMaster(offer.getIdOffer()));
+            Date dateFinish = new Date(orderInfo.getDateStart().getTime() + TimeUnit.SECONDS.toMillis(offer.getTime()));
+            boolean isNeedParts = true;
             //if (orderDAO.checkOnOwnership(buyer, seller)) {
-                orderDAO.reserve(buyer, master, offer, isNeedParts, orderInfo.getDateStart(), orderInfo.getDateFinish());
+                orderDAO.reserve(buyer, master, offer, isNeedParts, orderInfo.getDateStart(), dateFinish); //нафиг нам мнение клиента лол
                 return "redirect:/buyerOrders";
             //} else return "itsYourOwnOfferDude";
         //} else return "index";
 
     }
 
-    private int getFreeMaster(int IdOffer){
-        return 1;
-    }
+
     //
     //admin controller
     //
@@ -404,43 +404,51 @@ public class MainController {
         return "usersList";
     }
 
-    //@RequestMapping(value = "/admin/viewUserOffersForAdmin", method = RequestMethod.GET)
-    //public String userOffersForAdmin(Model model,
-    //                                 @RequestParam(value = "page", defaultValue = "1") String pageStr,
-    //                                 @RequestParam(value = "id", defaultValue = "0") int id) {
-    //    int page = 1;
-    //    try {
-    //        page = Integer.parseInt(pageStr);
-    //    } catch (Exception ex) {
-    //        ex.printStackTrace();
-    //    }
-    //    User seller = usersDAO.findByIdUser(id);
-    //    PaginationResult<OffersInfo> paginationResult = offerDAO.listOffersByIdUser(seller, page, MAX_RESULT, MAX_NAVIGATION_PAGE);
-    //    model.addAttribute("paginationResult", paginationResult);
-    //    model.addAttribute("idUser", id);
+    @RequestMapping(value = "/admin/viewAllUsersOrdersForAdmin", method = RequestMethod.GET)
+    public String userOffersForAdmin(Model model,
+                                     @RequestParam(value = "page", defaultValue = "1") String pageStr) {
+        int page = 1;
+        try {
+            page = Integer.parseInt(pageStr);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        PaginationResult<OrderInfo> paginationResult = orderDAO.findAllOrders(page, MAX_RESULT, MAX_NAVIGATION_PAGE);
+        model.addAttribute("paginationResult", paginationResult);
+        return "viewAllUsersOrdersForAdmin";
+    }
 
-    //    return "viewUserOffersForAdmin";
-    //}
+    @RequestMapping(value = "/admin/viewUserOrdersForAdmin", method = RequestMethod.GET)          //todo
+    public String userOrdersForAdmin(Model model,
+                                     @RequestParam(value = "page", defaultValue = "1") String pageStr,
+                                     @RequestParam(value = "id", defaultValue = "0") int id) {
+        int page = 1;
+        try {
+            page = Integer.parseInt(pageStr);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        if (id != 0) {
+            User buyer = usersDAO.findByIdUser(id);
+            PaginationResult<OrderInfo> paginationResult = orderDAO.findOrderByBuyer(buyer, page, MAX_RESULT, MAX_NAVIGATION_PAGE);
+            for (int i=0;i<paginationResult.getList().size();i++){
+                paginationResult.getList().get(i).setOrderStatus(calculateStatus(paginationResult.getList().get(i)));
+                System.out.println(paginationResult.getList().get(i).getOrderStatus());
+            }
+            model.addAttribute("paginationResult", paginationResult);
+            model.addAttribute("id", id);
+        } else return "redirect:/usersList";
+        return "viewUserOrdersForAdmin";
+    }
 
-    //@RequestMapping(value = "/admin/viewUserOrdersForAdmin", method = RequestMethod.GET)          //todo
-    //public String userOrdersForAdmin(Model model,
-    //                                 @RequestParam(value = "page", defaultValue = "1") String pageStr,
-    //                                 @RequestParam(value = "id", defaultValue = "0") int id) {
-    //    int page = 1;
-    //    try {
-    //        page = Integer.parseInt(pageStr);
-    //    } catch (Exception ex) {
-    //        ex.printStackTrace();
-    //    }
-    //    if (id != 0) {
-    //        User buyer = usersDAO.findByIdUser(id);
-    //        PaginationResult<OrderHistoryInfo> paginationResult = orderHistoryDAO.findOrderByBuyer(buyer, "reserve", page, MAX_RESULT, MAX_NAVIGATION_PAGE);
-    //        model.addAttribute("paginationResult", paginationResult);
-    //        model.addAttribute("id", id);
-    //    } else return "redirect:/usersList";
-    //    return "viewUserOrdersForAdmin";
-    //}
-
+    private String calculateStatus(OrderInfo orderInfo) {
+        String status;
+        Date currDate = new Date();
+        if (currDate.compareTo(orderInfo.getDateFinish()) == -1)
+            status = "Actual";
+        else status = "Done";
+        return status;
+    }
     //@RequestMapping(value = "/admin/blockPage")               //todo ban hammer?
     //public String blockPage(Model model,
     //                        @RequestParam(value = "id", defaultValue = "0") int id,

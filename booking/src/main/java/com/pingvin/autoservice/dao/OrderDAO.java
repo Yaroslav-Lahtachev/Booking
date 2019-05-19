@@ -3,6 +3,7 @@ package com.pingvin.autoservice.dao;
 import com.pingvin.autoservice.entity.*;
 //import com.pingvin.autoservice.entity.OrderHistory;
 //import com.pingvin.autoservice.model.OrderHistoryInfo;
+import com.pingvin.autoservice.model.OrderInfo;
 import com.pingvin.autoservice.pagination.PaginationResult;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -28,26 +29,26 @@ public class OrderDAO {
         return session.get(Order.class, idOrder);
     }
 
-//   public PaginationResult<OrderHistoryInfo> findAllOrders(int page, int maxResult, int maxNavPage) {
-//       Session session = this.sessionFactory.getCurrentSession();
-//       String sql = "Select new " + OrderHistoryInfo.class.getName()
-//               + " (e.idOrder, e.idUser.idUser, e.idOffer.idOffer, e.dateStart, e.dateFinish, e.status) "
-//               + " From " + OrderHistory.class.getName() + " e ";
-//       Query<OrderHistoryInfo> query = session.createQuery(sql, OrderHistoryInfo.class);
-//       return new PaginationResult<OrderHistoryInfo>(query, page, maxResult, maxNavPage);
-//   }
+    public PaginationResult<OrderInfo> findAllOrders(int page, int maxResult, int maxNavPage) {
+        Session session = this.sessionFactory.getCurrentSession();
+        String sql = "Select new " + OrderInfo.class.getName()
+                + " (e.id, e.customer.id, e.offer.id, e.master.id, e.needKit, e.dateStart, e.dateFinish) "
+                + " From " + Order.class.getName() + " e ";
+        Query<OrderInfo> query = session.createQuery(sql, OrderInfo.class);
+        return new PaginationResult<OrderInfo>(query, page, maxResult, maxNavPage);
+    }
 
-//   public PaginationResult<OrderHistoryInfo> findOrderByBuyer(User user, String status, int page, int maxResult, int maxNavPage) {
-//       Session session = this.sessionFactory.getCurrentSession();
-//       String sql = "Select new " + OrderHistoryInfo.class.getName()
-//               + " (o.idOrder, o.idOffer.idOffer, o.idOffer.idSeller.idUser, o.idOffer.idSeller.login, f.address, o.dateStart, o.dateFinish, o.status) "
-//               + " From " + OrderHistory.class.getName() + " as o, " + Offer.class.getName() + " as f "
-//               + " where f.idOffer=o.idOffer and o.idUser.idUser =: idUser and o.status =: status ";
-//       Query<OrderHistoryInfo> query = session.createQuery(sql, OrderHistoryInfo.class);
-//       query.setParameter("idUser", user.getIdUser());
-//       query.setParameter("status", status);
-//       return new PaginationResult<OrderHistoryInfo>(query, page, maxResult, maxNavPage);
-//   }
+    public PaginationResult<OrderInfo> findOrderByBuyer(User user, int page, int maxResult, int maxNavPage) {
+        Session session = this.sessionFactory.getCurrentSession();
+        String sql = "Select new " + OrderInfo.class.getName()
+                + " (o.id, o.offer.id, f.name, f.price, m.name, o.dateStart, o.dateFinish) "
+                + " From " + Order.class.getName() + " as o, " + Offer.class.getName() + " as f, " + Master.class.getName() + " as m "
+                + " where f.id=o.offer and o.customer.id =: idUser ";
+        Query<OrderInfo> query = session.createQuery(sql, OrderInfo.class);
+        query.setParameter("idUser", user.getIdUser());
+        return new PaginationResult<OrderInfo>(query, page, maxResult, maxNavPage);
+    }
+
 
 //   public PaginationResult<OrderHistoryInfo> findOrderBySeller(List<Parts> listOffers, int page, int maxResult, int maxNavPage) {
 //       if (listOffers != null) {
@@ -144,7 +145,7 @@ public class OrderDAO {
 //       } else return false;
 //   }
 
-    public void reserve(User customer, Master master, Offer offer, int needParts, Date dateStart, Date dateFinish) {
+    public void reserve(User customer, Master master, Offer offer, boolean needParts, Date dateStart, Date dateFinish) {
         Session session = this.sessionFactory.getCurrentSession();
         Order order = new Order();
         order.setCustomer(customer);

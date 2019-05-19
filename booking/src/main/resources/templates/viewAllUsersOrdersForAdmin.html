@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Booking</title>
+
+    <style>
+        th, td {
+            padding: 5px;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
+</head>
+
+<body>
+<!-- Include _menu.html -->
+<th:block th:include="/_header"></th:block>
+<th:block th:include="/_menu"></th:block>
+
+
+<h2>User Offers</h2>
+<div>Total Orders Count: <span th:utext="${paginationResult.totalRecords}"></span></div>
+<table border="1" , style="width: 100%">
+    <tr>
+        <th>ID Order</th>
+        <th>ID User</th>
+        <th>ID Offer</th>
+        <th>ID Master</th>
+        <th>Need kit</th>
+        <th>Date Start</th>
+        <th>Date Finish</th>
+    </tr>
+    <tr th:each="order : ${paginationResult.list}">
+        <td th:utext="${order.id}">..</td>
+        <td th:utext="${order.customer}">..</td>
+        <td th:utext="${order.offer}">..</td>
+        <td th:utext="${order.masterId}">..</td>
+        <td th:utext="${order.needKit}">..</td>
+        <td th:utext="${order.dateStart}">..</td>
+        <td th:utext="${order.dateFinish}">..</td>
+        <!--<td><a th:href="@{/newOffer(id=${userOffers.idOffer},idUser=*{idUser})}"> edit </a></td>-->
+    </tr>
+
+</table>
+<div class="page-navigator" th:if="${paginationResult.totalPages > 1}">
+    <th:block th:each="page: ${paginationResult.navigationPages}">
+        <a th:if="${page != -1}" class="nav-item"
+           th:href="@{/admin/viewAllUsersOrdersForAdmin(page=${page})}" th:utext="${page}"></a>
+
+        <span th:if="${page == -1}" class="nav-item"> ... </span>
+    </th:block>
+</div>
+</body>
+</html>
