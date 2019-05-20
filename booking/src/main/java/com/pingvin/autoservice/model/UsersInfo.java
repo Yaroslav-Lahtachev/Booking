@@ -82,12 +82,6 @@ public class UsersInfo {
         return false;
     }
 
-    public boolean isBlocked() {
-        if (this.role.equals("ROLE_BLOCKED"))
-            return true;
-        return false;
-    }
-
     public boolean isUser() {
 
         if (this.role.equals("ROLE_USER")) {
