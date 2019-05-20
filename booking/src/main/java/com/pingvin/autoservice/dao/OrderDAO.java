@@ -41,7 +41,7 @@ public class OrderDAO {
     public PaginationResult<OrderInfo> findOrderByBuyer(User user, int page, int maxResult, int maxNavPage) {
         Session session = this.sessionFactory.getCurrentSession();
         String sql = "Select new " + OrderInfo.class.getName()
-                + " (o.id, o.offer.id, f.name, f.price, m.name, o.dateStart, o.dateFinish) "
+                + " (o.id, o.offer.id, f.name, f.price, m.name, o.dateStart, o.dateFinish, o.status) "
                 + " From " + Order.class.getName() + " as o, " + Offer.class.getName() + " as f, " + Master.class.getName() + " as m "
                 + " where f.id=o.offer and o.customer.id =: idUser ";
         Query<OrderInfo> query = session.createQuery(sql, OrderInfo.class);
@@ -154,14 +154,15 @@ public class OrderDAO {
         order.setNeedKit(needParts);
         order.setDateStart(dateStart);
         order.setDateFinish(dateFinish);
+        order.setStatus("CREATED");
         session.persist(order);
         session.flush();
     }
 
-//   public void changeOrderStatus(int idOrder, String status) {
-//       OrderHistory orderHistory = findOrderByIdOrder(idOrder);
-//       orderHistory.setStatus(status);
-//   }
+  public void changeOrderStatus(int idOrder, String status) {
+      Order order = findOrderByIdOrder(idOrder);
+      order.setStatus(status);
+    }
 
 //   public boolean checkOnOwnership(User buyer, Parts seller) {
 //       if (buyer.getIdUser() == seller.getIdUser().getIdUser()) {

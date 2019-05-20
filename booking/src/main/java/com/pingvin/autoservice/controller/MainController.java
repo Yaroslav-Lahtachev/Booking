@@ -110,17 +110,17 @@ public class MainController {
     //@RequestMapping(value = "/newOffer", method = RequestMethod.GET)                  //todo добавление новых услуг?
     //public String newOffer(Model model, @RequestParam(value = "id", defaultValue = "-1") int idOffer, @RequestParam(value = "idUser", defaultValue = "-1") int idUser) {
     //    OffersInfo offersInfo = null;
-    //    OfferForm offerForm = null;
+    //    OrderForm offerForm = null;
     //    if (idOffer != -1) {
     //        Offer offer = offerDAO.findByIdOffer(idOffer);
     //        if (offer != null) {
     //            offersInfo = new OffersInfo(offer);
-    //            offerForm = new OfferForm(offersInfo);
+    //            offerForm = new OrderForm(offersInfo);
     //        }
     //    }
     //    if (offersInfo == null) {
     //        offersInfo = new OffersInfo();
-    //        offerForm = new OfferForm();
+    //        offerForm = new OrderForm();
     //        offersInfo.setNewOffer(true);
     //    } else {
     //        offersInfo.setNewOffer(false);
@@ -136,7 +136,7 @@ public class MainController {
     //@RequestMapping(value = "/newOffer", method = RequestMethod.POST)
     //public String saveUserOffer(Model model,
     //                            @ModelAttribute("offerForm")
-    //                            @Validated OfferForm offerForm,
+    //                            @Validated OrderForm offerForm,
     //                            BindingResult result,
     //                            final RedirectAttributes redirectAttributes) {
     //    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -262,6 +262,44 @@ public class MainController {
     //    }
     //    return "index";
     //}
+
+    @RequestMapping(value = "/changeOrderStatus", method = RequestMethod.GET)               //todo
+    public String changeOrderStatus(Model model,
+                                  @RequestParam(value = "id", defaultValue = "0") String id) {
+        int idOrder = 0;
+        try {
+            idOrder = Integer.parseInt(id);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        Order order = null;
+        if (idOrder != 0)
+            order = orderDAO.findOrderByIdOrder(idOrder);
+        OrderInfo orderInfo = null;
+        SignUpForm signUpForm = null;
+        if (order != null) {
+            orderInfo = new OrderInfo(order);
+            signUpForm = new SignUpForm();
+            signUpForm.setStatus(order.getStatus());
+            model.addAttribute("orderInfo", orderInfo);
+            model.addAttribute("signUpForm", signUpForm);
+            model.addAttribute("error", new Boolean(false));
+        } else return "redirect:/admin/usersList";
+        return "changeOrderStatus";
+    }
+
+    @RequestMapping(value = "/changeOrderStatus", method = RequestMethod.POST)
+    public String changeOrderStatus(Model model,
+                                  @ModelAttribute("signUpForm")
+                                  @Validated SignUpForm signUpForm,
+                                  BindingResult result,
+                                  final RedirectAttributes redirectAttributes,
+                                  @ModelAttribute("orderInfo") OrderInfo orderInfo)
+    {
+
+        orderDAO.changeOrderStatus(orderInfo.getId(), signUpForm.getStatus());
+        return "redirect:/admin/usersList";
+    }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String viewRegister(Model model) {
@@ -420,7 +458,8 @@ public class MainController {
                                  final RedirectAttributes redirectAttributes,
                                  @ModelAttribute("orderInfo") OrderInfo orderInfo)
     {
-        sendSimpleMessage(Consts.MESSAGE_ABOUT_CHANGING_TIME, "AmaGenius1337@gmail.com", "intriganchik27@gmail.com");
+
+        sendSimpleMessage(Consts.MESSAGE_ABOUT_CHANGING_TIME, "AmaGenius1337@gmail.com", "AmaGenius1337@gmail.com");
         return "redirect:/admin/usersList";
     }
 
@@ -468,10 +507,6 @@ public class MainController {
         if (id != 0) {
             User buyer = usersDAO.findByIdUser(id);
             PaginationResult<OrderInfo> paginationResult = orderDAO.findOrderByBuyer(buyer, page, MAX_RESULT, MAX_NAVIGATION_PAGE);
-            for (int i=0;i<paginationResult.getList().size();i++){
-                paginationResult.getList().get(i).setOrderStatus(calculateStatus(paginationResult.getList().get(i)));
-                System.out.println(paginationResult.getList().get(i).getOrderStatus());
-            }
             model.addAttribute("paginationResult", paginationResult);
             model.addAttribute("id", id);
         } else return "redirect:/usersList";
@@ -487,14 +522,6 @@ public class MainController {
         emailSender.send(message);
     }
 
-    private String calculateStatus(OrderInfo orderInfo) {
-        String status;
-        Date currDate = new Date();
-        if (currDate.compareTo(orderInfo.getDateFinish()) == -1)
-            status = "Actual";
-        else status = "Done";
-        return status;
-    }
     //@RequestMapping(value = "/admin/blockPage")               //todo ban hammer?
     //public String blockPage(Model model,
     //                        @RequestParam(value = "id", defaultValue = "0") int id,

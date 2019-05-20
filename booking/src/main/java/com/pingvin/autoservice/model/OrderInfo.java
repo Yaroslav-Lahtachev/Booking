@@ -17,7 +17,6 @@ public class OrderInfo {
     private String status;
     private String masterName;
     private String customerName;
-    private String orderStatus;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateStart;
@@ -124,14 +123,6 @@ public class OrderInfo {
         this.masterName = masterName;
     }
 
-    public String getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
-    }
-
     public OrderInfo() {
     }
 
@@ -156,7 +147,7 @@ public class OrderInfo {
         this.dateFinish = timeCut(dateFinish);
     }
 
-    public OrderInfo(int id, int offer, String nameOffer, double price, String masterName, Date dateStart, Date dateFinish) {
+    public OrderInfo(int id, int offer, String nameOffer, double price, String masterName, Date dateStart, Date dateFinish, String status) {
         this.id = id;
         this.offer = offer;
         this.nameOffer = nameOffer;
@@ -164,6 +155,7 @@ public class OrderInfo {
         this.masterName = masterName;
         this.dateStart = timeCut(dateStart);
         this.dateFinish = timeCut(dateFinish);
+        this.status = status;
     }
 
 
@@ -176,6 +168,7 @@ public class OrderInfo {
         this.dateStart = timeCut(order.getDateStart());
         this.dateFinish = timeCut(order.getDateFinish());
         this.customerName = order.getCustomer().getLogin();
+        this.status = order.getStatus();
     }
 
     @Override

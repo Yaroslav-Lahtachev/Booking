@@ -35,12 +35,23 @@ public class Order {
     @Column(name = "needKit", nullable = false)
     private boolean needKit;
 
+    @Column(name = "status", nullable = false)
+    private String status;
+
     public int getIdOrder() {
         return id;
     }
 
     public void setIdOrder(int id) {
         this.id = id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public User getCustomer() {
@@ -94,7 +105,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(int id, User customer, Offer offer, Date dateStart, Date dateFinish, Master master, boolean needKit) {
+    public Order(int id, User customer, Offer offer, Date dateStart, Date dateFinish, Master master, boolean needKit, String status) {
         this.id = id;
         this.customer = customer;
         this.offer = offer;
@@ -102,5 +113,6 @@ public class Order {
         this.dateFinish = dateFinish;
         this.master = master;
         this.needKit = needKit;
+        this.status = status;
     }
 }

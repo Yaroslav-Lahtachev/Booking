@@ -10,6 +10,7 @@ public class SignUpForm {
     private Date dateStart;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateFinish;
+    private String status;
 
     public SignUpForm() {
     }
@@ -42,5 +43,13 @@ public class SignUpForm {
 
     public void setDateFinish(Date dateFinish) {
         this.dateFinish = dateFinish;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

@@ -34,9 +34,9 @@
         <td th:utext="${ordersInfo.masterName}">..</td>
         <td th:utext="${ordersInfo.dateStart}">..</td>
         <td th:utext="${ordersInfo.dateFinish}">..</td>
-        <td th:utext="${ordersInfo.orderStatus}">..</td>
-
-        <td th:if="${ordersInfo.orderStatus=='Done'}"><a th:href="@{|/changeOrderTime?id=${ordersInfo.id}|}">change order time</a></td>  <!--todo манагерские фичи здеся-->
+        <td th:utext="${ordersInfo.status}">..</td>
+        <td><a th:href="@{|/changeOrderStatus?id=${ordersInfo.id}|}">change order status</a></td>  <!--todo манагерские фичи здеся-->
+        <td th:if="${ordersInfo.status=='Done'}"><a th:href="@{|/changeOrderTime?id=${ordersInfo.id}|}">change order time</a></td>  <!--todo манагерские фичи здеся-->
     </tr>
 
 
