@@ -1,5 +1,7 @@
 package com.pingvin.autoservice.controller;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import com.pingvin.autoservice.config.Consts;
@@ -23,8 +25,11 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+
+import static com.pingvin.autoservice.model.OrderInfo.timeCut;
 
 @Controller
 public class MainController {
@@ -427,7 +432,7 @@ public class MainController {
 
     @RequestMapping(value = "/changeOrderTime", method = RequestMethod.GET)               //todo
     public String changeOrderTime(Model model,
-                          @RequestParam(value = "id", defaultValue = "0") String id) {
+                                  @RequestParam(value = "id", defaultValue = "0") String id) {
         int idOrder = 0;
         try {
             idOrder = Integer.parseInt(id);
@@ -458,9 +463,57 @@ public class MainController {
                                   BindingResult result,
                                   final RedirectAttributes redirectAttributes,
                                   @ModelAttribute("orderInfo") OrderInfo orderInfo) {
+        //@DateTimeFormat(pattern = "yyyy-MM-dd")
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        sendSimpleMessage(Consts.MESSAGE_ABOUT_CHANGING_TIME, "lahtachevya@gmail.com", "AmaGenius1337@gmail.com");
+        Date nd = timeCut(signUpForm.getDateStart());
+
+        String sendTo = usersDAO.findByIdUser(orderInfo.getCustomer()).getEmail();
+        sendSimpleMessage(Consts.MESSAGE_ABOUT_CHANGING_TIME + simpleDateFormat.format(nd), sendTo, "yo, dude");
         return "redirect:/admin/usersList";
+    }
+
+    @RequestMapping(value = "/acceptChangeTime", method = RequestMethod.GET)
+    public String acceptChangeTime(Model model,
+                                   @RequestParam(value = "order", defaultValue = "3") String id,
+                                   @RequestParam(value = "date", defaultValue = "null") String time) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        int idOrder = 0;
+        Date date = null;
+        try {
+            idOrder = Integer.parseInt(id);
+            date = format.parse(time);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (date != null && idOrder != 0) {
+            Order order = orderDAO.findOrderByIdOrder(idOrder);
+            if (order != null) {
+                UtilForm utilForm = new UtilForm();
+                OrderInfo orderInfo = new OrderInfo(order);
+                orderInfo.setDateStart(date);
+                model.addAttribute("orderInfo", orderInfo);
+                model.addAttribute("utilForm", utilForm);
+                //model.addAttribute("date", date);
+                model.addAttribute("error", new Boolean(false));
+            } else return "redirect:/admin/usersList";
+        }
+        return "redirect:/acceptChangeTime";
+    }
+
+
+    @RequestMapping(value = "/acceptChangeTime", method = RequestMethod.POST)
+    public String acceptChangeTime(Model model,
+                                  @ModelAttribute("utilForm") UtilForm utilForm,
+                                  BindingResult result,
+                                  final RedirectAttributes redirectAttributes,
+                                  @ModelAttribute("orderInfo") OrderInfo orderInfo) {
+        if (utilForm.getTextField().equals("Agree")) {
+            orderDAO.changeOrderDate(orderInfo.getId(), orderInfo.getDateStart());
+        }
+        else System.out.println("customer is gay, lets delete his order");
+        return "redirect:/buyerOrders";
     }
 
     //

@@ -30,8 +30,11 @@
     </tr>
 </table>
 
-<form th:object="${signUpForm}" th:action="@{|/changeOrderTime?id=${orderInfo.customer}|}"
+<form th:object="${signUpForm}" th:action="@{/changeOrderTime}"
       method="POST" enctype="multipart/form-data">
+
+    <input type="hidden" th:field="${orderInfo.id}">..</td>
+    <input type="hidden" th:field="${orderInfo.customer}">..</td>
 
     <table style="text-align:left;">
         <td>
@@ -76,16 +79,7 @@
     </tr>
 </table>
 
-<!--
 
-<form th:object="${offersInfo}" th:action="@{/reserve}"
-      method="POST" enctype="multipart/form-data">
-    <input type="hidden" th:field="${offersInfo.idOffer}">..</td>
-    <input type="hidden" th:field="${offersInfo.name}">..</td>
-    <input type="hidden" th:field="${offersInfo.prof}">..</td>
-    <input type="hidden" th:field="${offersInfo.price}">..</td>
-    <input type="hidden" th:field="${offersInfo.time}">..</td>
-</form>
--->
+
 </body>
 </html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Changes Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
+</head>
+<body>
+<!-- Include _menu.html -->
+<th:block th:include="/_header"></th:block>
+<th:block th:include="/_menu"></th:block>
+
+<h2>Changes</h2>
+
+<div>Change Time for order</div>
+<table border="1" , style="width: 100%">
+    <tr>
+        <th>Customer</th>
+        <th>Offer</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th>Master</th>
+        <th>New Date</th>
+    </tr>
+    <tr>
+        <td th:utext="${orderInfo.customerName}">..</td>
+        <td th:utext="${orderInfo.nameOffer}">..</td>
+        <td th:utext="${orderInfo.price}">..</td>
+        <td th:utext="${orderInfo.status}">..</td>
+        <td th:utext="${orderInfo.masterName}">..</td>
+        <td th:utext="${orderInfo.dateStart}">..</td>
+    </tr>
+</table>
+
+<form th:object="${utilForm}" th:action="@{/acceptChangeTime}"
+      method="POST" enctype="multipart/form-data">
+
+    <table style="text-align:left;">
+        <td>
+            <input type="hidden" th:field="${orderInfo.customer}"/>
+            <input type="hidden" th:field="${orderInfo.dateStart}"/>
+        </td>
+        <tr>
+            <td><p><input name="status" type="radio" value="Agree" th:field="${utilForm.textField}"/>Accept</p></td>
+            <td><p><input name="status" type="radio" value="Reject" th:field="${signUpForm.textField}"/>Reject</p></td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" value="Accept"/>
+                <input type="reset" value="Reset"/>
+            </td>
+        </tr>
+    </table>
+</form>

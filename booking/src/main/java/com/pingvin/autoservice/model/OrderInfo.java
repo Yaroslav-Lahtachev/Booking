@@ -164,6 +164,7 @@ public class OrderInfo {
         this.masterName = order.getMaster().getName();
         this.dateStart = timeCut(order.getDateStart());
         this.dateFinish = timeCut(order.getDateFinish());
+        this.customer = order.getCustomer().getIdUser();
         this.customerName = order.getCustomer().getLogin();
         this.status = order.getStatus();
         this.needKit = order.getNeedKit();

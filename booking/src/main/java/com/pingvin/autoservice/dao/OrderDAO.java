@@ -159,9 +159,14 @@ public class OrderDAO {
         session.flush();
     }
 
-  public void changeOrderStatus(int idOrder, String status) {
-      Order order = findOrderByIdOrder(idOrder);
-      order.setStatus(status);
+    public void changeOrderStatus(int idOrder, String status) {
+        Order order = findOrderByIdOrder(idOrder);
+        order.setStatus(status);
+    }
+
+    public void changeOrderDate(int idOrder, Date date) {
+        Order order = findOrderByIdOrder(idOrder);
+        order.setDateStart(date);
     }
 
 //   public boolean checkOnOwnership(User buyer, Parts seller) {
