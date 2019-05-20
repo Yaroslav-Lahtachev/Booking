@@ -415,7 +415,7 @@ public class MainController {
             Offer offer = offerDAO.findByIdOffer(orderInfo.getOffer());
             Master master = masterDAO.findByIdMaster(masterDAO.getFreeMaster(offer.getIdOffer()));
             Date dateFinish = new Date(orderInfo.getDateStart().getTime() + TimeUnit.SECONDS.toMillis(offer.getTime()));
-            boolean isNeedParts = true;
+        int isNeedParts = signUpForm.getNeedKit() ? 1 : 0;
             //if (orderDAO.checkOnOwnership(buyer, seller)) {
                 orderDAO.reserve(buyer, master, offer, isNeedParts, orderInfo.getDateStart(), dateFinish); //нафиг нам мнение клиента лол
                 return "redirect:/buyerOrders";

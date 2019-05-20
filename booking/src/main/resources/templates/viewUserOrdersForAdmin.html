@@ -26,6 +26,7 @@
         <th>Master name</th>
         <th>Date Start Order</th>
         <th>Date Finish Order</th>
+        <th>Is Kit needed?</th>
         <th>Order Status</th>
     </tr>
     <tr th:each="ordersInfo : ${paginationResult.list}">
@@ -34,6 +35,7 @@
         <td th:utext="${ordersInfo.masterName}">..</td>
         <td th:utext="${ordersInfo.dateStart}">..</td>
         <td th:utext="${ordersInfo.dateFinish}">..</td>
+        <td th:utext="${ordersInfo.needKit==1} ? 'yes' : 'no'">..</td>
         <td th:utext="${ordersInfo.status}">..</td>
         <td><a th:href="@{|/changeOrderStatus?id=${ordersInfo.id}|}">change order status</a></td>  <!--todo манагерские фичи здеся-->
         <td th:if="${ordersInfo.status=='Done'}"><a th:href="@{|/changeOrderTime?id=${ordersInfo.id}|}">change order time</a></td>  <!--todo манагерские фичи здеся-->

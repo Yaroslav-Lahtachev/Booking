@@ -39,14 +39,32 @@
             <input type="hidden" th:field="${signUpForm.idOffer}"/>
         </td>
         <tr>
-            <td><input type="date" th:field="${signUpForm.dateStart}"/></td>
+            <td>Date start</td>
+            </td>
+            <!--th:value="${#dates.format(AdditionalInfo.dateStart, 'yyyy-mm-dd')}"/>-->
 
+        </tr>
+        <tr>
+            <td><input type="date" th:field="${signUpForm.dateStart}"/></td>
+            </td>
+            <!--th:value="${#dates.format(AdditionalInfo.dateStart, 'yyyy-mm-dd')}"/>-->
+
+        </tr>
+        <tr>
+            <td>Date finish</td>
             </td>
             <!--th:value="${#dates.format(AdditionalInfo.dateStart, 'yyyy-mm-dd')}"/>-->
 
         </tr>
         <tr>
             <td><input type="date" th:field="${signUpForm.dateFinish}"/></td>
+            <!--<td><span class="error-message" th:if="${#fields.hasErrors('dateFinish')}"
+                      th:errors="*{dateFinish}">..</span></td>-->
+            <!--th:value="${#dates.format(AdditionalInfo.dateFinish, 'yyyy-mm-dd')}"/>-->
+        </tr>
+
+        <tr>
+            <td><p><input type="checkbox" th:field="${signUpForm.needKit}"/>Is Kit needed?</p></td>
             <!--<td><span class="error-message" th:if="${#fields.hasErrors('dateFinish')}"
                       th:errors="*{dateFinish}">..</span></td>-->
             <!--th:value="${#dates.format(AdditionalInfo.dateFinish, 'yyyy-mm-dd')}"/>-->

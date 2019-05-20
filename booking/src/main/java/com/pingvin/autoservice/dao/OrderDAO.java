@@ -41,7 +41,7 @@ public class OrderDAO {
     public PaginationResult<OrderInfo> findOrderByBuyer(User user, int page, int maxResult, int maxNavPage) {
         Session session = this.sessionFactory.getCurrentSession();
         String sql = "Select new " + OrderInfo.class.getName()
-                + " (o.id, o.offer.id, f.name, f.price, m.name, o.dateStart, o.dateFinish, o.status) "
+                + " (o.id, o.offer.id, f.name, f.price, m.name, o.dateStart, o.dateFinish, o.status, o.needKit) "
                 + " From " + Order.class.getName() + " as o, " + Offer.class.getName() + " as f, " + Master.class.getName() + " as m "
                 + " where f.id=o.offer and o.customer.id =: idUser ";
         Query<OrderInfo> query = session.createQuery(sql, OrderInfo.class);
@@ -145,7 +145,7 @@ public class OrderDAO {
 //       } else return false;
 //   }
 
-    public void reserve(User customer, Master master, Offer offer, boolean needParts, Date dateStart, Date dateFinish) {
+    public void reserve(User customer, Master master, Offer offer, int needParts, Date dateStart, Date dateFinish) {
         Session session = this.sessionFactory.getCurrentSession();
         Order order = new Order();
         order.setCustomer(customer);

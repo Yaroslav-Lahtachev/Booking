@@ -13,7 +13,7 @@ public class OrderInfo {
     private String nameOffer;
     private double price;
     private int masterId;
-    private boolean needKit;
+    private int needKit;
     private String status;
     private String masterName;
     private String customerName;
@@ -63,11 +63,11 @@ public class OrderInfo {
         this.masterId = masterId;
     }
 
-    public boolean getNeedKit() {
+    public int getNeedKit() {
         return needKit;
     }
 
-    public void setNeedKit(boolean needKit) {
+    public void setNeedKit(int needKit) {
         this.needKit = needKit;
     }
 
@@ -103,10 +103,6 @@ public class OrderInfo {
         this.price = price;
     }
 
-    public boolean isNeedKit() {
-        return needKit;
-    }
-
     public String getMasterName() {
         return masterName;
     }
@@ -137,7 +133,7 @@ public class OrderInfo {
         this.dateFinish = dateFinish;
     }
 
-    public OrderInfo(int id, int customer, int offer, int masterId, boolean needKit, Date dateStart, Date dateFinish) {
+    public OrderInfo(int id, int customer, int offer, int masterId, int needKit, Date dateStart, Date dateFinish) {
         this.id = id;
         this.customer = customer;
         this.offer = offer;
@@ -147,7 +143,7 @@ public class OrderInfo {
         this.dateFinish = timeCut(dateFinish);
     }
 
-    public OrderInfo(int id, int offer, String nameOffer, double price, String masterName, Date dateStart, Date dateFinish, String status) {
+    public OrderInfo(int id, int offer, String nameOffer, double price, String masterName, Date dateStart, Date dateFinish, String status, int needKit) {
         this.id = id;
         this.offer = offer;
         this.nameOffer = nameOffer;
@@ -156,6 +152,7 @@ public class OrderInfo {
         this.dateStart = timeCut(dateStart);
         this.dateFinish = timeCut(dateFinish);
         this.status = status;
+        this.needKit = needKit;
     }
 
 
@@ -169,6 +166,7 @@ public class OrderInfo {
         this.dateFinish = timeCut(order.getDateFinish());
         this.customerName = order.getCustomer().getLogin();
         this.status = order.getStatus();
+        this.needKit = order.getNeedKit();
     }
 
     @Override

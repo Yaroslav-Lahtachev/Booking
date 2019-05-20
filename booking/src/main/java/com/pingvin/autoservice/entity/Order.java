@@ -33,7 +33,7 @@ public class Order {
     private Master master;
 
     @Column(name = "needKit", nullable = false)
-    private boolean needKit;
+    private int needKit;
 
     @Column(name = "status", nullable = false)
     private String status;
@@ -94,18 +94,18 @@ public class Order {
         this.master = master;
     }
 
-    public boolean getNeedKit() {
+    public int getNeedKit() {
         return needKit;
     }
 
-    public void setNeedKit(boolean needKit) {
+    public void setNeedKit(int needKit) {
         this.needKit = needKit;
     }
 
     public Order() {
     }
 
-    public Order(int id, User customer, Offer offer, Date dateStart, Date dateFinish, Master master, boolean needKit, String status) {
+    public Order(int id, User customer, Offer offer, Date dateStart, Date dateFinish, Master master, int needKit, String status) {
         this.id = id;
         this.customer = customer;
         this.offer = offer;
