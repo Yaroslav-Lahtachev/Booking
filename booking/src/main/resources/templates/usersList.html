@@ -34,10 +34,6 @@
         <!--<td th:if="${usersInfo.isSeller()}"><a th:href="@{|/admin/viewUserOffersForAdmin?id=${usersInfo.idUser}|}"> view
             offers </a></td>
         <td th:unless="${usersInfo.isSeller()}"> empty offers</td>-->
-        <td th:if="${usersInfo.isUser()}"><a
-                th:href="@{/admin/blockPage(id=${usersInfo.idUser},status=-1)}"> block </a></td>
-        <td th:if="${usersInfo.isBlocked()}"><a th:href="@{/admin/blockPage(id=${usersInfo.idUser}, status=1)}">
-            unblock </a></td>
     </tr>
 
 </table>

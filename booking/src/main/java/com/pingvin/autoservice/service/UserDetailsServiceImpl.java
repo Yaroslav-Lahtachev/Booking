@@ -34,10 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         GrantedAuthority authority = new SimpleGrantedAuthority(role);
 
         grantList.add(authority);
-        boolean flag = false;
-        if (!user.getRole().equals("ROLE_BLOCKED"))
-            flag = true;
-        boolean enabled = flag;
+        boolean enabled = true;
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;
         boolean accountNonLocked = true;

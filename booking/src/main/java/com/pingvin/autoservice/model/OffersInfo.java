@@ -1,7 +1,6 @@
 package com.pingvin.autoservice.model;
 
 import com.pingvin.autoservice.entity.Offer;
-import com.pingvin.autoservice.form.OfferForm;
 
 public class OffersInfo {
     private int id;
@@ -36,7 +35,7 @@ public class OffersInfo {
         this.time = offer.getTime();
     }
 
-   //public OffersInfo(OfferForm offerForm) {
+   //public OffersInfo(OrderForm offerForm) {
    //    this.id = offerForm.getIdOffer();
    //    this.name = offerForm.getName();
    //    this.prof = offerForm.getProf();

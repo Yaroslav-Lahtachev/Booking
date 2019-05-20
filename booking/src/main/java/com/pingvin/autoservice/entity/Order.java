@@ -33,7 +33,10 @@ public class Order {
     private Master master;
 
     @Column(name = "needKit", nullable = false)
-    private boolean needKit;
+    private int needKit;
+
+    @Column(name = "status", nullable = false)
+    private String status;
 
     public int getIdOrder() {
         return id;
@@ -41,6 +44,14 @@ public class Order {
 
     public void setIdOrder(int id) {
         this.id = id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public User getCustomer() {
@@ -83,18 +94,18 @@ public class Order {
         this.master = master;
     }
 
-    public boolean getNeedKit() {
+    public int getNeedKit() {
         return needKit;
     }
 
-    public void setNeedKit(boolean needKit) {
+    public void setNeedKit(int needKit) {
         this.needKit = needKit;
     }
 
     public Order() {
     }
 
-    public Order(int id, User customer, Offer offer, Date dateStart, Date dateFinish, Master master, boolean needKit) {
+    public Order(int id, User customer, Offer offer, Date dateStart, Date dateFinish, Master master, int needKit, String status) {
         this.id = id;
         this.customer = customer;
         this.offer = offer;
@@ -102,5 +113,6 @@ public class Order {
         this.dateFinish = dateFinish;
         this.master = master;
         this.needKit = needKit;
+        this.status = status;
     }
 }

@@ -37,7 +37,7 @@
         <td th:utext="${ordersInfo.dateStart}">..</td>
         <td th:utext="${ordersInfo.dateFinish}">..</td>
         <td th:utext="${ordersInfo.dateFinish}">..</td>
-        <td th:if="${ordersInfo.orderStatus=='Actual'}"><a th:href="@{|/cancelOrder?id=${ordersInfo.id}|}"> cancel </a></td>
+        <td th:if="${ordersInfo.status=='Actual'}"><a th:href="@{|/cancelOrder?id=${ordersInfo.id}|}"> cancel </a></td>
     </tr>
 
 </table>

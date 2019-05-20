@@ -21,26 +21,24 @@
 <div>Total Offers Count: <span th:utext="${paginationResult.totalRecords}"></span></div>
 <table border="1" , style="width: 100%">
     <tr>
-        <th>ID Order</th>
-        <th>ID Offer</th>
         <th>Offer Name</th>
         <th>Price</th>
         <th>Master name</th>
         <th>Date Start Order</th>
         <th>Date Finish Order</th>
+        <th>Is Kit needed?</th>
         <th>Order Status</th>
     </tr>
     <tr th:each="ordersInfo : ${paginationResult.list}">
-        <td th:utext="${ordersInfo.id}">..</td>
-        <td th:utext="${ordersInfo.offer}">..</td>
         <td th:utext="${ordersInfo.nameOffer}">..</td>
         <td th:utext="${ordersInfo.price}">..</td>
         <td th:utext="${ordersInfo.masterName}">..</td>
         <td th:utext="${ordersInfo.dateStart}">..</td>
         <td th:utext="${ordersInfo.dateFinish}">..</td>
-        <td th:utext="${ordersInfo.orderStatus}">..</td>
-
-        <td th:if="${ordersInfo.orderStatus=='Actual'}"><a th:href="@{|/cancelOrder?id=${ordersInfo.idOrder}|}"> cancel </a></td>  <!--todo манагерские фичи здеся-->
+        <td th:utext="${ordersInfo.needKit==1} ? 'yes' : 'no'">..</td>
+        <td th:utext="${ordersInfo.status}">..</td>
+        <td><a th:href="@{|/changeOrderStatus?id=${ordersInfo.id}|}">change order status</a></td>  <!--todo манагерские фичи здеся-->
+        <td th:if="${ordersInfo.status=='WAITING FOR KIT' or ordersInfo.status=='WAITING FOR MASTER'}"><a th:href="@{|/changeOrderTime?id=${ordersInfo.id}|}">change order time</a></td>  <!--todo манагерские фичи здеся-->
     </tr>
 
 

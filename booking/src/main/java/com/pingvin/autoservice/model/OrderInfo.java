@@ -1,5 +1,6 @@
 package com.pingvin.autoservice.model;
 
+import com.pingvin.autoservice.entity.Order;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Calendar;
@@ -12,9 +13,10 @@ public class OrderInfo {
     private String nameOffer;
     private double price;
     private int masterId;
-    private boolean needKit;
+    private int needKit;
+    private String status;
     private String masterName;
-    private String orderStatus;
+    private String customerName;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateStart;
@@ -27,6 +29,14 @@ public class OrderInfo {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public int getCustomer() {
@@ -53,11 +63,11 @@ public class OrderInfo {
         this.masterId = masterId;
     }
 
-    public boolean getNeedKit() {
+    public int getNeedKit() {
         return needKit;
     }
 
-    public void setNeedKit(boolean needKit) {
+    public void setNeedKit(int needKit) {
         this.needKit = needKit;
     }
 
@@ -93,24 +103,20 @@ public class OrderInfo {
         this.price = price;
     }
 
-    public boolean isNeedKit() {
-        return needKit;
-    }
-
     public String getMasterName() {
         return masterName;
     }
 
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
     public void setMasterName(String masterName) {
         this.masterName = masterName;
-    }
-
-    public String getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
     }
 
     public OrderInfo() {
@@ -127,7 +133,7 @@ public class OrderInfo {
         this.dateFinish = dateFinish;
     }
 
-    public OrderInfo(int id, int customer, int offer, int masterId, boolean needKit, Date dateStart, Date dateFinish) {
+    public OrderInfo(int id, int customer, int offer, int masterId, int needKit, Date dateStart, Date dateFinish) {
         this.id = id;
         this.customer = customer;
         this.offer = offer;
@@ -137,7 +143,7 @@ public class OrderInfo {
         this.dateFinish = timeCut(dateFinish);
     }
 
-    public OrderInfo(int id, int offer, String nameOffer, double price, String masterName, Date dateStart, Date dateFinish) {
+    public OrderInfo(int id, int offer, String nameOffer, double price, String masterName, Date dateStart, Date dateFinish, String status, int needKit) {
         this.id = id;
         this.offer = offer;
         this.nameOffer = nameOffer;
@@ -145,9 +151,23 @@ public class OrderInfo {
         this.masterName = masterName;
         this.dateStart = timeCut(dateStart);
         this.dateFinish = timeCut(dateFinish);
+        this.status = status;
+        this.needKit = needKit;
     }
 
 
+    public OrderInfo(Order order) {
+        this.id = order.getIdOrder();
+        this.offer = order.getOffer().getIdOffer();
+        this.nameOffer = order.getOffer().getName();
+        this.price = order.getOffer().getPrice();
+        this.masterName = order.getMaster().getName();
+        this.dateStart = timeCut(order.getDateStart());
+        this.dateFinish = timeCut(order.getDateFinish());
+        this.customerName = order.getCustomer().getLogin();
+        this.status = order.getStatus();
+        this.needKit = order.getNeedKit();
+    }
 
     @Override
     public String toString() {

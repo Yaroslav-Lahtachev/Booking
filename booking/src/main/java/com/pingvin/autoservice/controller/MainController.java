@@ -1,10 +1,10 @@
 package com.pingvin.autoservice.controller;
 
-
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import com.pingvin.autoservice.config.Consts;
 import com.pingvin.autoservice.dao.*;
-import com.pingvin.autoservice.entity.Master;
-import com.pingvin.autoservice.entity.Offer;
-import com.pingvin.autoservice.entity.User;
+import com.pingvin.autoservice.entity.*;
 import com.pingvin.autoservice.form.*;
 import com.pingvin.autoservice.model.OffersInfo;
 //import com.pingvin.autoservice.model.OrderHistoryInfo;
@@ -41,6 +41,8 @@ public class MainController {
     private PartsDAO partsDAO;
     @Autowired
     private MasterDAO masterDAO;
+   //@Autowired
+   //public JavaMailSender emailSender;
 
     final int MAX_RESULT = 3;
     final int MAX_NAVIGATION_PAGE = 10;
@@ -108,17 +110,17 @@ public class MainController {
     //@RequestMapping(value = "/newOffer", method = RequestMethod.GET)                  //todo добавление новых услуг?
     //public String newOffer(Model model, @RequestParam(value = "id", defaultValue = "-1") int idOffer, @RequestParam(value = "idUser", defaultValue = "-1") int idUser) {
     //    OffersInfo offersInfo = null;
-    //    OfferForm offerForm = null;
+    //    OrderForm offerForm = null;
     //    if (idOffer != -1) {
     //        Offer offer = offerDAO.findByIdOffer(idOffer);
     //        if (offer != null) {
     //            offersInfo = new OffersInfo(offer);
-    //            offerForm = new OfferForm(offersInfo);
+    //            offerForm = new OrderForm(offersInfo);
     //        }
     //    }
     //    if (offersInfo == null) {
     //        offersInfo = new OffersInfo();
-    //        offerForm = new OfferForm();
+    //        offerForm = new OrderForm();
     //        offersInfo.setNewOffer(true);
     //    } else {
     //        offersInfo.setNewOffer(false);
@@ -134,7 +136,7 @@ public class MainController {
     //@RequestMapping(value = "/newOffer", method = RequestMethod.POST)
     //public String saveUserOffer(Model model,
     //                            @ModelAttribute("offerForm")
-    //                            @Validated OfferForm offerForm,
+    //                            @Validated OrderForm offerForm,
     //                            BindingResult result,
     //                            final RedirectAttributes redirectAttributes) {
     //    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -196,9 +198,9 @@ public class MainController {
         User user = usersDAO.findByLogin(authentication.getName());
         PaginationResult<OrderInfo> paginationResult =
                 orderDAO.findOrderByCustomer(user, page, MAX_RESULT, MAX_NAVIGATION_PAGE);
-        for (int i=0;i<paginationResult.getList().size();i++){
-            paginationResult.getList().get(i).setOrderStatus(calculateStatus(paginationResult.getList().get(i)));
-        }
+        //for (int i=0;i<paginationResult.getList().size();i++){
+        //    paginationResult.getList().get(i).setStatus(calculateStatus(paginationResult.getList().get(i)));
+        //}
         model.addAttribute("paginationResult", paginationResult);
         //model.addAttribute("Reserved", reserved);
         //model.addAttribute("type", type);
@@ -262,6 +264,44 @@ public class MainController {
             //orderDAO.changeOrderStatus(utilForm.getIntField(), status);
         }
         return "index";
+    }
+
+    @RequestMapping(value = "/changeOrderStatus", method = RequestMethod.GET)               //todo
+    public String changeOrderStatus(Model model,
+                                  @RequestParam(value = "id", defaultValue = "0") String id) {
+        int idOrder = 0;
+        try {
+            idOrder = Integer.parseInt(id);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        Order order = null;
+        if (idOrder != 0)
+            order = orderDAO.findOrderByIdOrder(idOrder);
+        OrderInfo orderInfo = null;
+        SignUpForm signUpForm = null;
+        if (order != null) {
+            orderInfo = new OrderInfo(order);
+            signUpForm = new SignUpForm();
+            signUpForm.setStatus(order.getStatus());
+            model.addAttribute("orderInfo", orderInfo);
+            model.addAttribute("signUpForm", signUpForm);
+            model.addAttribute("error", new Boolean(false));
+        } else return "redirect:/admin/usersList";
+        return "changeOrderStatus";
+    }
+
+    @RequestMapping(value = "/changeOrderStatus", method = RequestMethod.POST)
+    public String changeOrderStatus(Model model,
+                                  @ModelAttribute("signUpForm")
+                                  @Validated SignUpForm signUpForm,
+                                  BindingResult result,
+                                  final RedirectAttributes redirectAttributes,
+                                  @ModelAttribute("orderInfo") OrderInfo orderInfo)
+    {
+
+        orderDAO.changeOrderStatus(orderInfo.getId(), signUpForm.getStatus());
+        return "redirect:/admin/usersList";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -378,7 +418,7 @@ public class MainController {
             Offer offer = offerDAO.findByIdOffer(orderInfo.getOffer());
             Master master = masterDAO.findByIdMaster(masterDAO.getFreeMaster(offer.getIdOffer()));
             Date dateFinish = new Date(orderInfo.getDateStart().getTime() + TimeUnit.SECONDS.toMillis(offer.getTime()));
-            boolean isNeedParts = true;
+        int isNeedParts = signUpForm.getNeedKit() ? 1 : 0;
             //if (orderDAO.checkOnOwnership(buyer, seller)) {
                 orderDAO.reserve(buyer, master, offer, isNeedParts, orderInfo.getDateStart(), dateFinish); //нафиг нам мнение клиента лол
                 return "redirect:/buyerOrders";
@@ -387,6 +427,44 @@ public class MainController {
 
     }
 
+    @RequestMapping(value = "/changeOrderTime", method = RequestMethod.GET)               //todo
+    public String changeOrderTime(Model model,
+                          @RequestParam(value = "id", defaultValue = "0") String id) {
+        int idOrder = 0;
+        try {
+            idOrder = Integer.parseInt(id);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        Order order = null;
+        if (idOrder != 0)
+            order = orderDAO.findOrderByIdOrder(idOrder);
+        OrderInfo orderInfo = null;
+        SignUpForm signUpForm = null;
+        if (order != null) {
+            orderInfo = new OrderInfo(order);
+            signUpForm = new SignUpForm();
+            signUpForm.setDateStart(new Date());
+            signUpForm.setDateFinish(new Date());
+            model.addAttribute("orderInfo", orderInfo);
+            model.addAttribute("signUpForm", signUpForm);
+            model.addAttribute("error", new Boolean(false));
+        } else return "redirect:/admin/usersList";
+        return "changeOrderTime";
+    }
+
+    @RequestMapping(value = "/changeOrderTime", method = RequestMethod.POST)
+    public String changeOrderTime(Model model,
+                                 @ModelAttribute("signUpForm")
+                                 @Validated SignUpForm signUpForm,
+                                 BindingResult result,
+                                 final RedirectAttributes redirectAttributes,
+                                 @ModelAttribute("orderInfo") OrderInfo orderInfo)
+    {
+
+        sendSimpleMessage(Consts.MESSAGE_ABOUT_CHANGING_TIME, "AmaGenius1337@gmail.com", "AmaGenius1337@gmail.com");
+        return "redirect:/admin/usersList";
+    }
 
     //
     //admin controller
@@ -431,24 +509,24 @@ public class MainController {
         }
         if (id != 0) {
             User buyer = usersDAO.findByIdUser(id);
+
             PaginationResult<OrderInfo> paginationResult = orderDAO.findOrderByCustomer(buyer, page, MAX_RESULT, MAX_NAVIGATION_PAGE);
-            for (int i=0;i<paginationResult.getList().size();i++){
-                paginationResult.getList().get(i).setOrderStatus(calculateStatus(paginationResult.getList().get(i)));
-            }
+
             model.addAttribute("paginationResult", paginationResult);
             model.addAttribute("id", id);
         } else return "redirect:/usersList";
         return "viewUserOrdersForAdmin";
     }
 
-    private String calculateStatus(OrderInfo orderInfo) {
-        String status;
-        Date currDate = new Date();
-        if (currDate.compareTo(orderInfo.getDateFinish()) == -1)
-            status = "Actual";
-        else status = "Done";
-        return status;
+    private void sendSimpleMessage(
+            String text, String to, String subject) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText(text);
+        //emailSender.send(message);
     }
+
     //@RequestMapping(value = "/admin/blockPage")               //todo ban hammer?
     //public String blockPage(Model model,
     //                        @RequestParam(value = "id", defaultValue = "0") int id,

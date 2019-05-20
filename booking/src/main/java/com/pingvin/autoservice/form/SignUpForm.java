@@ -10,18 +10,29 @@ public class SignUpForm {
     private Date dateStart;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateFinish;
+    private boolean needKit;
+    private String status;
 
     public SignUpForm() {
     }
 
-    public SignUpForm(int idOffer, Date dateStart, Date dateFinish) {
+    public SignUpForm(int idOffer, Date dateStart, Date dateFinish, boolean needKit) {
         this.idOffer = idOffer;
         this.dateStart = dateStart;
         this.dateFinish = dateFinish;
+        this.needKit = needKit;
     }
 
     public int getIdOffer() {
         return idOffer;
+    }
+
+    public void setNeedKit(boolean needKit) {
+        this.needKit = needKit;
+    }
+
+    public boolean getNeedKit() {
+        return needKit;
     }
 
     public void setIdOffer(int idOffer) {
@@ -42,5 +53,13 @@ public class SignUpForm {
 
     public void setDateFinish(Date dateFinish) {
         this.dateFinish = dateFinish;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

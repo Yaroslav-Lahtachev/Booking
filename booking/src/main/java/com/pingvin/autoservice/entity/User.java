@@ -6,7 +6,6 @@ import javax.persistence.*;
 @Table(name = "users")
 public class User {
 
-    public static final String ROLE_BLOCKED = "BLOCKED";
     public static final String ROLE_USER = "USER";
     public static final String ROLE_ADMIN = "ADMIN";
 
