@@ -41,8 +41,8 @@ public class MainController {
     private PartsDAO partsDAO;
     @Autowired
     private MasterDAO masterDAO;
-   //@Autowired
-   //public JavaMailSender emailSender;
+    @Autowired
+    public JavaMailSender emailSender;
 
     final int MAX_RESULT = 3;
     final int MAX_NAVIGATION_PAGE = 10;
@@ -176,7 +176,7 @@ public class MainController {
     @RequestMapping(value = "/buyerOrders", method = RequestMethod.GET)       //todo
     public String findActiveOrderByBuyer(Model model,
                                          @RequestParam(value = "page", defaultValue = "1") String pageStr
-                                         /*@RequestParam(value = "type", defaultValue = "reserved") String type*/) {
+            /*@RequestParam(value = "type", defaultValue = "reserved") String type*/) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         //String status = null;
         //boolean reserved = false;
@@ -268,7 +268,7 @@ public class MainController {
 
     @RequestMapping(value = "/changeOrderStatus", method = RequestMethod.GET)               //todo
     public String changeOrderStatus(Model model,
-                                  @RequestParam(value = "id", defaultValue = "0") String id) {
+                                    @RequestParam(value = "id", defaultValue = "0") String id) {
         int idOrder = 0;
         try {
             idOrder = Integer.parseInt(id);
@@ -293,12 +293,11 @@ public class MainController {
 
     @RequestMapping(value = "/changeOrderStatus", method = RequestMethod.POST)
     public String changeOrderStatus(Model model,
-                                  @ModelAttribute("signUpForm")
-                                  @Validated SignUpForm signUpForm,
-                                  BindingResult result,
-                                  final RedirectAttributes redirectAttributes,
-                                  @ModelAttribute("orderInfo") OrderInfo orderInfo)
-    {
+                                    @ModelAttribute("signUpForm")
+                                    @Validated SignUpForm signUpForm,
+                                    BindingResult result,
+                                    final RedirectAttributes redirectAttributes,
+                                    @ModelAttribute("orderInfo") OrderInfo orderInfo) {
 
         orderDAO.changeOrderStatus(orderInfo.getId(), signUpForm.getStatus());
         return "redirect:/admin/usersList";
@@ -401,8 +400,7 @@ public class MainController {
                                  @Validated SignUpForm signUpForm,
                                  BindingResult result,
                                  final RedirectAttributes redirectAttributes,
-                                 @ModelAttribute("offersInfo") OffersInfo offersInfo)
-    {
+                                 @ModelAttribute("offersInfo") OffersInfo offersInfo) {
         //if (result.hasErrors()) {
         //    model.addAttribute("offersInfo", offersInfo);
         //    List<OrderInfo> calendar = orderDAO.getInfoConcretOrder(offersInfo.getIdOffer(), "signUp");
@@ -414,15 +412,15 @@ public class MainController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         //if (orderDAO.CheckReserveOfferByIdAndDate(orderHistoryInfo.getIdOffer(), orderHistoryInfo.getDateStart(), orderHistoryInfo.getDateFinish())) {
-            User buyer = usersDAO.findByLogin(authentication.getName());
-            Offer offer = offerDAO.findByIdOffer(orderInfo.getOffer());
-            Master master = masterDAO.findByIdMaster(masterDAO.getFreeMaster(offer.getIdOffer()));
-            Date dateFinish = new Date(orderInfo.getDateStart().getTime() + TimeUnit.SECONDS.toMillis(offer.getTime()));
+        User buyer = usersDAO.findByLogin(authentication.getName());
+        Offer offer = offerDAO.findByIdOffer(orderInfo.getOffer());
+        Master master = masterDAO.findByIdMaster(masterDAO.getFreeMaster(offer.getIdOffer()));
+        Date dateFinish = new Date(orderInfo.getDateStart().getTime() + TimeUnit.SECONDS.toMillis(offer.getTime()));
         int isNeedParts = signUpForm.getNeedKit() ? 1 : 0;
-            //if (orderDAO.checkOnOwnership(buyer, seller)) {
-                orderDAO.reserve(buyer, master, offer, isNeedParts, orderInfo.getDateStart(), dateFinish); //нафиг нам мнение клиента лол
-                return "redirect:/buyerOrders";
-            //} else return "itsYourOwnOfferDude";
+        //if (orderDAO.checkOnOwnership(buyer, seller)) {
+        orderDAO.reserve(buyer, master, offer, isNeedParts, orderInfo.getDateStart(), dateFinish); //нафиг нам мнение клиента лол
+        return "redirect:/buyerOrders";
+        //} else return "itsYourOwnOfferDude";
         //} else return "index";
 
     }
@@ -455,14 +453,13 @@ public class MainController {
 
     @RequestMapping(value = "/changeOrderTime", method = RequestMethod.POST)
     public String changeOrderTime(Model model,
-                                 @ModelAttribute("signUpForm")
-                                 @Validated SignUpForm signUpForm,
-                                 BindingResult result,
-                                 final RedirectAttributes redirectAttributes,
-                                 @ModelAttribute("orderInfo") OrderInfo orderInfo)
-    {
+                                  @ModelAttribute("signUpForm")
+                                  @Validated SignUpForm signUpForm,
+                                  BindingResult result,
+                                  final RedirectAttributes redirectAttributes,
+                                  @ModelAttribute("orderInfo") OrderInfo orderInfo) {
 
-        sendSimpleMessage(Consts.MESSAGE_ABOUT_CHANGING_TIME, "AmaGenius1337@gmail.com", "AmaGenius1337@gmail.com");
+        sendSimpleMessage(Consts.MESSAGE_ABOUT_CHANGING_TIME, "lahtachevya@gmail.com", "AmaGenius1337@gmail.com");
         return "redirect:/admin/usersList";
     }
 
@@ -524,7 +521,7 @@ public class MainController {
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
-        //emailSender.send(message);
+        emailSender.send(message);
     }
 
     //@RequestMapping(value = "/admin/blockPage")               //todo ban hammer?

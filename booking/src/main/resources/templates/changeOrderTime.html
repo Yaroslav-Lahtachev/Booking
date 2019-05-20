@@ -30,7 +30,7 @@
     </tr>
 </table>
 
-<form th:object="${signUpForm}" th:action="@{/changeOrderTime}"
+<form th:object="${signUpForm}" th:action="@{|/changeOrderTime?id=${orderInfo.customer}|}"
       method="POST" enctype="multipart/form-data">
 
     <table style="text-align:left;">
