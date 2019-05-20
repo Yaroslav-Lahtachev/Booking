@@ -38,7 +38,7 @@ public class OrderDAO {
         return new PaginationResult<OrderInfo>(query, page, maxResult, maxNavPage);
     }
 
-    public PaginationResult<OrderInfo> findOrderByBuyer(User user, int page, int maxResult, int maxNavPage) {
+    public PaginationResult<OrderInfo> findOrderByCustomer(User user, int page, int maxResult, int maxNavPage) {
         Session session = this.sessionFactory.getCurrentSession();
         String sql = "Select new " + OrderInfo.class.getName()
                 + " (o.id, o.offer.id, f.name, f.price, m.name, o.dateStart, o.dateFinish) "

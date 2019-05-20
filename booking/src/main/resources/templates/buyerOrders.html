@@ -30,22 +30,21 @@
         <th>Status</th>
     </tr>
     <tr th:each="ordersInfo : ${paginationResult.list}">
-        <td th:utext="${ordersInfo.idOrder}">..</td>
-        <td th:utext="${ordersInfo.idOffer}">..</td>
-        <td th:utext="${ordersInfo.idUser}">..</td>
-        <td th:utext="${ordersInfo.loginSeller}">..</td>
-        <td th:utext="${ordersInfo.address}">..</td>
+        <td th:utext="${ordersInfo.id}">..</td>
+        <td th:utext="${ordersInfo.nameOffer}">..</td>
+        <td th:utext="${ordersInfo.price}">..</td>
+        <td th:utext="${ordersInfo.masterName}">..</td>
         <td th:utext="${ordersInfo.dateStart}">..</td>
         <td th:utext="${ordersInfo.dateFinish}">..</td>
-        <td th:utext="${ordersInfo.status}">..</td>
-        <td th:if="${Reserved}"><a th:href="@{|/cancelOrder?id=${ordersInfo.idOrder}|}"> cancel </a></td>
+        <td th:utext="${ordersInfo.dateFinish}">..</td>
+        <td th:if="${ordersInfo.orderStatus=='Actual'}"><a th:href="@{|/cancelOrder?id=${ordersInfo.id}|}"> cancel </a></td>
     </tr>
 
 </table>
 <div class="page-navigator" th:if="${paginationResult.totalPages > 1}">
     <th:block th:each="page: ${paginationResult.navigationPages}">
         <a th:if="${page != -1}" class="nav-item"
-           th:href="@{/buyerOrders(page=${page}, type=${type})}" th:utext="${page}"></a>
+           th:href="@{/buyerOrders(page=${page})}" th:utext="${page}"></a>
 
         <span th:if="${page == -1}" class="nav-item"> ... </span>
     </th:block>

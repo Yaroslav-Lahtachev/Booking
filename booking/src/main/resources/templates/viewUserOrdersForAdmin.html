@@ -40,7 +40,7 @@
         <td th:utext="${ordersInfo.dateFinish}">..</td>
         <td th:utext="${ordersInfo.orderStatus}">..</td>
 
-        <td th:if="${ordersInfo.orderStatus=='Actual'}"><a th:href="@{|/newOffer?id=${ordersInfo.id}|}"> cancel </a></td>  <!--todo манагерские фичи здеся-->
+        <td th:if="${ordersInfo.orderStatus=='Actual'}"><a th:href="@{|/cancelOrder?id=${ordersInfo.idOrder}|}"> cancel </a></td>  <!--todo манагерские фичи здеся-->
     </tr>
 
 

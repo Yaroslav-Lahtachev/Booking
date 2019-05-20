@@ -4,7 +4,6 @@ package com.pingvin.autoservice.controller;
 import com.pingvin.autoservice.dao.*;
 import com.pingvin.autoservice.entity.Master;
 import com.pingvin.autoservice.entity.Offer;
-import com.pingvin.autoservice.entity.Parts;
 import com.pingvin.autoservice.entity.User;
 import com.pingvin.autoservice.form.*;
 import com.pingvin.autoservice.model.OffersInfo;
@@ -25,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Controller
@@ -173,36 +171,39 @@ public class MainController {
     //
 
 
-    //@RequestMapping(value = "/buyerOrders", method = RequestMethod.GET)       //todo
-    //public String findActiveOrderByBuyer(Model model,
-    //                                     @RequestParam(value = "page", defaultValue = "1") String pageStr,
-    //                                     @RequestParam(value = "type", defaultValue = "reserved") String type) {
-    //    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    //    String status = null;
-    //    boolean reserved = false;
-    //    int page = 1;
-    //    try {
-    //        page = Integer.parseInt(pageStr);
-    //    } catch (Exception ex) {
-    //        ex.printStackTrace();
-    //    }
-    //    switch (type) {
-    //        case "reserved":
-    //            status = "reserve";
-    //            reserved = true;
-    //            break;
-    //        case "performed":
-    //            status = "performed";
-    //            break;
-    //    }
-    //    User user = usersDAO.findByLogin(authentication.getName());
-    //    PaginationResult<OrderHistoryInfo> paginationResult =
-    //            orderHistoryDAO.findOrderByBuyer(user, status, page, MAX_RESULT, MAX_NAVIGATION_PAGE);
-    //    model.addAttribute("paginationResult", paginationResult);
-    //    model.addAttribute("Reserved", reserved);
-    //    model.addAttribute("type", type);
-    //    return "buyerOrders";
-    //}
+    @RequestMapping(value = "/buyerOrders", method = RequestMethod.GET)       //todo
+    public String findActiveOrderByBuyer(Model model,
+                                         @RequestParam(value = "page", defaultValue = "1") String pageStr
+                                         /*@RequestParam(value = "type", defaultValue = "reserved") String type*/) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        //String status = null;
+        //boolean reserved = false;
+        int page = 1;
+        try {
+            page = Integer.parseInt(pageStr);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        //switch (type) {
+        //    case "reserved":
+        //        status = "reserve";
+        //        reserved = true;
+        //        break;
+        //    case "performed":
+        //        status = "performed";
+        //        break;
+        //}
+        User user = usersDAO.findByLogin(authentication.getName());
+        PaginationResult<OrderInfo> paginationResult =
+                orderDAO.findOrderByCustomer(user, page, MAX_RESULT, MAX_NAVIGATION_PAGE);
+        for (int i=0;i<paginationResult.getList().size();i++){
+            paginationResult.getList().get(i).setOrderStatus(calculateStatus(paginationResult.getList().get(i)));
+        }
+        model.addAttribute("paginationResult", paginationResult);
+        //model.addAttribute("Reserved", reserved);
+        //model.addAttribute("type", type);
+        return "buyerOrders";
+    }
 
 
     //@RequestMapping(value = "/sellerOrders", method = RequestMethod.GET)
@@ -253,15 +254,15 @@ public class MainController {
         return "cancelOrder";
     }
 
-    //@RequestMapping(value = "/cancelOrder", method = RequestMethod.POST)
-    //public String cancelConfirm(Model model, @ModelAttribute("UtilForm") UtilForm utilForm) {
-    //    if (utilForm.getTextField().equals("CONFIRM")) {
-    //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    //        String status = new String("canceled");
-    //        orderHistoryDAO.changeOrderStatus(utilForm.getIntField(), status);
-    //    }
-    //    return "index";
-    //}
+    @RequestMapping(value = "/cancelOrder", method = RequestMethod.POST)
+    public String cancelConfirm(Model model, @ModelAttribute("UtilForm") UtilForm utilForm) {
+        if (utilForm.getTextField().equals("CONFIRM")) {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String status = new String("canceled");
+            //orderDAO.changeOrderStatus(utilForm.getIntField(), status);
+        }
+        return "index";
+    }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String viewRegister(Model model) {
@@ -430,10 +431,9 @@ public class MainController {
         }
         if (id != 0) {
             User buyer = usersDAO.findByIdUser(id);
-            PaginationResult<OrderInfo> paginationResult = orderDAO.findOrderByBuyer(buyer, page, MAX_RESULT, MAX_NAVIGATION_PAGE);
+            PaginationResult<OrderInfo> paginationResult = orderDAO.findOrderByCustomer(buyer, page, MAX_RESULT, MAX_NAVIGATION_PAGE);
             for (int i=0;i<paginationResult.getList().size();i++){
                 paginationResult.getList().get(i).setOrderStatus(calculateStatus(paginationResult.getList().get(i)));
-                System.out.println(paginationResult.getList().get(i).getOrderStatus());
             }
             model.addAttribute("paginationResult", paginationResult);
             model.addAttribute("id", id);

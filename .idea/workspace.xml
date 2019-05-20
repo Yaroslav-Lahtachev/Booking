@@ -2,20 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1fe9dff6-d9fb-451d-9493-e5211f0b9688" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/dao/MasterDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/dao/PartsDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/config/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/config/WebSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/controller/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/dao/OrderDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/dao/OrderDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/entity/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/entity/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/model/OrderInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/model/OrderInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/model/UsersInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/model/UsersInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/booking/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/booking/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/booking/src/main/resources/templates/usersList.html" beforeDir="false" afterPath="$PROJECT_DIR$/booking/src/main/resources/templates/usersList.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/booking/src/main/resources/templates/viewUserOffersForAdmin.html" beforeDir="false" afterPath="$PROJECT_DIR$/booking/src/main/resources/templates/viewAllUsersOrdersForAdmin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/booking/src/main/resources/templates/buyerOrders.html" beforeDir="false" afterPath="$PROJECT_DIR$/booking/src/main/resources/templates/buyerOrders.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/booking/src/main/resources/templates/viewUserOrdersForAdmin.html" beforeDir="false" afterPath="$PROJECT_DIR$/booking/src/main/resources/templates/viewUserOrdersForAdmin.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/booking/target/" />
@@ -35,30 +26,30 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="html" value="6" />
-          <entry key="java" value="24" />
+          <entry key="html" value="8" />
+          <entry key="java" value="26" />
           <entry key="properties" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="HTML" value="6" />
-          <entry key="JAVA" value="24" />
+          <entry key="HTML" value="8" />
+          <entry key="JAVA" value="26" />
           <entry key="Properties" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="html" value="291" />
-          <entry key="java" value="993" />
-          <entry key="properties" value="19" />
+          <entry key="html" value="324" />
+          <entry key="java" value="1021" />
+          <entry key="properties" value="34" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="291" />
-          <entry key="JAVA" value="993" />
-          <entry key="Properties" value="19" />
+          <entry key="HTML" value="324" />
+          <entry key="JAVA" value="1021" />
+          <entry key="Properties" value="34" />
         </counts>
       </usages-collector>
     </session>
@@ -91,6 +82,15 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/entity/User.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="340">
+                  <caret line="20" column="62" lean-forward="true" selection-start-line="20" selection-start-column="62" selection-end-line="20" selection-end-column="62" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/dao/PartsDAO.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="153">
@@ -105,11 +105,20 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/dao/OrderDAO.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-1771">
-                  <caret line="51" selection-start-line="51" selection-end-line="51" />
+                <state relative-caret-position="201">
+                  <caret line="160" column="34" selection-start-line="160" selection-start-column="17" selection-end-line="160" selection-end-column="34" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/entity/Order.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="442">
+                  <caret line="30" column="14" lean-forward="true" selection-start-line="30" selection-start-column="3" selection-end-line="30" selection-end-column="14" />
                 </state>
               </provider>
             </entry>
@@ -120,46 +129,10 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/booking/src/main/resources/application.properties">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="187">
-                  <caret line="11" column="33" lean-forward="true" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/util/Date.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-13398">
-                  <caret line="130" column="13" selection-start-line="130" selection-start-column="13" selection-end-line="130" selection-end-column="13" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/controller/MainController.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1250">
-                  <caret line="448" column="27" selection-start-line="448" selection-start-column="27" selection-end-line="448" selection-end-column="27" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/model/UsersInfo.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1105">
-                  <caret line="85" column="35" selection-start-line="85" selection-start-column="35" selection-end-line="85" selection-end-column="35" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/config/WebSecurityConfig.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="221">
-                  <caret line="42" column="98" selection-start-line="42" selection-start-column="72" selection-end-line="42" selection-end-column="98" />
+                <state relative-caret-position="224">
+                  <caret line="367" column="28" selection-start-line="367" selection-start-column="19" selection-end-line="367" selection-end-column="28" />
                 </state>
               </provider>
             </entry>
@@ -195,11 +168,20 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/booking/src/main/resources/templates/viewUserOrdersForAdmin.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="454">
-                  <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
+                <state relative-caret-position="-12">
+                  <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/booking/src/main/resources/templates/buyerOrders.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="516">
+                  <caret line="38" column="55" lean-forward="true" selection-start-line="38" selection-start-column="55" selection-end-line="38" selection-end-column="55" />
                 </state>
               </provider>
             </entry>
@@ -222,9 +204,13 @@
       <find>admin/</find>
       <find>idOrder</find>
       <find>masterId</find>
-      <find>if</find>
       <find>usersList</find>
+      <find>if</find>
       <find>findOrderByBuyer</find>
+      <find>can</find>
+      <find>cancelOrder</find>
+      <find>changeOrderStatus</find>
+      <find>buyerOrders</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -242,10 +228,11 @@
         <option value="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/model/UsersInfo.java" />
         <option value="$PROJECT_DIR$/booking/src/main/resources/templates/usersList.html" />
         <option value="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/model/OrderInfo.java" />
+        <option value="$PROJECT_DIR$/booking/src/main/resources/application.properties" />
         <option value="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/dao/OrderDAO.java" />
         <option value="$PROJECT_DIR$/booking/src/main/resources/templates/viewUserOrdersForAdmin.html" />
         <option value="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/controller/MainController.java" />
-        <option value="$PROJECT_DIR$/booking/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/booking/src/main/resources/templates/buyerOrders.html" />
       </list>
     </option>
   </component>
@@ -265,10 +252,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
+    <option name="x" value="111" />
+    <option name="y" value="-20" />
     <option name="width" value="1936" />
-    <option name="height" value="1176" />
+    <option name="height" value="1054" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -384,7 +371,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558281139323" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558371621468" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
@@ -419,12 +406,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558269756242</updated>
-      <workItem from="1558269759129" duration="10652000" />
+      <workItem from="1558269759129" duration="16521000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10652000" />
+    <option name="totallyTimeSpent" value="16521000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
@@ -436,7 +423,7 @@
       <window_info id="Favorites" side_tool="true" />
       <window_info id="Capture Tool" />
       <window_info id="Web" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13539445" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.071428575" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Spring" />
       <window_info anchor="bottom" id="Terminal" />
@@ -447,8 +434,8 @@
       <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32973504" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.26300293" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3994112" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -519,13 +506,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/entity/Order.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="16" column="25" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/entity/Offer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -575,31 +555,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/entity/Master.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/booking/src/main/resources/templates/usersList.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="417">
           <caret line="37" column="96" lean-forward="true" selection-start-line="36" selection-start-column="8" selection-end-line="37" selection-end-column="96" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/booking/src/main/resources/templates/viewUserOrdersForAdmin.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="454">
-          <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/controller/MainController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1250">
-          <caret line="448" column="27" selection-start-line="448" selection-start-column="27" selection-end-line="448" selection-end-column="27" />
         </state>
       </provider>
     </entry>
@@ -625,23 +584,65 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/booking/src/main/resources/validation.properties">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/entity/Order.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="30" column="14" lean-forward="true" selection-start-line="30" selection-start-column="3" selection-end-line="30" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/entity/Master.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/entity/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="62" lean-forward="true" selection-start-line="20" selection-start-column="62" selection-end-line="20" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/booking/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="42" selection-start-line="6" selection-start-column="42" selection-end-line="6" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/dao/OrderDAO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1771">
-          <caret line="51" selection-start-line="51" selection-end-line="51" />
+        <state relative-caret-position="201">
+          <caret line="160" column="34" selection-start-line="160" selection-start-column="17" selection-end-line="160" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/booking/src/main/resources/validation.properties">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/booking/src/main/resources/application.properties">
+    <entry file="file://$PROJECT_DIR$/booking/src/main/resources/templates/viewUserOrdersForAdmin.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="33" lean-forward="true" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
+        <state relative-caret-position="-12">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/controller/MainController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="367" column="28" selection-start-line="367" selection-start-column="19" selection-end-line="367" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/booking/src/main/resources/templates/buyerOrders.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="516">
+          <caret line="38" column="55" lean-forward="true" selection-start-line="38" selection-start-column="55" selection-end-line="38" selection-end-column="55" />
         </state>
       </provider>
     </entry>
