@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Changes Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
+</head>
+<body>
+<!-- Include _menu.html -->
+<th:block th:include="/_header"></th:block>
+<th:block th:include="/_menu"></th:block>
+
+<h2>Changes</h2>
+
+<div>Change Time for order</div>
+<table border="1" , style="width: 100%">
+    <tr>
+        <th>Customer</th>
+        <th>Offer</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th>Master</th>
+    </tr>
+    <tr>
+        <td th:utext="${orderInfo.customerName}">..</td>
+        <td th:utext="${orderInfo.nameOffer}">..</td>
+        <td th:utext="${orderInfo.price}">..</td>
+        <td th:utext="${orderInfo.status}">..</td>
+        <td th:utext="${orderInfo.masterName}">..</td>
+    </tr>
+</table>
+
+<form th:object="${signUpForm}" th:action="@{/changeOrderTime}"
+      method="POST" enctype="multipart/form-data">
+
+    <table style="text-align:left;">
+        <td>
+            <!-- <span th:utext="${AdditionalInfo.idOffer}"></span>-->
+            <input type="hidden" th:field="${signUpForm.idOffer}"/>
+        </td>
+        <tr>
+            <td><input type="date" th:field="${signUpForm.dateStart}"/></td>
+
+            </td>
+            <!--th:value="${#dates.format(AdditionalInfo.dateStart, 'yyyy-mm-dd')}"/>-->
+
+        </tr>
+        <tr>
+            <td><input type="date" th:field="${signUpForm.dateFinish}"/></td>
+            <!--<td><span class="error-message" th:if="${#fields.hasErrors('dateFinish')}"
+                      th:errors="*{dateFinish}">..</span></td>-->
+            <!--th:value="${#dates.format(AdditionalInfo.dateFinish, 'yyyy-mm-dd')}"/>-->
+        </tr>
+
+        <tr>
+
+            <td>
+                <input type="submit" value="Accept"/>
+                <input type="reset" value="Reset"/>
+            <td><span class="error-message" th:if="${#fields.hasErrors('dateStart')}" th:errors="*{dateStart}">..</span>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<div th:align="left" th:if="${error}">New dates:</div>
+
+<table th:if="${error}">
+    <tr>
+        <td>Date start</td>
+        <td>Date finish</td>
+    </tr>
+    <tr th:each="calendarDate : ${calendar}">
+        <td th:utext="${#dates.format(calendarDate.dateStart, 'dd-MM-yyyy')}">..</td>
+        <td th:utext="${#dates.format(calendarDate.dateFinish, 'dd-MM-yyyy')}">..</td>
+    </tr>
+</table>
+
+<!--
+
+<form th:object="${offersInfo}" th:action="@{/reserve}"
+      method="POST" enctype="multipart/form-data">
+    <input type="hidden" th:field="${offersInfo.idOffer}">..</td>
+    <input type="hidden" th:field="${offersInfo.name}">..</td>
+    <input type="hidden" th:field="${offersInfo.prof}">..</td>
+    <input type="hidden" th:field="${offersInfo.price}">..</td>
+    <input type="hidden" th:field="${offersInfo.time}">..</td>
+</form>
+-->
+</body>
+</html>
