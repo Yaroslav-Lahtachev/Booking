@@ -25,16 +25,16 @@ textarea {
 }
 input:focus,
 textarea:focus {
-     outline: none;
- }
+    outline: none;
+}
 input:valid ~ label,textarea:valid ~ label {
-     top: -14px;
-     font-size: 12px;
-     color: #2196F3;
- }
+    top: -14px;
+    font-size: 12px;
+    color: #2196F3;
+}
 input:focus ~ .bar:before {
-     width: 320px;
- }
+    width: 320px;
+}
 
 input[type="password"] {
     letter-spacing: 0.3em;
@@ -55,7 +55,7 @@ body {
     max-width: 860px;
     min-width: 360px;
     margin: 0px auto;
-    background: #007aa1;
+    background: rgba(0,122,161,0.7);
     padding: 0px 5px;
     text-align: center;
     color:white;
@@ -123,7 +123,7 @@ a:hover {
     text-align: left;
     border-bottom: 1px solid #ccc;
     position: relative;
-    background: #37789a;
+    background: rgba(0,122,161,0.8);;
     color: white;
 }
 
@@ -134,7 +134,7 @@ a:hover {
 }
 
 .header-container .header-bar a {
-    color: #d7d5d8;
+    color: white;
 }
 
 
@@ -226,22 +226,6 @@ ul {
     font-style: italic;
 }
 
-.price {
-    color: blue;
-    font-weight: bold;
-}
-
-.subtotal {
-    color: darkblue;
-    font-weight: bold;
-}
-
-.total {
-    color: darkblue;
-    font-weight: bold;
-    font-size: 120%;
-}
-
 table {
     width: 800px;
     border-collapse: collapse;
@@ -257,26 +241,23 @@ td {
 }
 
 th {
-    text-align: left;
-}
-
-thead th{
-    background-color: #55608f;
+    text-align: center;
+    background-color: #275e79;
 }
 
 tbody tr:hover{
     background-color: rgba(255,255,255,0.3);
 }
-td {
+tbody td {
     position: relative;
 }
-td:hover td:before {
-     content: "";
-     position: absolute;
-     left: 0;
-     right: 0;
-     top: -9999px;
-     bottom: -9999px;
-     background-color: rgba(255,255,255,0.2);
-     z-index: -1;
- }
+tbody td:hover:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -9999px;
+    bottom: -9999px;
+    background-color: rgba(255,255,255,0.2);
+    z-index: -1;
+}

@@ -26,7 +26,8 @@
         <th>Profession</th>
         <th>Price</th>
         <th>Kit</th>
-
+        <th>Is Kit Needed?</th>
+        <th>Pick up order?</th>
     </tr>
     <tr th:each="offersInfo : ${paginationResult.list}">
         <td th:utext="${offersInfo.name}">..</td>
@@ -37,48 +38,30 @@
         <td>
             <input type="checkbox" th:field="*{needKit}" th:value="|${offersInfo.idOffer}|" />
             <label
-                    th:for="${#ids.prev('needKit')}"
-                    th:text="select">
-
+                    th:for="${#ids.prev('needKit')}">
             </label>
         </td>
         <td>
             <input type="checkbox" th:field="*{offer}" th:value="|${offersInfo.idOffer}|" />
             <label
-                    th:for="${#ids.prev('offer')}"
-                    th:text="select">
-
+                    th:for="${#ids.prev('offer')}">
             </label>
         </td>
         <!--<td><a th:href="@{|/signUp?id=${offersInfo.idOffer}|}">Reserve</a></td>-->
-    </tr>
-
-    <tr>
-        <td>Date start</td>
-        </td>
-    </tr>
-    <tr>
-        <td><input type="date" th:field="${signUpForm.dateStart}"/></td>
-        </td>
-    </tr>
-
-    <tr>
-        <td>
-            <input type="submit" value="Accept"/>
-            <input type="reset" value="Reset"/>
-        </td>
     </tr>
     <tr th:each="offersInfo : ${paginationResult.list}">
         <a th:if="${searchOffer.offer == '1'}">kek</a>
     </tr>
 </table>
-
+    <Br>Please, enter Date Start<Br>
+    <input type="date" style= "text-align: center;color: white;margin: auto;" th:field="${signUpForm.dateStart}"/>
+    <button type="submit">Accept</button>
+    <button type="reset">Reset</button>
 </form>
 <div class="page-navigator" th:if="${paginationResult.totalPages > 1}">
     <th:block th:each="page: ${paginationResult.navigationPages}">
         <a th:if="${page != -1}" class="nav-item" th:href="@{/offersPage(page=${page})}" th:utext="${page}">
         </a>
-
         <span th:if="${page == -1}" class="nav-item"> ... </span>
     </th:block>
 </div>
