@@ -2,6 +2,9 @@ package com.pingvin.autoservice.model;
 
 import com.pingvin.autoservice.entity.Offer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class OffersInfo {
     private int id;
     private String name;
@@ -9,6 +12,32 @@ public class OffersInfo {
     private double price;
     private int time;
     private String kitName;
+    private List<String> offer = new ArrayList<>();
+    private List<String> needKit = new ArrayList<>();
+
+    public List<String> getOffer() {
+        return offer;
+    }
+
+    public void setOffer(List<String> offer) {
+        this.offer = offer;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public List<String> getNeedKit() {
+        return needKit;
+    }
+
+    public void setNeedKit(List<String> needKit) {
+        this.needKit = needKit;
+    }
 
     public OffersInfo() {
     }
