@@ -20,7 +20,6 @@
 <div>Total Offers Count: <span th:utext="${paginationResult.totalRecords}"></span></div>
 <table border="1" , style="width: 100%">
     <tr>
-        <th>ID Offer</th>
         <th>Name</th>
         <th>Profession</th>
         <th>Price</th>
@@ -28,7 +27,6 @@
 
     </tr>
     <tr th:each="offersInfo : ${paginationResult.list}">
-        <td th:utext="${offersInfo.idOffer}">..</td>
         <td th:utext="${offersInfo.name}">..</td>
         <td th:utext="${offersInfo.prof}">..</td>
         <td th:utext="${offersInfo.price}">..</td>
