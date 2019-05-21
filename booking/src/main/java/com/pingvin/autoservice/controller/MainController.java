@@ -270,7 +270,7 @@ public class MainController {
                 offers.add(Integer.parseInt(searchOffer.getOffer().get(i)));
             }
             for (int i = 0; i < searchOffer.getNeedKit().size(); i++) {
-                needKit.add(Integer.parseInt(searchOffer.getOffer().get(i)));
+                needKit.add(Integer.parseInt(searchOffer.getNeedKit().get(i)));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -281,7 +281,12 @@ public class MainController {
                 Offer offer = offerDAO.findByIdOffer(offers.get(i));
                 Master master = masterDAO.findByIdMaster(masterDAO.getFreeMaster(offer.getIdOffer()));
                 Date dateFinish = new Date(orderInfo.getDateStart().getTime() + TimeUnit.SECONDS.toMillis(offer.getTime()));
-                int isNeedParts = signUpForm.getNeedKit() ? 1 : 0;
+                int isNeedParts = 0;
+                for (int j = 0; j < needKit.size(); j++)
+                    if (offers.get(i) == needKit.get(j)) {
+                        isNeedParts = 1;
+                        break;
+                    }
                 orderDAO.reserve(buyer, master, offer, isNeedParts, orderInfo.getDateStart(), dateFinish);
             }
         }
