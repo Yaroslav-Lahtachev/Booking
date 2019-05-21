@@ -6,7 +6,6 @@
 
     <div class="header-bar">
         <th:block sec:authorize="isAuthenticated()">
-            Hello
             <li th:if="${#request.getUserPrincipal()!=null}">
                 <a th:href="@{/admin/userInfo}" th:utext="${#request.getUserPrincipal().getName()}">..</a>
                 &nbsp;|&nbsp;
