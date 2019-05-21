@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/styles.css}" media="all">
 </head>
 <body>
 <th:block th:include="/_header"></th:block>
@@ -17,8 +17,7 @@
     <th:block th:if="${#session != null && #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}">
         <div th:if="${#request.getParameter('error') == 'true'}"
              style="color: red; margin: 10px 0px;">
-            Login Failed!!!<br/> Reason :
-            <span th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION')}"></span>
+            Login Failed!<br/>
         </div>
     </th:block>
 
@@ -36,8 +35,8 @@
             <tr>
                 <td>&nbsp;</td>
                 <td>
-                    <input type="submit" value="Login"/>
-                    <input type="reset" value="Reset"/>
+                    <button type="submit">Login</button>
+                    <button type="reset">Reset</button>
                 </td>
             </tr>
         </table>

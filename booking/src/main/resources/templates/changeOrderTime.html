@@ -63,8 +63,8 @@
         <tr>
 
             <td>
-                <input type="submit" value="Accept"/>
-                <input type="reset" value="Reset"/>
+                <button type="submit">Accept</button>
+                <button type="reset">Reset</button>
             <td><span class="error-message" th:if="${#fields.hasErrors('dateStart')}" th:errors="*{dateStart}">..</span>
             </td>
         </tr>

@@ -1,5 +1,5 @@
 html {
-    background: rgba(255, 157, 4, 0.27);
+    background:url(https://cdn2.f-cdn.com/contestentries/35704/8218109/5229fffc28752_thumb900.jpg);
 }
 
 h3 {
@@ -7,23 +7,110 @@ h3 {
     padding: 0px;
 }
 
-a:link {
-    color: antiquewhite;
+textarea {
+    resize: none;
 }
 
-/* A link that has been visited */
-a:visited {
-    color: antiquewhite;
+input,
+textarea {
+    background: none;
+    color: mix(white, #424242, 70%);
+    font-size: 18px;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    width: 320px;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid #007aa1;
+}
+input:focus,
+textarea:focus {
+     outline: none;
+ }
+input:valid ~ label,textarea:valid ~ label {
+     top: -14px;
+     font-size: 12px;
+     color: #2196F3;
+ }
+input:focus ~ .bar:before {
+     width: 320px;
+ }
+
+input[type="password"] {
+    letter-spacing: 0.3em;
+}
+
+label {
+    color: $muted-color;
+    font-size: 16px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 10px;
+    transition: $trans-time ease all;
 }
 
 body {
     max-width: 860px;
     min-width: 360px;
     margin: 0px auto;
-    background: #f8a424;
+    background: #007aa1;
     padding: 0px 5px;
     text-align: center;
     color:white;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: 600;
+}
+button {
+    text-decoration: none;
+    outline: none;
+    display: inline-block;
+    width: 140px;
+    height: 45px;
+    line-height: 45px;
+    border-radius: 45px;
+    margin: 10px 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: 600;
+    color: #524f4e;
+    background: white;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: .3s;
+}
+button:hover {
+    background: #59b4e5;
+    box-shadow: 0px 15px 20px rgba(13, 35, 70, 0.4);
+    color: #fff;
+    transform: translateY(-7px);
+}
+
+a {
+    color: #0099CC;
+    background: transparent;
+    border: 2px solid #0099CC;
+    border-radius: 6px;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+a:hover {
+    background-color: #008CBA;
+    color: white;
 }
 
 .page-title {
@@ -36,20 +123,20 @@ body {
     text-align: left;
     border-bottom: 1px solid #ccc;
     position: relative;
-    background: #c16815;
+    background: #37789a;
     color: white;
 }
 
 .header-container .header-bar {
     position: absolute;
     right: 10px;
-    bottom: 20px;
+    top: 10px;
 }
 
 .header-container .header-bar a {
-    color: white;
-    font-size: bold;
+    color: #d7d5d8;
 }
+
 
 .footer-container {
     text-align: center;
@@ -68,12 +155,20 @@ body {
     color: #004d99;
     font-weight: bold;
     text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: 600;
 }
 
 .site-name {
     font-size: 200%;
     margin: 10px 10px 10px 0px;
     padding: 5px;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: 600;
 }
 
 .container {
@@ -85,6 +180,10 @@ body {
     border: 1px solid #ccc;
     text-align: left;
     margin: 20px 0px;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: 600;
 }
 
 .customer-info-container {
@@ -121,19 +220,9 @@ ul {
     margin: 5px 5px 5px 20px;
 }
 
-.button-update-sc {
-    color: red;
-    margin: 5px 5px 5px 20px;
-}
-
-.button-send-sc {
-    color: red;
-    margin: 5px 5px 5px 20px;
-}
-
 .error-message {
     font-size: 90%;
-    color: red;
+    color: darkblue;
     font-style: italic;
 }
 
@@ -143,16 +232,51 @@ ul {
 }
 
 .subtotal {
-    color: red;
+    color: darkblue;
     font-weight: bold;
 }
 
 .total {
-    color: red;
+    color: darkblue;
     font-weight: bold;
     font-size: 120%;
 }
 
-table td {
-    padding: 5px;
+table {
+    width: 800px;
+    border-collapse: collapse;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
+
+th,
+td {
+    padding: 15px;
+    background-color: rgba(255,255,255,0.2);
+    color: #fff;
+}
+
+th {
+    text-align: left;
+}
+
+thead th{
+    background-color: #55608f;
+}
+
+tbody tr:hover{
+    background-color: rgba(255,255,255,0.3);
+}
+td {
+    position: relative;
+}
+td:hover td:before {
+     content: "";
+     position: absolute;
+     left: 0;
+     right: 0;
+     top: -9999px;
+     bottom: -9999px;
+     background-color: rgba(255,255,255,0.2);
+     z-index: -1;
+ }
