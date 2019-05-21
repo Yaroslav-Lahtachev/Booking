@@ -3,6 +3,8 @@ package com.pingvin.autoservice.form;
 public class UtilForm {
     private String textField;
     private int intField;
+    private boolean check;
+
 
     public UtilForm(String textField, int intField) {
         this.textField = textField;
@@ -26,5 +28,13 @@ public class UtilForm {
 
     public void setTextField(String textField) {
         this.textField = textField;
+    }
+
+    public boolean isCheck() {
+        return check;
+    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
     }
 }

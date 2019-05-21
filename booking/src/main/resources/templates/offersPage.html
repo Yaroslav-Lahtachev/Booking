@@ -18,6 +18,8 @@
 <h2>Offers</h2>
 
 <div>Total Offers Count: <span th:utext="${paginationResult.totalRecords}"></span></div>
+<form th:object="${searchOffer}" th:action="@{/signUp}"
+      method="POST" enctype="multipart/form-data">
 <table border="1" , style="width: 100%">
     <tr>
         <th>Name</th>
@@ -32,10 +34,46 @@
         <td th:utext="${offersInfo.price}">..</td>
         <td th:utext="${offersInfo.kitName}">..</td>
 
-        <td><a th:href="@{|/signUp?id=${offersInfo.idOffer}|}">Reserve</a></td>
+        <td>
+            <input type="checkbox" th:field="*{needKit}" th:value="|${offersInfo.idOffer}|" />
+            <label
+                    th:for="${#ids.prev('needKit')}"
+                    th:text="select">
+
+            </label>
+        </td>
+        <td>
+            <input type="checkbox" th:field="*{offer}" th:value="|${offersInfo.idOffer}|" />
+            <label
+                    th:for="${#ids.prev('offer')}"
+                    th:text="select">
+
+            </label>
+        </td>
+        <!--<td><a th:href="@{|/signUp?id=${offersInfo.idOffer}|}">Reserve</a></td>-->
     </tr>
 
+    <tr>
+        <td>Date start</td>
+        </td>
+    </tr>
+    <tr>
+        <td><input type="date" th:field="${signUpForm.dateStart}"/></td>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <input type="submit" value="Accept"/>
+            <input type="reset" value="Reset"/>
+        </td>
+    </tr>
+    <tr th:each="offersInfo : ${paginationResult.list}">
+        <a th:if="${searchOffer.offer == '1'}">kek</a>
+    </tr>
 </table>
+
+</form>
 <div class="page-navigator" th:if="${paginationResult.totalPages > 1}">
     <th:block th:each="page: ${paginationResult.navigationPages}">
         <a th:if="${page != -1}" class="nav-item" th:href="@{/offersPage(page=${page})}" th:utext="${page}">

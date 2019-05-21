@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -209,9 +210,16 @@ public class MainController {
                              @RequestParam(value = "page", defaultValue = "1") int page
     ) {
         OffersInfo searchOffer = new OffersInfo();
+        //UtilForm utilForm = new UtilForm();
+        //ArrayList arrayList = new ArrayList();
         PaginationResult<OffersInfo> paginationResult = offerDAO.findOffersInfo(searchOffer, page, MAX_RESULT, MAX_NAVIGATION_PAGE);
+        SignUpForm signUpForm = new SignUpForm();
+        signUpForm.setDateStart(new Date());
+        signUpForm.setDateFinish(new Date());
         model.addAttribute("paginationResult", paginationResult);
-
+        //model.addAttribute("utilForm", utilForm);
+        model.addAttribute("signUpForm", signUpForm);
+        //model.addAttribute("arrayList", arrayList);
         model.addAttribute("searchOffer", searchOffer);
         return "offersPage";
     }
@@ -246,19 +254,37 @@ public class MainController {
 
     @RequestMapping(value = "/signUp", method = RequestMethod.POST)
     public String reserveAddInfo(Model model,
-                                 @ModelAttribute("signUpForm")
-                                 @Validated SignUpForm signUpForm,
+                                 @ModelAttribute("searchOffer")
+                                 @Validated OffersInfo searchOffer,
                                  BindingResult result,
                                  final RedirectAttributes redirectAttributes,
-                                 @ModelAttribute("offersInfo") OffersInfo offersInfo) {
-        OrderInfo orderInfo = new OrderInfo(signUpForm.getIdOffer(), signUpForm.getDateStart(), signUpForm.getDateFinish());
+                                 @ModelAttribute("offersInfo") OffersInfo offersInfo,
+                                 @ModelAttribute("signUpForm") SignUpForm signUpForm) {
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User buyer = usersDAO.findByLogin(authentication.getName());
-        Offer offer = offerDAO.findByIdOffer(orderInfo.getOffer());
-        Master master = masterDAO.findByIdMaster(masterDAO.getFreeMaster(offer.getIdOffer()));
-        Date dateFinish = new Date(orderInfo.getDateStart().getTime() + TimeUnit.SECONDS.toMillis(offer.getTime()));
-        int isNeedParts = signUpForm.getNeedKit() ? 1 : 0;
-        orderDAO.reserve(buyer, master, offer, isNeedParts, orderInfo.getDateStart(), dateFinish);
+        List<Integer> offers = new ArrayList();
+        List<Integer> needKit = new ArrayList();
+        try {
+            for (int i = 0; i < searchOffer.getOffer().size(); i++) {
+                offers.add(Integer.parseInt(searchOffer.getOffer().get(i)));
+            }
+            for (int i = 0; i < searchOffer.getNeedKit().size(); i++) {
+                needKit.add(Integer.parseInt(searchOffer.getOffer().get(i)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (!offers.isEmpty()) {
+            for (int i = 0; i < offers.size(); i++) {
+                OrderInfo orderInfo = new OrderInfo(offers.get(i), signUpForm.getDateStart(), signUpForm.getDateFinish());
+                Offer offer = offerDAO.findByIdOffer(offers.get(i));
+                Master master = masterDAO.findByIdMaster(masterDAO.getFreeMaster(offer.getIdOffer()));
+                Date dateFinish = new Date(orderInfo.getDateStart().getTime() + TimeUnit.SECONDS.toMillis(offer.getTime()));
+                int isNeedParts = signUpForm.getNeedKit() ? 1 : 0;
+                orderDAO.reserve(buyer, master, offer, isNeedParts, orderInfo.getDateStart(), dateFinish);
+            }
+        }
         return "redirect:/buyerOrders";
     }
 
