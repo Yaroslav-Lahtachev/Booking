@@ -14,11 +14,11 @@ textarea {
 input,
 textarea {
     background: none;
-    color: mix(white, #424242, 70%);
+    color: white;
     font-size: 18px;
     padding: 10px 10px 10px 5px;
     display: block;
-    width: 320px;
+    width: auto;
     border: none;
     border-radius: 0;
     border-bottom: 1px solid #007aa1;
