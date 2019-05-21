@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
 </head>
 <body>
-<!-- Include _menu.html -->
+
 <th:block th:include="/_header"></th:block>
 <th:block th:include="/_menu"></th:block>
 
@@ -35,39 +35,19 @@
 
     <table style="text-align:left;">
         <td>
-            <!-- <span th:utext="${AdditionalInfo.idOffer}"></span>-->
             <input type="hidden" th:field="${signUpForm.idOffer}"/>
         </td>
         <tr>
             <td>Date start</td>
             </td>
-            <!--th:value="${#dates.format(AdditionalInfo.dateStart, 'yyyy-mm-dd')}"/>-->
-
         </tr>
         <tr>
             <td><input type="date" th:field="${signUpForm.dateStart}"/></td>
             </td>
-            <!--th:value="${#dates.format(AdditionalInfo.dateStart, 'yyyy-mm-dd')}"/>-->
 
         </tr>
-        <tr>
-            <td>Date finish</td>
-            </td>
-            <!--th:value="${#dates.format(AdditionalInfo.dateStart, 'yyyy-mm-dd')}"/>-->
-
-        </tr>
-        <tr>
-            <td><input type="date" th:field="${signUpForm.dateFinish}"/></td>
-            <!--<td><span class="error-message" th:if="${#fields.hasErrors('dateFinish')}"
-                      th:errors="*{dateFinish}">..</span></td>-->
-            <!--th:value="${#dates.format(AdditionalInfo.dateFinish, 'yyyy-mm-dd')}"/>-->
-        </tr>
-
         <tr>
             <td><p><input type="checkbox" th:field="${signUpForm.needKit}"/>Is Kit needed?</p></td>
-            <!--<td><span class="error-message" th:if="${#fields.hasErrors('dateFinish')}"
-                      th:errors="*{dateFinish}">..</span></td>-->
-            <!--th:value="${#dates.format(AdditionalInfo.dateFinish, 'yyyy-mm-dd')}"/>-->
         </tr>
 
         <tr>
@@ -86,11 +66,9 @@
 <table th:if="${error}">
     <tr>
         <td>Date start</td>
-        <td>Date finish</td>
     </tr>
     <tr th:each="calendarDate : ${calendar}">
         <td th:utext="${#dates.format(calendarDate.dateStart, 'dd-MM-yyyy')}">..</td>
-        <td th:utext="${#dates.format(calendarDate.dateFinish, 'dd-MM-yyyy')}">..</td>
     </tr>
 </table>
 

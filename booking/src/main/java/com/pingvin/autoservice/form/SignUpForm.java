@@ -12,15 +12,17 @@ public class SignUpForm {
     private Date dateFinish;
     private boolean needKit;
     private String status;
+    private String reason;
 
     public SignUpForm() {
     }
 
-    public SignUpForm(int idOffer, Date dateStart, Date dateFinish, boolean needKit) {
+    public SignUpForm(int idOffer, Date dateStart, Date dateFinish, boolean needKit, String reason) {
         this.idOffer = idOffer;
         this.dateStart = dateStart;
         this.dateFinish = dateFinish;
         this.needKit = needKit;
+        this.reason = reason;
     }
 
     public int getIdOffer() {
@@ -29,6 +31,14 @@ public class SignUpForm {
 
     public void setNeedKit(boolean needKit) {
         this.needKit = needKit;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 
     public boolean getNeedKit() {

@@ -1,6 +1,6 @@
 package com.pingvin.autoservice.service;
 
-import com.pingvin.autoservice.dao.UsersDAO;
+import com.pingvin.autoservice.dao.UserDAO;
 import com.pingvin.autoservice.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,7 +17,7 @@ import java.util.List;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private UsersDAO usersDAO;
+    private UserDAO usersDAO;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

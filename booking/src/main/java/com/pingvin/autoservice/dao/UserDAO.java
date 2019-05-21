@@ -1,5 +1,6 @@
 package com.pingvin.autoservice.dao;
 
+import com.pingvin.autoservice.entity.Order;
 import com.pingvin.autoservice.entity.User;
 import com.pingvin.autoservice.form.UsersForm;
 import com.pingvin.autoservice.model.UsersInfo;
@@ -16,7 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Repository
 @Transactional
-public class  UsersDAO {
+public class UserDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -24,7 +25,7 @@ public class  UsersDAO {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public UsersDAO() {
+    public UserDAO() {
     }
 
     public User findByIdUser(int idUser) {
@@ -56,7 +57,7 @@ public class  UsersDAO {
         user.setLogin(newUser.getLogin());
         user.setPassword(encrPass);
         user.setRole("ROLE_USER");
-        user.setEmail(newUser.getEmail()); //newUser.getLogin()+"@mail.com"
+        user.setEmail(newUser.getEmail());
         session.persist(user);
         session.flush();
 
@@ -71,6 +72,12 @@ public class  UsersDAO {
             return 0;
         }
         return value;
+    }
+
+    public void removeUser(int idUser) {
+        Session session = this.sessionFactory.getCurrentSession();
+        User user = session.get(User.class, idUser);
+        session.remove(user);
     }
 
     public void changeUserRole(int idUser,String role){

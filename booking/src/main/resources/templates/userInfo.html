@@ -25,19 +25,10 @@
 <table>
     <tr>
         <th>
-            <a th:href="@{/buyerOrders(type=(reserved))}">Active user's orders| &nbsp; </a>
+            <a th:href="@{/removeUser}">Remove User</a>
         </th>
         <th>
-            <a th:href="@{/buyerOrders(type=(performed))}">History user's orders| &nbsp; </a>
-        </th>
-        <th>
-            <a th:href="@{/sellerOrders(type=(active))}">Active user's offers| &nbsp;</a>
-        </th>
-        <th>
-            <a th:href="@{/sellerOrders(type=(reserved))}">Reserved user's offers| &nbsp; </a>
-        </th>
-        <th>
-            <a th:href="@{/sellerOrders(type=(performed))}">History user's offers| &nbsp; </a>
+            | &nbsp;
         </th>
         <th th:if="${userInfo.isAdmin()}">
             <a th:href="@{/admin/usersList}">Manage Users</a>

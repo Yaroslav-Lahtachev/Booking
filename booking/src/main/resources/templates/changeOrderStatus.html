@@ -35,7 +35,6 @@
 
     <table style="text-align:left;">
         <td>
-            <!-- <span th:utext="${AdditionalInfo.idOffer}"></span>-->
             <input type="hidden" th:field="${orderInfo.id}"/>
         </td>
         <tr>
@@ -46,9 +45,6 @@
             <td><p><input name="status" type="radio" value="WAITING FOR MASTER" th:field="${signUpForm.status}"/>WAITING FOR MASTER</p></td>
             <td><p><input name="status" type="radio" value="IN PROGRESS" th:field="${signUpForm.status}"/>IN PROGRESS</p></td>
             <td><p><input name="status" type="radio" value="DONE" th:field="${signUpForm.status}"/>DONE</p></td>
-            <!--<td><span class="error-message" th:if="${#fields.hasErrors('dateFinish')}"
-                      th:errors="*{dateFinish}">..</span></td>-->
-            <!--th:value="${#dates.format(AdditionalInfo.dateFinish, 'yyyy-mm-dd')}"/>-->
         </tr>
 
         <tr>
@@ -60,18 +56,5 @@
         </tr>
     </table>
 </form>
-
-
-<!--
-
-<form th:object="${offersInfo}" th:action="@{/reserve}"
-      method="POST" enctype="multipart/form-data">
-    <input type="hidden" th:field="${offersInfo.idOffer}">..</td>
-    <input type="hidden" th:field="${offersInfo.name}">..</td>
-    <input type="hidden" th:field="${offersInfo.prof}">..</td>
-    <input type="hidden" th:field="${offersInfo.price}">..</td>
-    <input type="hidden" th:field="${offersInfo.time}">..</td>
-</form>
--->
 </body>
 </html>

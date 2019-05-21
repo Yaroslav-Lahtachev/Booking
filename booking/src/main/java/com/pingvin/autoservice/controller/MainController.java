@@ -1,7 +1,5 @@
 package com.pingvin.autoservice.controller;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import com.pingvin.autoservice.config.Consts;
@@ -35,9 +33,7 @@ import static com.pingvin.autoservice.model.OrderInfo.timeCut;
 public class MainController {
 
     @Autowired
-    private UsersDAO usersDAO;
-    @Autowired
-    private SellerDAO sellerDAO;
+    private UserDAO usersDAO;
     @Autowired
     private OfferDAO offerDAO;
     @Autowired
@@ -55,12 +51,6 @@ public class MainController {
     @Autowired
     private UserValidator userValidator;
 
-    @Autowired
-    private OfferValidator offerValidator;
-
-    @Autowired
-    private ReserveValidator reserveValidator;
-
     @InitBinder
     protected void initBinder(WebDataBinder dataBinder) {
         Object target = dataBinder.getTarget();
@@ -71,14 +61,6 @@ public class MainController {
         if (target.getClass() == UsersForm.class) {
             dataBinder.setValidator(userValidator);
         }
-
-        if (target.getClass() == OfferForm.class) {
-            dataBinder.setValidator(offerValidator);
-        }
-
-        if (target.getClass() == SignUpForm.class) {
-            dataBinder.setValidator(reserveValidator);
-        }
     }
 
     @RequestMapping("/")
@@ -86,18 +68,11 @@ public class MainController {
         return "index";
     }
 
-    //
-    //      LOGIN
-    //
     @RequestMapping(value = {"/admin/login"}, method = RequestMethod.GET)
     public String login(Model model) {
         return "login.html";
     }
 
-
-    //
-    //      User
-    //
     @RequestMapping(value = {"/admin/userInfo"}, method = RequestMethod.GET)
     public String userInfo(Model model) {
 
@@ -109,151 +84,24 @@ public class MainController {
         return "userInfo";
     }
 
-    //
-    //      Offer
-    //
-    //@RequestMapping(value = "/newOffer", method = RequestMethod.GET)                  //todo добавление новых услуг?
-    //public String newOffer(Model model, @RequestParam(value = "id", defaultValue = "-1") int idOffer, @RequestParam(value = "idUser", defaultValue = "-1") int idUser) {
-    //    OffersInfo offersInfo = null;
-    //    OrderForm offerForm = null;
-    //    if (idOffer != -1) {
-    //        Offer offer = offerDAO.findByIdOffer(idOffer);
-    //        if (offer != null) {
-    //            offersInfo = new OffersInfo(offer);
-    //            offerForm = new OrderForm(offersInfo);
-    //        }
-    //    }
-    //    if (offersInfo == null) {
-    //        offersInfo = new OffersInfo();
-    //        offerForm = new OrderForm();
-    //        offersInfo.setNewOffer(true);
-    //    } else {
-    //        offersInfo.setNewOffer(false);
-    //        offerForm.setNewOffer(false);
-    //    }
-    //    offersInfo.setIdSeller(idUser);
-    //    offerForm.setIdSeller(idUser);
-    //    model.addAttribute("offerForm", offerForm);
-//
-    //    return "newOffer";
-    //}
-
-    //@RequestMapping(value = "/newOffer", method = RequestMethod.POST)
-    //public String saveUserOffer(Model model,
-    //                            @ModelAttribute("offerForm")
-    //                            @Validated OrderForm offerForm,
-    //                            BindingResult result,
-    //                            final RedirectAttributes redirectAttributes) {
-    //    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    //    if (result.hasErrors()) {
-    //        return "newOffer";
-    //    }
-    //    OffersInfo offersInfo = new OffersInfo(offerForm);
-    //    try {
-    //        Parts seller = null;
-    //        if (offersInfo.getIdSeller() == -1) {
-    //            seller = sellerDAO.addNewOffer(usersDAO.findByLogin(authentication.getName()));
-    //        } else {
-    //            seller = sellerDAO.addNewOffer(usersDAO.findByIdUser(offersInfo.getIdSeller()));
-    //        }
-    //        if (seller != null) {
-    //            offerDAO.createNewOffer(seller, offersInfo);
-    //            if (offersInfo.isNewOffer()) {
-    //                System.out.println(offersInfo.isNewOffer());
-    //                orderHistoryDAO.saveNewOfferInOrder(seller, null, null);
-    //            }
-    //        } else
-    //            return "accessesDenied";
-    //    } catch (Exception e) {
-    //        String message = e.getMessage();
-    //        model.addAttribute("message", message);
-    //        return "newOffer";
-    //    }
-    //    return "redirect:/sellerOrders";
-    //}
-
-
-    //
-    //
-    //
-
-
-    @RequestMapping(value = "/buyerOrders", method = RequestMethod.GET)       //todo
+    @RequestMapping(value = "/buyerOrders", method = RequestMethod.GET)
     public String findActiveOrderByBuyer(Model model,
-                                         @RequestParam(value = "page", defaultValue = "1") String pageStr
-            /*@RequestParam(value = "type", defaultValue = "reserved") String type*/) {
+                                         @RequestParam(value = "page", defaultValue = "1") String pageStr) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        //String status = null;
-        //boolean reserved = false;
         int page = 1;
         try {
             page = Integer.parseInt(pageStr);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        //switch (type) {
-        //    case "reserved":
-        //        status = "reserve";
-        //        reserved = true;
-        //        break;
-        //    case "performed":
-        //        status = "performed";
-        //        break;
-        //}
         User user = usersDAO.findByLogin(authentication.getName());
         PaginationResult<OrderInfo> paginationResult =
                 orderDAO.findOrderByCustomer(user, page, MAX_RESULT, MAX_NAVIGATION_PAGE);
-        //for (int i=0;i<paginationResult.getList().size();i++){
-        //    paginationResult.getList().get(i).setStatus(calculateStatus(paginationResult.getList().get(i)));
-        //}
         model.addAttribute("paginationResult", paginationResult);
-        //model.addAttribute("Reserved", reserved);
-        //model.addAttribute("type", type);
         return "buyerOrders";
     }
 
-
-    //@RequestMapping(value = "/sellerOrders", method = RequestMethod.GET)
-    //public String findOrderBySeller(Model model,
-    //                                @RequestParam(value = "page", defaultValue = "1") String pageStr,
-    //                                @RequestParam(value = "type", defaultValue = "active") String type) {
-    //    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    //    int page = 1;
-    //    String status = null;
-    //    boolean reserved = false;
-    //    boolean performed = false;
-    //    try {
-    //        page = Integer.parseInt(pageStr);
-    //    } catch (Exception ex) {
-    //        ex.printStackTrace();
-    //    }
-    //    switch (type) {
-    //        case "active":
-    //            status = "offer";
-    //            break;
-    //        case "reserved":
-    //            reserved = true;
-    //            status = "reserve";
-    //            break;
-    //        case "performed":
-    //            reserved = true;
-    //            status = "performed";
-    //            performed = true;
-    //            break;
-    //    }
-    //    User user = usersDAO.findByLogin(authentication.getName());
-//
-    //    PaginationResult<OrderHistoryInfo> paginationResult = orderHistoryDAO.findOrderHistoryBySeller(user, status, page, MAX_RESULT, MAX_NAVIGATION_PAGE);
-//
-    //    model.addAttribute("paginationResult", paginationResult);
-    //    model.addAttribute("Reserved", reserved);
-    //    model.addAttribute("Performed", performed);
-    //    model.addAttribute("type", type);
-    //    return "sellerOrders";
-    //}
-
-
-    @RequestMapping(value = "/cancelOrder", method = RequestMethod.GET)         //todo
+    @RequestMapping(value = "/cancelOrder", method = RequestMethod.GET)
     public String cancelOrder(Model model, @RequestParam(value = "id", defaultValue = "0") int idOrder) {
         UtilForm utilForm = new UtilForm();
         utilForm.setIntField(idOrder);
@@ -265,13 +113,29 @@ public class MainController {
     public String cancelConfirm(Model model, @ModelAttribute("UtilForm") UtilForm utilForm) {
         if (utilForm.getTextField().equals("CONFIRM")) {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            String status = new String("canceled");
-            //orderDAO.changeOrderStatus(utilForm.getIntField(), status);
+            orderDAO.removeOrder(utilForm.getIntField());
         }
         return "index";
     }
 
-    @RequestMapping(value = "/changeOrderStatus", method = RequestMethod.GET)               //todo
+    @RequestMapping(value = "/removeUser", method = RequestMethod.GET)
+    public String removeUser(Model model, @RequestParam(value = "id", defaultValue = "0") int userId) {
+        UtilForm utilForm = new UtilForm();
+        utilForm.setIntField(userId);
+        model.addAttribute("utilForm", utilForm);
+        return "removeUser";
+    }
+
+    @RequestMapping(value = "/removeUser", method = RequestMethod.POST)
+    public String removeUser(Model model, @ModelAttribute("UtilForm") UtilForm utilForm) {
+        if (utilForm.getTextField().equals("CONFIRM")) {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            usersDAO.removeUser(utilForm.getIntField());
+        }
+        return "index";
+    }
+
+    @RequestMapping(value = "/changeOrderStatus", method = RequestMethod.GET)
     public String changeOrderStatus(Model model,
                                     @RequestParam(value = "id", defaultValue = "0") String id) {
         int idOrder = 0;
@@ -315,7 +179,7 @@ public class MainController {
         return "registerPage";
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)               //todo add email
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String saveRegister(Model model,
                                @ModelAttribute("usersForm")
                                @Validated UsersForm usersForm,
@@ -325,9 +189,8 @@ public class MainController {
             return "registerPage";
         }
         try {
-            usersDAO.addNewUser(usersForm);                                         //todo here
+            usersDAO.addNewUser(usersForm);
         }
-        // Other error!!
         catch (Exception e) {
             model.addAttribute("errorMessage", "Error: " + e.getMessage());
             return "registerPage";
@@ -336,19 +199,10 @@ public class MainController {
     }
 
 
-    @RequestMapping(value = "/offersPage", method = RequestMethod.GET)            //todo услуги будут тут?
+    @RequestMapping(value = "/offersPage", method = RequestMethod.GET)
     public String showOffers(Model model,
-                             @RequestParam(value = "page", defaultValue = "1") int page/*,
-                             @RequestParam(value = "search", defaultValue = "false") boolean search,
-                             @RequestParam(value = "city", defaultValue = "") String city,
-                             @RequestParam(value = "address", defaultValue = "") String address,
-                             @RequestParam(value = "mpc", defaultValue = "0") int maxPeopleCount,
-                             @RequestParam(value = "price", defaultValue = "0.0") double price,
-                             @RequestParam(value = "parking", defaultValue = "false") boolean parking,
-                             @RequestParam(value = "wifi", defaultValue = "false") boolean wifi,
-                             @RequestParam(value = "animal", defaultValue = "false") boolean animal,
-                             @RequestParam(value = "smoking", defaultValue = "false") boolean smoking*/) {
-        //String status = new String("offer");
+                             @RequestParam(value = "page", defaultValue = "1") int page
+                            ) {
         OffersInfo searchOffer = new OffersInfo();
         PaginationResult<OffersInfo> paginationResult = offerDAO.findOffersInfo(searchOffer, page, MAX_RESULT, MAX_NAVIGATION_PAGE);
         model.addAttribute("paginationResult", paginationResult);
@@ -357,20 +211,7 @@ public class MainController {
         return "offersPage";
     }
 
-    //@RequestMapping(value = "/offersPage", method = RequestMethod.POST)
-    //public String searchOffer(Model model, @ModelAttribute("searchOffer") @Validated OffersInfo searchOffer, BindingResult result) {
-    //    String status = new String("offer");
-    //    if (result.hasErrors()) {
-    //        return "offersPage";
-    //    }
-    //    searchOffer.setNewOffer(true);
-    //    PaginationResult<OffersInfo> paginationResult = offerDAO.findOffersInfo(searchOffer, status, 1, MAX_RESULT, MAX_NAVIGATION_PAGE);
-    //    model.addAttribute("paginationResult", paginationResult);
-    //    model.addAttribute("searchOffer", searchOffer);
-    //    return "offersPage";
-    //}
-
-    @RequestMapping(value = "/signUp", method = RequestMethod.GET)               //todo
+    @RequestMapping(value = "/signUp", method = RequestMethod.GET)
     public String reserve(Model model,
                           @RequestParam(value = "id", defaultValue = "0") String id) {
         int idOffer = 0;
@@ -383,7 +224,6 @@ public class MainController {
         if (idOffer != 0)
             offer = offerDAO.findByIdOffer(idOffer);
         OffersInfo offersInfo = null;
-//
         SignUpForm signUpForm = null;
         if (offer != null) {
             offersInfo = new OffersInfo(offer);
@@ -406,31 +246,18 @@ public class MainController {
                                  BindingResult result,
                                  final RedirectAttributes redirectAttributes,
                                  @ModelAttribute("offersInfo") OffersInfo offersInfo) {
-        //if (result.hasErrors()) {
-        //    model.addAttribute("offersInfo", offersInfo);
-        //    List<OrderInfo> calendar = orderDAO.getInfoConcretOrder(offersInfo.getIdOffer(), "signUp");
-        //    model.addAttribute("calendar", calendar);
-        //    model.addAttribute("error", new Boolean(true));
-        //    return "signUp";
-        //}
         OrderInfo orderInfo = new OrderInfo(signUpForm.getIdOffer(), signUpForm.getDateStart(), signUpForm.getDateFinish());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        //if (orderDAO.CheckReserveOfferByIdAndDate(orderHistoryInfo.getIdOffer(), orderHistoryInfo.getDateStart(), orderHistoryInfo.getDateFinish())) {
         User buyer = usersDAO.findByLogin(authentication.getName());
         Offer offer = offerDAO.findByIdOffer(orderInfo.getOffer());
         Master master = masterDAO.findByIdMaster(masterDAO.getFreeMaster(offer.getIdOffer()));
         Date dateFinish = new Date(orderInfo.getDateStart().getTime() + TimeUnit.SECONDS.toMillis(offer.getTime()));
         int isNeedParts = signUpForm.getNeedKit() ? 1 : 0;
-        //if (orderDAO.checkOnOwnership(buyer, seller)) {
-        orderDAO.reserve(buyer, master, offer, isNeedParts, orderInfo.getDateStart(), dateFinish); //нафиг нам мнение клиента лол
+        orderDAO.reserve(buyer, master, offer, isNeedParts, orderInfo.getDateStart(), dateFinish);
         return "redirect:/buyerOrders";
-        //} else return "itsYourOwnOfferDude";
-        //} else return "index";
-
     }
 
-    @RequestMapping(value = "/changeOrderTime", method = RequestMethod.GET)               //todo
+    @RequestMapping(value = "/changeOrderTime", method = RequestMethod.GET)
     public String changeOrderTime(Model model,
                                   @RequestParam(value = "id", defaultValue = "0") String id) {
         int idOrder = 0;
@@ -463,19 +290,18 @@ public class MainController {
                                   BindingResult result,
                                   final RedirectAttributes redirectAttributes,
                                   @ModelAttribute("orderInfo") OrderInfo orderInfo) {
-        //@DateTimeFormat(pattern = "yyyy-MM-dd")
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        Date nd = timeCut(signUpForm.getDateStart());
-
+        Date newdate = timeCut(signUpForm.getDateFinish());
+        String reason = signUpForm.getReason();
         String sendTo = usersDAO.findByIdUser(orderInfo.getCustomer()).getEmail();
-        sendSimpleMessage(Consts.MESSAGE_ABOUT_CHANGING_TIME + simpleDateFormat.format(nd), sendTo, "yo, dude");
+        sendSimpleMessage(String.format(Consts.MESSAGE_ABOUT_CHANGING_TIME, reason, simpleDateFormat.format(newdate),orderInfo.getId()), sendTo, "yo, dude");
         return "redirect:/admin/usersList";
     }
 
     @RequestMapping(value = "/acceptChangeTime", method = RequestMethod.GET)
     public String acceptChangeTime(Model model,
-                                   @RequestParam(value = "order", defaultValue = "3") String id,
+                                   @RequestParam(value = "order", defaultValue = "-1") String id,
                                    @RequestParam(value = "date", defaultValue = "null") String time) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         int idOrder = 0;
@@ -487,19 +313,18 @@ public class MainController {
             e.printStackTrace();
         }
 
-        if (date != null && idOrder != 0) {
+        if (date != null && idOrder != -1) {
             Order order = orderDAO.findOrderByIdOrder(idOrder);
             if (order != null) {
                 UtilForm utilForm = new UtilForm();
                 OrderInfo orderInfo = new OrderInfo(order);
-                orderInfo.setDateStart(date);
+                orderInfo.setDateFinish(date);
                 model.addAttribute("orderInfo", orderInfo);
                 model.addAttribute("utilForm", utilForm);
-                //model.addAttribute("date", date);
                 model.addAttribute("error", new Boolean(false));
             } else return "redirect:/admin/usersList";
         }
-        return "redirect:/acceptChangeTime";
+        return "acceptChangeTime";
     }
 
 
@@ -510,15 +335,15 @@ public class MainController {
                                   final RedirectAttributes redirectAttributes,
                                   @ModelAttribute("orderInfo") OrderInfo orderInfo) {
         if (utilForm.getTextField().equals("Agree")) {
-            orderDAO.changeOrderDate(orderInfo.getId(), orderInfo.getDateStart());
+            orderDAO.changeOrderDate(orderInfo.getId(), orderInfo.getDateFinish());
         }
-        else System.out.println("customer is gay, lets delete his order");
+        else {
+            System.out.println("customer is gay, lets delete his order");
+            orderDAO.removeOrder(orderInfo.getId());
+        }
         return "redirect:/buyerOrders";
     }
 
-    //
-    //admin controller
-    //
     @RequestMapping(value = "/admin/usersList", method = RequestMethod.GET)
     public String usersList(Model model, @RequestParam(value = "page", defaultValue = "1") String pageStr) {
         int page = 1;
@@ -576,23 +401,5 @@ public class MainController {
         message.setText(text);
         emailSender.send(message);
     }
-
-    //@RequestMapping(value = "/admin/blockPage")               //todo ban hammer?
-    //public String blockPage(Model model,
-    //                        @RequestParam(value = "id", defaultValue = "0") int id,
-    //                        @RequestParam(value = "status", defaultValue = "0") int status) {
-    //    String setStatus = new String();
-    //    switch (status) {
-    //        case -1:
-    //            setStatus = "BLOCKED";
-    //            orderHistoryDAO.blockUnblockOffer(id, "blocked");
-    //            break;
-    //        case 1:
-    //            setStatus = "USER";
-    //            break;
-    //    }
-    //    usersDAO.changeUserRole(id, setStatus);
-    //    return "redirect:/admin/usersList";
-    //}
 
 }

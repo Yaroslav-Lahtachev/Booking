@@ -1,7 +1,7 @@
 package com.pingvin.autoservice.form;
 
 
-import com.pingvin.autoservice.dao.UsersDAO;
+import com.pingvin.autoservice.dao.UserDAO;
 import com.pingvin.autoservice.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ import org.springframework.validation.Validator;
 public class UserValidator implements Validator {
 
     @Autowired
-    private UsersDAO usersDAO;
+    private UserDAO usersDAO;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -31,7 +31,6 @@ public class UserValidator implements Validator {
         if (!errors.hasFieldErrors("login")) {
             User user = usersDAO.findByLogin(usersForm.getLogin());
             if (user != null) {
-                // Login is not available.
                 errors.rejectValue("login", "Duplicate.usersForm.login");
             }
         }

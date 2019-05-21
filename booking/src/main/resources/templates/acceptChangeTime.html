@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
 </head>
 <body>
-<!-- Include _menu.html -->
+
 <th:block th:include="/_header"></th:block>
 <th:block th:include="/_menu"></th:block>
 
@@ -20,7 +20,7 @@
         <th>Price</th>
         <th>Status</th>
         <th>Master</th>
-        <th>New Date</th>
+        <th>New Finish Date</th>
     </tr>
     <tr>
         <td th:utext="${orderInfo.customerName}">..</td>
@@ -28,7 +28,7 @@
         <td th:utext="${orderInfo.price}">..</td>
         <td th:utext="${orderInfo.status}">..</td>
         <td th:utext="${orderInfo.masterName}">..</td>
-        <td th:utext="${orderInfo.dateStart}">..</td>
+        <td th:utext="${orderInfo.dateFinish}">..</td>
     </tr>
 </table>
 
@@ -37,12 +37,13 @@
 
     <table style="text-align:left;">
         <td>
+            <input type="hidden" th:field="${orderInfo.id}"/>
             <input type="hidden" th:field="${orderInfo.customer}"/>
-            <input type="hidden" th:field="${orderInfo.dateStart}"/>
+            <input type="hidden" th:field="${orderInfo.dateFinish}"/>
         </td>
         <tr>
             <td><p><input name="status" type="radio" value="Agree" th:field="${utilForm.textField}"/>Accept</p></td>
-            <td><p><input name="status" type="radio" value="Reject" th:field="${signUpForm.textField}"/>Reject</p></td>
+            <td><p><input name="status" type="radio" value="Reject" th:field="${utilForm.textField}"/>Reject</p></td>
         </tr>
         <tr>
             <td>

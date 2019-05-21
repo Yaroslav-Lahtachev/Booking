@@ -21,7 +21,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
 </head>
 <body>
-<!-- Include _menu.html -->
+
 <th:block th:include="/_header"></th:block>
 <th:block th:include="/_menu"></th:block>
 
@@ -51,7 +51,7 @@
         <tr>
             <td>E-Mail</td>
             <td><input type="email" th:field="*{email}"/></td>
-            <td> <!--<span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">..</span>--></td>
+            <td>
         </tr>
         <tr>
             <td>&nbsp;</td>
