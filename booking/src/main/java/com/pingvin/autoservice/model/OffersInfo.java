@@ -19,7 +19,7 @@ public class OffersInfo {
         this.time = time;
     }
 
-    public OffersInfo( int id, String name, String prof, double price, int time) {
+    public OffersInfo(int id, String name, String prof, double price, int time) {
         this.id = id;
         this.name = name;
         this.prof = prof;

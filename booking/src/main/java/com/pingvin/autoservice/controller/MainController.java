@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static com.pingvin.autoservice.model.OrderInfo.timeCut;
@@ -130,9 +131,14 @@ public class MainController {
     public String removeUser(Model model, @ModelAttribute("UtilForm") UtilForm utilForm) {
         if (utilForm.getTextField().equals("CONFIRM")) {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            int idUser = utilForm.getIntField();
+            List allOrdersByUser = orderDAO.findOrderByCustomer(idUser);
+            if (allOrdersByUser.size() > 0) {
+                orderDAO.removeOrders(allOrdersByUser);
+            }
             usersDAO.removeUser(utilForm.getIntField());
         }
-        return "index";
+        return "redirect:/admin/logout";
     }
 
     @RequestMapping(value = "/changeOrderStatus", method = RequestMethod.GET)
@@ -190,8 +196,7 @@ public class MainController {
         }
         try {
             usersDAO.addNewUser(usersForm);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             model.addAttribute("errorMessage", "Error: " + e.getMessage());
             return "registerPage";
         }
@@ -202,7 +207,7 @@ public class MainController {
     @RequestMapping(value = "/offersPage", method = RequestMethod.GET)
     public String showOffers(Model model,
                              @RequestParam(value = "page", defaultValue = "1") int page
-                            ) {
+    ) {
         OffersInfo searchOffer = new OffersInfo();
         PaginationResult<OffersInfo> paginationResult = offerDAO.findOffersInfo(searchOffer, page, MAX_RESULT, MAX_NAVIGATION_PAGE);
         model.addAttribute("paginationResult", paginationResult);
@@ -295,7 +300,7 @@ public class MainController {
         Date newdate = timeCut(signUpForm.getDateFinish());
         String reason = signUpForm.getReason();
         String sendTo = usersDAO.findByIdUser(orderInfo.getCustomer()).getEmail();
-        sendSimpleMessage(String.format(Consts.MESSAGE_ABOUT_CHANGING_TIME, reason, simpleDateFormat.format(newdate),orderInfo.getId()), sendTo, "yo, dude");
+        sendSimpleMessage(String.format(Consts.MESSAGE_ABOUT_CHANGING_TIME, reason, simpleDateFormat.format(newdate), orderInfo.getId()), sendTo, "yo, dude");
         return "redirect:/admin/usersList";
     }
 
@@ -330,14 +335,13 @@ public class MainController {
 
     @RequestMapping(value = "/acceptChangeTime", method = RequestMethod.POST)
     public String acceptChangeTime(Model model,
-                                  @ModelAttribute("utilForm") UtilForm utilForm,
-                                  BindingResult result,
-                                  final RedirectAttributes redirectAttributes,
-                                  @ModelAttribute("orderInfo") OrderInfo orderInfo) {
+                                   @ModelAttribute("utilForm") UtilForm utilForm,
+                                   BindingResult result,
+                                   final RedirectAttributes redirectAttributes,
+                                   @ModelAttribute("orderInfo") OrderInfo orderInfo) {
         if (utilForm.getTextField().equals("Agree")) {
             orderDAO.changeOrderDate(orderInfo.getId(), orderInfo.getDateFinish());
-        }
-        else {
+        } else {
             System.out.println("customer is gay, lets delete his order");
             orderDAO.removeOrder(orderInfo.getId());
         }

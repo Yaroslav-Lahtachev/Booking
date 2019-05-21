@@ -33,9 +33,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable();
-        http.authorizeRequests().antMatchers( "/reserve", "/signUp", "/cancelOrder","/sellerOrders", "/buyerOrders", "/admin/userInfo", "/acceptChangeTime")
+        http.authorizeRequests().antMatchers("/reserve", "/signUp", "/cancelOrder", "/sellerOrders", "/buyerOrders", "/admin/userInfo", "/acceptChangeTime")
                 .access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
-        http.authorizeRequests().antMatchers("/admin/usersList","/admin/viewAllUsersOrdersForAdmin","/admin/viewUserOrdersForAdmin","/changeOrderTime","/changeOrderStatus").access("hasRole('ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/admin/usersList", "/admin/viewAllUsersOrdersForAdmin", "/admin/viewUserOrdersForAdmin", "/changeOrderTime", "/changeOrderStatus").access("hasRole('ROLE_ADMIN')");
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
         http.authorizeRequests().and().formLogin()
                 .loginProcessingUrl("/j_spring_security_check")

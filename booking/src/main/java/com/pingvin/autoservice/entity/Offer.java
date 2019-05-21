@@ -39,6 +39,7 @@ public class Offer implements Serializable {
     public Parts getKit() {
         return kit;
     }
+
     public void setKit(Parts kit) {
         this.kit = kit;
     }

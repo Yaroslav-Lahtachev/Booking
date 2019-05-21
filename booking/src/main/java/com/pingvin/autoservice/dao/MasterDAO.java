@@ -16,12 +16,12 @@ public class MasterDAO {
     public MasterDAO() {
     }
 
-    public Master findByIdMaster(int id){
+    public Master findByIdMaster(int id) {
         Session session = this.sessionFactory.getCurrentSession();
         return session.get(Master.class, id);
     }
 
-    public int getFreeMaster(int IdOffer){
+    public int getFreeMaster(int IdOffer) {
         return 1;
     }
 }

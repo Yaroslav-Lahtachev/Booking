@@ -35,7 +35,7 @@ public class UserDAO {
 
     public User findByLogin(String login) {
         Session session = this.sessionFactory.getCurrentSession();
-        return (User)session.createCriteria(User.class).add(Restrictions.eq("login", login)).uniqueResult();
+        return (User) session.createCriteria(User.class).add(Restrictions.eq("login", login)).uniqueResult();
     }
 
     public PaginationResult<UsersInfo> listUsersInfo(int page, int maxResult, int maxNavPage) {
@@ -43,7 +43,7 @@ public class UserDAO {
                 + " (e.id,e.login,e.password,e.email,e.role) "
                 + " from " + User.class.getName() + " e ";
         Session session = this.sessionFactory.getCurrentSession();
-        Query<UsersInfo> query = session.createQuery(sql,UsersInfo.class);
+        Query<UsersInfo> query = session.createQuery(sql, UsersInfo.class);
         return new PaginationResult<UsersInfo>(query, page, maxResult, maxNavPage);
     }
 
@@ -76,11 +76,12 @@ public class UserDAO {
 
     public void removeUser(int idUser) {
         Session session = this.sessionFactory.getCurrentSession();
+        User ordersUser = session.get(User.class, idUser);
         User user = session.get(User.class, idUser);
         session.remove(user);
     }
 
-    public void changeUserRole(int idUser,String role){
+    public void changeUserRole(int idUser, String role) {
         Session session = this.sessionFactory.getCurrentSession();
         User user = findByIdUser(idUser);
         user.setRole(role);

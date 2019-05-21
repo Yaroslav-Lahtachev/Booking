@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -55,6 +57,13 @@ public class OrderDAO {
         session.remove(order);
     }
 
+    public void removeOrders(List<Order> orders) {
+        Session session = this.sessionFactory.getCurrentSession();
+        for (int i = 0; i < orders.size(); i++) {
+            session.remove(orders.get(i));
+        }
+    }
+
     public void reserve(User customer, Master master, Offer offer, int needParts, Date dateStart, Date dateFinish) {
         Session session = this.sessionFactory.getCurrentSession();
         Order order = new Order();
@@ -67,6 +76,14 @@ public class OrderDAO {
         order.setStatus("CREATED");
         session.persist(order);
         session.flush();
+    }
+
+    public List<Order> findOrderByCustomer(int idUser) {
+        Session session = this.sessionFactory.getCurrentSession();
+        String sql = "from Order where customer.id =: idUser";
+        Query<Order> query = session.createQuery(sql, Order.class);
+        query.setParameter("idUser", idUser);
+        return query.list();
     }
 
     public void changeOrderStatus(int idOrder, String status) {
