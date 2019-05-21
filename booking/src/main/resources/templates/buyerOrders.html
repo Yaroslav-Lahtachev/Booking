@@ -19,22 +19,16 @@
 <div>Total orders Count: <span th:utext="${paginationResult.totalRecords}"></span></div>
 <table border="1" , style="width: 100%">
     <tr>
-        <th>ID Order</th>
-        <th>ID Offer</th>
-        <th>ID Seller</th>
-        <th>Login Seller</th>
-        <th>Address</th>
+        <th>Name Offer</th>
+        <th>Master Name</th>
         <th>Date Start Order</th>
         <th>Date Finish Order</th>
         <th>Status</th>
     </tr>
     <tr th:each="ordersInfo : ${paginationResult.list}">
-        <td th:utext="${ordersInfo.id}">..</td>
         <td th:utext="${ordersInfo.nameOffer}">..</td>
-        <td th:utext="${ordersInfo.price}">..</td>
         <td th:utext="${ordersInfo.masterName}">..</td>
         <td th:utext="${ordersInfo.dateStart}">..</td>
-        <td th:utext="${ordersInfo.dateFinish}">..</td>
         <td th:utext="${ordersInfo.dateFinish}">..</td>
         <td th:utext="${ordersInfo.status}">..</td>
     </tr>

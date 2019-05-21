@@ -24,7 +24,7 @@
         <th>Name</th>
         <th>Profession</th>
         <th>Price</th>
-        <th>Time</th>
+        <th>Kit</th>
 
     </tr>
     <tr th:each="offersInfo : ${paginationResult.list}">
@@ -32,7 +32,7 @@
         <td th:utext="${offersInfo.name}">..</td>
         <td th:utext="${offersInfo.prof}">..</td>
         <td th:utext="${offersInfo.price}">..</td>
-        <td th:utext="${offersInfo.time}">..</td>
+        <td th:utext="${offersInfo.kitName}">..</td>
 
         <td><a th:href="@{|/signUp?id=${offersInfo.idOffer}|}">Reserve</a></td>
     </tr>

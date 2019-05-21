@@ -17,6 +17,7 @@ public class OrderInfo {
     private String status;
     private String masterName;
     private String customerName;
+    private String kitName;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateStart;
@@ -29,6 +30,14 @@ public class OrderInfo {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getKitName() {
+        return kitName;
+    }
+
+    public void setKitName (String kitName) {
+        this.kitName = kitName;
     }
 
     public String getStatus() {
@@ -143,6 +152,19 @@ public class OrderInfo {
         this.dateFinish = timeCut(dateFinish);
     }
 
+    public OrderInfo(int id, int offer, String nameOffer, double price, String masterName, Date dateStart, Date dateFinish, String status, int needKit, String kitName) {
+        this.id = id;
+        this.offer = offer;
+        this.nameOffer = nameOffer;
+        this.price = price;
+        this.masterName = masterName;
+        this.dateStart = timeCut(dateStart);
+        this.dateFinish = timeCut(dateFinish);
+        this.status = status;
+        this.needKit = needKit;
+        this.kitName = kitName;
+    }
+
     public OrderInfo(int id, int offer, String nameOffer, double price, String masterName, Date dateStart, Date dateFinish, String status, int needKit) {
         this.id = id;
         this.offer = offer;
@@ -168,6 +190,7 @@ public class OrderInfo {
         this.customerName = order.getCustomer().getLogin();
         this.status = order.getStatus();
         this.needKit = order.getNeedKit();
+        this.kitName = order.getOffer().getKit().getName();
     }
 
     @Override

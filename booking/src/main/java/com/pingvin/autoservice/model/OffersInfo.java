@@ -8,6 +8,7 @@ public class OffersInfo {
     private String prof;
     private double price;
     private int time;
+    private String kitName;
 
     public OffersInfo() {
     }
@@ -19,12 +20,13 @@ public class OffersInfo {
         this.time = time;
     }
 
-    public OffersInfo(int id, String name, String prof, double price, int time) {
+    public OffersInfo(int id, String name, String prof, double price, int time, String kitName) {
         this.id = id;
         this.name = name;
         this.prof = prof;
         this.price = price;
         this.time = time;
+        this.kitName = kitName;
     }
 
     public OffersInfo(Offer offer) {
@@ -33,6 +35,15 @@ public class OffersInfo {
         this.prof = offer.getProf();
         this.price = offer.getPrice();
         this.time = offer.getTime();
+        this.kitName = offer.getKit().getName();
+    }
+
+    public String getKitName() {
+        return kitName;
+    }
+
+    public void setKitName (String kitName) {
+        this.kitName = kitName;
     }
 
     public int getIdOffer() {

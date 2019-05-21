@@ -20,6 +20,7 @@
         <th>Price</th>
         <th>Status</th>
         <th>Master</th>
+        <th>Is Kit needed?</th>
     </tr>
     <tr>
         <td th:utext="${orderInfo.customerName}">..</td>
@@ -27,6 +28,7 @@
         <td th:utext="${orderInfo.price}">..</td>
         <td th:utext="${orderInfo.status}">..</td>
         <td th:utext="${orderInfo.masterName}">..</td>
+        <td th:utext="${orderInfo.needKit==1} ? 'yes' : 'no'">..</td>
     </tr>
 </table>
 
@@ -38,13 +40,13 @@
             <input type="hidden" th:field="${orderInfo.id}"/>
         </td>
         <tr>
-            <td><p><input name="status" type="radio" value="WAITING FOR KIT" th:field="${signUpForm.status}"/>WAITING FOR KIT</p></td>
-            <td><p><input name="status" type="radio" value="KIT WAS ORDERED" th:field="${signUpForm.status}"/>KIT WAS ORDERED</p></td>
-            <td><p><input name="status" type="radio" value="KIT ON ITS WAY" th:field="${signUpForm.status}"/>KIT ON ITS WAY</p></td>
-            <td><p><input name="status" type="radio" value="KIT WAS DELIVERED" th:field="${signUpForm.status}"/>KIT WAS DELIVERED</p></td>
-            <td><p><input name="status" type="radio" value="WAITING FOR MASTER" th:field="${signUpForm.status}"/>WAITING FOR MASTER</p></td>
-            <td><p><input name="status" type="radio" value="IN PROGRESS" th:field="${signUpForm.status}"/>IN PROGRESS</p></td>
-            <td><p><input name="status" type="radio" value="DONE" th:field="${signUpForm.status}"/>DONE</p></td>
+            <td th:if="${orderInfo.status=='CREATED' and orderInfo.needKit==1}"><p><input name="status" type="radio" value="WAITING FOR KIT" th:field="${signUpForm.status}"/>WAITING FOR KIT</p></td>
+            <td th:if="${orderInfo.status=='WAITING FOR KIT'}"><p><input name="status" type="radio" value="KIT WAS ORDERED" th:field="${signUpForm.status}"/>KIT WAS ORDERED</p></td>
+            <td th:if="${orderInfo.status=='KIT WAS ORDERED'}"><p><input name="status" type="radio" value="KIT ON ITS WAY" th:field="${signUpForm.status}"/>KIT ON ITS WAY</p></td>
+            <td th:if="${orderInfo.status=='KIT ON ITS WAY'}"><p><input name="status" type="radio" value="KIT WAS DELIVERED" th:field="${signUpForm.status}"/>KIT WAS DELIVERED</p></td>
+            <td th:if="${orderInfo.status=='KIT WAS DELIVERED' or (orderInfo.status=='CREATED' and orderInfo.needKit==0)}"><p><input name="status" type="radio" value="WAITING FOR MASTER" th:field="${signUpForm.status}"/>WAITING FOR MASTER</p></td>
+            <td th:if="${orderInfo.status=='WAITING FOR MASTER'}"><p><input name="status" type="radio" value="IN PROGRESS" th:field="${signUpForm.status}"/>IN PROGRESS</p></td>
+            <td th:if="${orderInfo.status=='IN PROGRESS'}"><p><input name="status" type="radio" value="DONE" th:field="${signUpForm.status}"/>DONE</p></td>
         </tr>
 
         <tr>
