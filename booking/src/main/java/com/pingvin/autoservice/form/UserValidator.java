@@ -27,6 +27,7 @@ public class UserValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "login", "NotEmpty.usersForm.login");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty.usersForm.password");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirmPassword", "NotEmpty.usersForm.confirmPassword");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty.usersForm.email");
 
         if (!errors.hasFieldErrors("login")) {
             User user = usersDAO.findByLogin(usersForm.getLogin());
