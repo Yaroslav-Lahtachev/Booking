@@ -29,6 +29,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import static com.pingvin.autoservice.config.Consts.TIME_FOR_DELIVER_KIT;
 import static com.pingvin.autoservice.model.OrderInfo.timeCut;
 
 @Controller
@@ -280,13 +281,17 @@ public class MainController {
                 OrderInfo orderInfo = new OrderInfo(offers.get(i), signUpForm.getDateStart(), signUpForm.getDateFinish());
                 Offer offer = offerDAO.findByIdOffer(offers.get(i));
                 Master master = masterDAO.findByIdMaster(masterDAO.getFreeMaster(offer.getIdOffer()));
-                Date dateFinish = new Date(orderInfo.getDateStart().getTime() + TimeUnit.SECONDS.toMillis(offer.getTime()));
+
                 int isNeedParts = 0;
-                for (int j = 0; j < needKit.size(); j++)
-                    if (offers.get(i) == needKit.get(j)) {
-                        isNeedParts = 1;
-                        break;
-                    }
+                if(!needKit.isEmpty()) {
+                    isNeedParts = needKit.get(i);
+                }
+                long timeFinish = orderInfo.getDateStart().getTime() + TimeUnit.SECONDS.toMillis(offer.getTime());
+                if (isNeedParts == 1){
+                    timeFinish += TIME_FOR_DELIVER_KIT;
+                }
+                Date dateFinish = new Date(timeFinish);
+
                 orderDAO.reserve(buyer, master, offer, isNeedParts, orderInfo.getDateStart(), dateFinish);
             }
         }

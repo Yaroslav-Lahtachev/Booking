@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Users List</title>
+    <title>Автосервис</title>
 
     <style>
         th, td {
@@ -16,19 +16,19 @@
 <th:block th:include="/_header"></th:block>
 <th:block th:include="/_menu"></th:block>
 
-<h2>Users</h2>
-<div>Total Users Count: <span th:utext="${paginationResult.totalRecords}"></span></div>
+<h2>Список пользователей</h2>
+<div>Количество пользователей: <span th:utext="${paginationResult.totalRecords}"></span></div>
 <table border="1" , style="width: 100%">
     <tr>
-        <th>ID User</th>
-        <th>Login</th>
-        <th>Status</th>
+        <th>ID пользователя</th>
+        <th>Имя пользователя</th>
+        <th>Статус</th>
     </tr>
     <tr th:each="usersInfo : ${paginationResult.list}">
         <td th:utext="${usersInfo.idUser}">..</td>
         <td th:utext="${usersInfo.login}">..</td>
         <td th:utext="${usersInfo.role}">..</td>
-        <td><a th:href="@{|/admin/viewUserOrdersForAdmin?id=${usersInfo.idUser}|}"> view orders </a></td>
+        <td><a th:href="@{|/admin/viewUserOrdersForAdmin?id=${usersInfo.idUser}|}"> посмотреть заказы </a></td>
     </tr>
 
 </table>

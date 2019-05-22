@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Booking</title>
+    <title>Автосервис</title>
 
     <style>
         th, td {
@@ -17,17 +17,17 @@
 <th:block th:include="/_menu"></th:block>
 
 
-<h2>User Orders</h2>
+<h2>Заказы пользователя</h2>
 <div>Total Offers Count: <span th:utext="${paginationResult.totalRecords}"></span></div>
 <table border="1" , style="width: 100%">
     <tr>
-        <th>Offer Name</th>
-        <th>Price</th>
-        <th>Master name</th>
-        <th>Date Start Order</th>
-        <th>Date Finish Order</th>
-        <th>Is Kit needed?</th>
-        <th>Order Status</th>
+        <th>Наименование услуги</th>
+        <th>Цена</th>
+        <th>Мастер</th>
+        <th>Дата начала</th>
+        <th>Дата окончания</th>
+        <th>Нужны запчасти?</th>
+        <th>Статус заказа</th>
     </tr>
     <tr th:each="ordersInfo : ${paginationResult.list}">
         <td th:utext="${ordersInfo.nameOffer}">..</td>
@@ -35,11 +35,20 @@
         <td th:utext="${ordersInfo.masterName}">..</td>
         <td th:utext="${ordersInfo.dateStart}">..</td>
         <td th:utext="${ordersInfo.dateFinish}">..</td>
-        <td th:utext="${ordersInfo.needKit==1} ? 'yes' : 'no'">..</td>
-        <td th:utext="${ordersInfo.status}">..</td>
-        <td><a th:href="@{|/changeOrderStatus?id=${ordersInfo.id}|}">Change order status</a></td>  <!--todo манагерские фичи здеся-->
-        <td><a th:href="@{|/changeOrderTime?id=${ordersInfo.id}|}">Change order time</a></td>  <!--todo манагерские фичи здеся-->
-        <td><a th:href="@{|/cancelOrder?id=${ordersInfo.id}|}">Cancel order</a></td>  <!--todo манагерские фичи здеся-->
+        <td th:utext="${ordersInfo.needKit==1} ? 'да' : 'нет'">..</td>
+        <th:block th:switch="${ordersInfo.status}">
+            <td th:case="'DONE'">Готово</td>
+            <td th:case="'IN PROGRESS'">Выполняется</td>
+            <td th:case="'WAITING FOR MASTER'">Ожидание свободного мастера</td>
+            <td th:case="'KIT WAS DELIVERED'">Запчасти доставлены в сервис</td>
+            <td th:case="'KIT ON ITS WAY'">Запчасти в пути</td>
+            <td th:case="'KIT WAS ORDERED'">Заказаны запчасти</td>
+            <td th:case="'WAITING FOR KIT'">Ожидает заказа запчастей</td>
+            <td th:case="'CREATED'">Создана</td>
+        </th:block>
+        <td><a th:href="@{|/changeOrderStatus?id=${ordersInfo.id}|}">Сменить статус заказа</a></td>
+        <td><a th:href="@{|/changeOrderTime?id=${ordersInfo.id}|}">Сменить дату окончания</a></td>
+        <td><a th:href="@{|/cancelOrder?id=${ordersInfo.id}|}">Отменить заказ</a></td>
     </tr>
 
 

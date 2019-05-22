@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Changes Page</title>
+    <title>Автосервис</title>
     <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
 </head>
 <body>
@@ -10,23 +10,32 @@
 <th:block th:include="/_header"></th:block>
 <th:block th:include="/_menu"></th:block>
 
-<h2>Changes</h2>
+<h2>Изменения заказа</h2>
 
-<div>Change Time for order</div>
+<div>Сменить статус</div>
 <table border="1" , style="width: 100%">
     <tr>
-        <th>Customer</th>
-        <th>Offer</th>
-        <th>Price</th>
-        <th>Status</th>
-        <th>Master</th>
-        <th>Is Kit needed?</th>
+        <th>Заказчик</th>
+        <th>Услуга</th>
+        <th>Цена</th>
+        <th>Статус</th>
+        <th>Мастер</th>
+        <th>Нужны запчасти?</th>
     </tr>
     <tr>
         <td th:utext="${orderInfo.customerName}">..</td>
         <td th:utext="${orderInfo.nameOffer}">..</td>
         <td th:utext="${orderInfo.price}">..</td>
-        <td th:utext="${orderInfo.status}">..</td>
+        <th:block th:switch="${orderInfo.status}">
+            <td th:case="'DONE'">Готово</td>
+            <td th:case="'IN PROGRESS'">Выполняется</td>
+            <td th:case="'WAITING FOR MASTER'">Ожидание свободного мастера</td>
+            <td th:case="'KIT WAS DELIVERED'">Запчасти доставлены в сервис</td>
+            <td th:case="'KIT ON ITS WAY'">Запчасти в пути</td>
+            <td th:case="'KIT WAS ORDERED'">Заказаны запчасти</td>
+            <td th:case="'WAITING FOR KIT'">Ожидает заказа запчастей</td>
+            <td th:case="'CREATED'">Создана</td>
+        </th:block>
         <td th:utext="${orderInfo.masterName}">..</td>
         <td th:utext="${orderInfo.needKit==1} ? 'yes' : 'no'">..</td>
     </tr>
@@ -40,20 +49,20 @@
             <input type="hidden" th:field="${orderInfo.id}"/>
         </td>
         <tr>
-            <td th:if="${orderInfo.status=='CREATED' and orderInfo.needKit==1}"><p><input name="status" type="radio" value="WAITING FOR KIT" th:field="${signUpForm.status}"/>WAITING FOR KIT</p></td>
-            <td th:if="${orderInfo.status=='WAITING FOR KIT'}"><p><input name="status" type="radio" value="KIT WAS ORDERED" th:field="${signUpForm.status}"/>KIT WAS ORDERED</p></td>
-            <td th:if="${orderInfo.status=='KIT WAS ORDERED'}"><p><input name="status" type="radio" value="KIT ON ITS WAY" th:field="${signUpForm.status}"/>KIT ON ITS WAY</p></td>
-            <td th:if="${orderInfo.status=='KIT ON ITS WAY'}"><p><input name="status" type="radio" value="KIT WAS DELIVERED" th:field="${signUpForm.status}"/>KIT WAS DELIVERED</p></td>
-            <td th:if="${orderInfo.status=='KIT WAS DELIVERED' or (orderInfo.status=='CREATED' and orderInfo.needKit==0)}"><p><input name="status" type="radio" value="WAITING FOR MASTER" th:field="${signUpForm.status}"/>WAITING FOR MASTER</p></td>
-            <td th:if="${orderInfo.status=='WAITING FOR MASTER'}"><p><input name="status" type="radio" value="IN PROGRESS" th:field="${signUpForm.status}"/>IN PROGRESS</p></td>
-            <td th:if="${orderInfo.status=='IN PROGRESS'}"><p><input name="status" type="radio" value="DONE" th:field="${signUpForm.status}"/>DONE</p></td>
+            <td th:if="${orderInfo.status=='CREATED' and orderInfo.needKit==1}"><p><input name="status" type="radio" value="WAITING FOR KIT" th:field="${signUpForm.status}"/>Ожидает заказа запчастей</p></td>
+            <td th:if="${orderInfo.status=='WAITING FOR KIT'}"><p><input name="status" type="radio" value="KIT WAS ORDERED" th:field="${signUpForm.status}"/>Заказаны запчасти</p></td>
+            <td th:if="${orderInfo.status=='KIT WAS ORDERED'}"><p><input name="status" type="radio" value="KIT ON ITS WAY" th:field="${signUpForm.status}"/>Запчасти в пути</p></td>
+            <td th:if="${orderInfo.status=='KIT ON ITS WAY'}"><p><input name="status" type="radio" value="KIT WAS DELIVERED" th:field="${signUpForm.status}"/>Запчасти доставлены в сервис</p></td>
+            <td th:if="${orderInfo.status=='KIT WAS DELIVERED' or (orderInfo.status=='CREATED' and orderInfo.needKit==0)}"><p><input name="status" type="radio" value="WAITING FOR MASTER" th:field="${signUpForm.status}"/>Ожидание свободного мастера</p></td>
+            <td th:if="${orderInfo.status=='WAITING FOR MASTER' or orderInfo.status=='CREATED'}"><p><input name="status" type="radio" value="IN PROGRESS" th:field="${signUpForm.status}"/>Выполняется</p></td>
+            <td th:if="${orderInfo.status=='IN PROGRESS'}"><p><input name="status" type="radio" value="DONE" th:field="${signUpForm.status}"/>Готово</p></td>
         </tr>
 
         <tr>
 
             <td>
-                <button type="submit">"Accept</button>
-                <button type="reset">Reset</button>
+                <button type="submit">"Сохранить</button>
+                <button type="reset">Очистить</button>
             </td>
         </tr>
     </table>

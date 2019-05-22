@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Changes Page</title>
+    <title>Автосервис</title>
     <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
 </head>
 <body>
@@ -12,21 +12,30 @@
 
 <h2>Changes</h2>
 
-<div>Change Time for order</div>
+<div>Сменить дату окончания заказа</div>
 <table border="1" , style="width: 100%">
     <tr>
-        <th>Customer</th>
-        <th>Offer</th>
-        <th>Price</th>
-        <th>Status</th>
-        <th>Master</th>
-        <th>New Finish Date</th>
+        <th>Заказчик</th>
+        <th>Услуга</th>
+        <th>Цена</th>
+        <th>Статус</th>
+        <th>Мастер</th>
+        <th>Новая дата окончания</th>
     </tr>
     <tr>
         <td th:utext="${orderInfo.customerName}">..</td>
         <td th:utext="${orderInfo.nameOffer}">..</td>
         <td th:utext="${orderInfo.price}">..</td>
-        <td th:utext="${orderInfo.status}">..</td>
+        <th:block th:switch="${orderInfo.status}">
+            <td th:case="'DONE'">Готово</td>
+            <td th:case="'IN PROGRESS'">Выполняется</td>
+            <td th:case="'WAITING FOR MASTER'">Ожидание свободного мастера</td>
+            <td th:case="'KIT WAS DELIVERED'">Запчасти доставлены в сервис</td>
+            <td th:case="'KIT ON ITS WAY'">Запчасти в пути</td>
+            <td th:case="'KIT WAS ORDERED'">Заказаны запчасти</td>
+            <td th:case="'WAITING FOR KIT'">Ожидает заказа запчастей</td>
+            <td th:case="'CREATED'">Создана</td>
+        </th:block>
         <td th:utext="${orderInfo.masterName}">..</td>
         <td th:utext="${orderInfo.dateFinish}">..</td>
     </tr>
@@ -47,8 +56,8 @@
         </tr>
         <tr>
             <td>
-                <button type="submit">Accept</button>
-                <button type="reset">Reset</button>
+                <button type="submit">Перейти к смене</button>
+                <button type="reset">Очистить</button>
             </td>
         </tr>
     </table>

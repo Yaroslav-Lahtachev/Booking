@@ -2,20 +2,20 @@
      xmlns:th="http://www.thymeleaf.org"
      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-    <div class="site-name" align="center">Auto service</div>
+    <div class="site-name" align="center">Автосервис</div>
 
     <div class="header-bar">
         <th:block sec:authorize="isAuthenticated()">
             <li th:if="${#request.getUserPrincipal()!=null}">
                 <a th:href="@{/admin/userInfo}" th:utext="${#request.getUserPrincipal().getName()}">..</a>
                 &nbsp;|&nbsp;
-                <a th:href="@{/admin/logout}">Logout</a>
+                <a th:href="@{/admin/logout}">Выйти</a>
             </li>
 
         </th:block>
 
         <th:block th:if="${#request.getUserPrincipal()==null}" sec:authorize="!isAuthenticated()">
-            <a th:href="@{/admin/login}">Login</a>
+            <a th:href="@{/admin/login}">Войти</a>
         </th:block>
     </div>
 

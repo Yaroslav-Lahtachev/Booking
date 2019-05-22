@@ -2,22 +2,22 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Автосервис</title>
     <link rel="stylesheet" type="text/css" th:href="@{/styles.css}" media="all">
 </head>
 <body>
 <th:block th:include="/_header"></th:block>
 <th:block th:include="/_menu"></th:block>
 
-<div class="page-title">Login (For Users, Admin)</div>
+<div class="page-title">Войти</div>
 
 <div class="login-container">
-    <h3>Enter username and password</h3>
+    <h3>Введите имя пользователя и пароль</h3>
     <br>
     <th:block th:if="${#session != null && #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}">
         <div th:if="${#request.getParameter('error') == 'true'}"
              style="color: red; margin: 10px 0px;">
-            Login Failed!<br/>
+            Логин провален!<br/>
         </div>
     </th:block>
 
@@ -25,18 +25,18 @@
           th:action="@{/j_spring_security_check}">
         <table>
             <tr>
-                <td>User Name *</td>
+                <td>Имя пользователя *</td>
                 <td><input name="userName"/></td>
             </tr>
             <tr>
-                <td>Password *</td>
+                <td>Пароль *</td>
                 <td><input type="password" name="password"/></td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
                 <td>
-                    <button type="submit">Login</button>
-                    <button type="reset">Reset</button>
+                    <button type="submit">Войти</button>
+                    <button type="reset">Очистить</button>
                 </td>
             </tr>
         </table>

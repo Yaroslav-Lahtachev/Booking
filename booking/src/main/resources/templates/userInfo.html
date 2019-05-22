@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>User Info</title>
+    <title>Автосервис</title>
     <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
 </head>
 <body>
@@ -10,12 +10,12 @@
 <th:block th:include="/_header"></th:block>
 <th:block th:include="/_menu"></th:block>
 
-<div class="page-title">Account Info</div>
+<div class="page-title">Информация о пользователе</div>
 <div class="account-container">
     <ul>
-        <li>User Name: <span th:utext="${#request.userPrincipal.name}"></span></li>
+        <li>Имя пользователя: <span th:utext="${#request.userPrincipal.name}"></span></li>
         <li>
-            Role:
+            Роль пользователя:
             <ul>
                 <li th:each="auth : ${userDetails.authorities}" th:utext="${auth.authority}"></li>
             </ul>
@@ -25,13 +25,13 @@
 <table>
     <tr>
         <th>
-            <a th:href="@{|/removeUser?id=${userInfo.idUser}|}">Remove User</a>
+            <a th:href="@{|/removeUser?id=${userInfo.idUser}|}">Удалить пользователя</a>
         </th>
         <th>
             | &nbsp;
         </th>
         <th th:if="${userInfo.isAdmin()}">
-            <a th:href="@{/admin/usersList}">Manage Users</a>
+            <a th:href="@{/admin/usersList}">Модерация пользователей</a>
         </th>
     </tr>
 

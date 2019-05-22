@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Cancel</title>
+    <title>Автосервис</title>
     <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
 </head>
 <body>
@@ -14,7 +14,7 @@
 
     <table style="text-align:left;">
         <td>
-            <span text="">To cancel type 'CONFIRM'</span>
+            <span text="">Чтобы отменить заказ введите 'Подтверждаю'</span>
             <input th:field="${utilForm.textField}"/>
         </td>
         <td>
@@ -26,9 +26,9 @@
         <tr>
             <td>&nbsp;</td>
             <td>
-                <button type="submit">Accept</button>
+                <button type="submit">Отправить</button>
                 <a href="/admin/userInfo">
-                    <button type="button">Cancel</button>
+                    <button type="button">Отменить</button>
                 </a>
             </td>
         </tr>

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>User's orders</title>
+    <title>Автосервис</title>
 
     <style>
         th, td {
@@ -15,22 +15,31 @@
 <th:block th:include="/_header"></th:block>
 <th:block th:include="/_menu"></th:block>
 
-<h2>Orders</h2>
-<div>Total orders Count: <span th:utext="${paginationResult.totalRecords}"></span></div>
+<h2>Заказы</h2>
+<div>Список заказов: <span th:utext="${paginationResult.totalRecords}"></span></div>
 <table border="1" , style="width: 100%">
     <tr>
-        <th>Name Offer</th>
-        <th>Master Name</th>
-        <th>Date Start Order</th>
-        <th>Date Finish Order</th>
-        <th>Status</th>
+        <th>Услуга</th>
+        <th>Мастер</th>
+        <th>Дата начала</th>
+        <th>Дата окончания</th>
+        <th>Статус</th>
     </tr>
     <tr th:each="ordersInfo : ${paginationResult.list}">
         <td th:utext="${ordersInfo.nameOffer}">..</td>
         <td th:utext="${ordersInfo.masterName}">..</td>
         <td th:utext="${ordersInfo.dateStart}">..</td>
         <td th:utext="${ordersInfo.dateFinish}">..</td>
-        <td th:utext="${ordersInfo.status}">..</td>
+        <th:block th:switch="${ordersInfo.status}">
+            <td th:case="'DONE'">Готово</td>
+            <td th:case="'IN PROGRESS'">Выполняется</td>
+            <td th:case="'WAITING FOR MASTER'">Ожидание свободного мастера</td>
+            <td th:case="'KIT WAS DELIVERED'">Запчасти доставлены в сервис</td>
+            <td th:case="'KIT ON ITS WAY'">Запчасти в пути</td>
+            <td th:case="'KIT WAS ORDERED'">Заказаны запчасти</td>
+            <td th:case="'WAITING FOR KIT'">Ожидает заказа запчастей</td>
+            <td th:case="'CREATED'">Создана</td>
+        </th:block>
     </tr>
 
 </table>

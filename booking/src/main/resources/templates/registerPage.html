@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Registration</title>
+    <title>Автосервис</title>
     <style>
         th, td {
             padding: 5px;
@@ -25,7 +25,7 @@
 <th:block th:include="/_header"></th:block>
 <th:block th:include="/_menu"></th:block>
 
-<h2>Register</h2>
+<h2>Регистрация</h2>
 
 <div th:if="${errorMessage != null}" th:utext="${errorMessage}"
      class="error">...
@@ -34,17 +34,17 @@
 <form th:action="@{/register}" th:object="${usersForm}" method="POST">
     <table>
         <tr>
-            <td>User Name</td>
+            <td>Имя пользователя</td>
             <td><input type="text" th:field="*{login}"/></td>
             <td><span th:if="${#fields.hasErrors('login')}" th:errors="*{login}">..</span></td>
         </tr>
         <tr>
-            <td>Password</td>
+            <td>Пароль</td>
             <td><input type="password" th:field="*{password}"/></td>
             <td><span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">..</span></td>
         </tr>
         <tr>
-            <td>Confirm</td>
+            <td>Подтвердите пароль</td>
             <td><input type="password" th:field="*{confirmPassword}"/></td>
             <td><span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">..</span></td>
         </tr>
@@ -55,8 +55,8 @@
         </tr>
         <tr>
             <td>&nbsp;</td>
-            <td><button type="submit">Submit</button>
-                <a th:href="@{/}">Cancel</a></td>
+            <td><button type="submit">Сохранить</button>
+                <a th:href="@{/}">Отменить</a></td>
             <td>&nbsp;</td>
         </tr>
     </table>

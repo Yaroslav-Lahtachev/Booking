@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Reservation Page</title>
+    <title>Автосервис</title>
     <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
 </head>
 <body>
@@ -10,15 +10,15 @@
 <th:block th:include="/_header"></th:block>
 <th:block th:include="/_menu"></th:block>
 
-<h2>Reservation</h2>
+<h2>Бронирование услуги</h2>
 
-<div>Сhosen Offer</div>
+<div>Выбрать услугу</div>
 <table border="1" , style="width: 100%">
     <tr>
-        <th>Name</th>
-        <th>Profession</th>
-        <th>Price</th>
-        <th>Kit</th>
+        <th>Наименование</th>
+        <th>Проффесия</th>
+        <th>Цена</th>
+        <th>Запчасти</th>
     </tr>
     <tr>
         <td th:utext="${offersInfo.name}">..</td>
@@ -51,8 +51,8 @@
         <tr>
 
             <td>
-                <button type="submit">Accept"</button>
-                <button type="reset">Reset"</button>
+                <button type="submit">Подтвердить</button>
+                <button type="reset">Очистить</button>
             <td><span class="error-message" th:if="${#fields.hasErrors('dateStart')}" th:errors="*{dateStart}">..</span>
             </td>
         </tr>
