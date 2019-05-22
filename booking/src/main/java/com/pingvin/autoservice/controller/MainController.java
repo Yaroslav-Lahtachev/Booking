@@ -123,8 +123,8 @@ public class MainController {
 
     @RequestMapping(value = "/prepareResult", method = RequestMethod.GET)
     public String prepareResult(Model model,
-                                  @RequestParam(value = "page", defaultValue = "1") int page,
-                                  @RequestParam(value = "id", defaultValue = "0") String id) {
+                                @RequestParam(value = "page", defaultValue = "1") int page,
+                                @RequestParam(value = "id", defaultValue = "0") String id) {
         int idOrder = 0;
         try {
             idOrder = Integer.parseInt(id);
@@ -174,10 +174,9 @@ public class MainController {
             e.printStackTrace();
         }
         String sendTo = buyer.getEmail();
-        if (offers.isEmpty()){
+        if (offers.isEmpty()) {
             sendSimpleMessage(String.format(Consts.MESSAGE_ABOUT_RESULT_OF_CHECKUP_LUCKY, buyer.getIdUser()), sendTo, "yo, dude");
-        }
-        else {
+        } else {
             for (int i = 0; i < offers.size(); i++) {
                 Offer offer = offerDAO.findByIdOffer(offers.get(i));
                 Master master = masterDAO.findByIdMaster(masterDAO.getFreeMaster(offer.getIdOffer()));
@@ -277,7 +276,7 @@ public class MainController {
 
     @RequestMapping(value = "/checkupForUser", method = RequestMethod.GET)
     public String offersPageResultOfCheckupForUser(Model model,
-                             @RequestParam(value = "page", defaultValue = "1") int page
+                                                   @RequestParam(value = "page", defaultValue = "1") int page
     ) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User buyer = usersDAO.findByLogin(authentication.getName());
@@ -321,7 +320,7 @@ public class MainController {
             ex.printStackTrace();
         }
         Offer offer = null;
-        if (idOffer != -1){
+        if (idOffer != -1) {
             offer = offerDAO.findByIdOffer(idOffer);
         }
         OffersInfo offersInfo = null;
@@ -369,8 +368,14 @@ public class MainController {
                 Master master = masterDAO.findByIdMaster(masterDAO.getFreeMaster(offer.getIdOffer()));
 
                 int isNeedParts = 0;
-                if(!needKit.isEmpty()) {
-                    isNeedParts = needKit.get(i);
+                if (!needKit.isEmpty()) {
+                    for (int j = 0; j < needKit.size(); j++) {
+                        if (offer.getIdOffer() == needKit.get(i)) {
+                            isNeedParts = 1;
+                            break;
+                        }
+                    }
+
                 }
 
                 orderDAO.reserve(buyer, master, offer, isNeedParts, new Date(), new Date(), Consts.CREATED_STATUS);
@@ -381,12 +386,12 @@ public class MainController {
 
     @RequestMapping(value = "/submitResult", method = RequestMethod.POST)
     public String submitResult(Model model,
-                                 @ModelAttribute("searchOffer")
-                                 @Validated OffersInfo searchOffer,
-                                 BindingResult result,
-                                 final RedirectAttributes redirectAttributes,
-                                 @ModelAttribute("offerInfo") OffersInfo offersInfo,
-                                 @ModelAttribute("signUpForm") SignUpForm signUpForm) {
+                               @ModelAttribute("searchOffer")
+                               @Validated OffersInfo searchOffer,
+                               BindingResult result,
+                               final RedirectAttributes redirectAttributes,
+                               @ModelAttribute("offerInfo") OffersInfo offersInfo,
+                               @ModelAttribute("signUpForm") SignUpForm signUpForm) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User buyer = usersDAO.findByLogin(authentication.getName());
@@ -409,7 +414,7 @@ public class MainController {
                 Master master = masterDAO.findByIdMaster(masterDAO.getFreeMaster(offer.getIdOffer()));
 
                 int isNeedParts = 0;
-                if(!needKit.isEmpty()) {
+                if (!needKit.isEmpty()) {
                     isNeedParts = needKit.get(i);
                 }
                 orderDAO.reserve(buyer, master, offer, isNeedParts, new Date(), new Date(), Consts.CREATED_STATUS);
