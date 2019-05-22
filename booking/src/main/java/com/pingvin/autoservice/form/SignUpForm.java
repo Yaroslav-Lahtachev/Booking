@@ -10,7 +10,6 @@ public class SignUpForm {
     private Date dateStart;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateFinish;
-    private int needKit;
     private String status;
     private String reason;
 
@@ -21,16 +20,11 @@ public class SignUpForm {
         this.idOffer = idOffer;
         this.dateStart = dateStart;
         this.dateFinish = dateFinish;
-        this.needKit = needKit;
         this.reason = reason;
     }
 
     public int getIdOffer() {
         return idOffer;
-    }
-
-    public void setNeedKit(int needKit) {
-        this.needKit = needKit;
     }
 
     public String getReason() {
@@ -39,10 +33,6 @@ public class SignUpForm {
 
     public void setReason(String reason) {
         this.reason = reason;
-    }
-
-    public int getNeedKit() {
-        return needKit;
     }
 
     public void setIdOffer(int idOffer) {
