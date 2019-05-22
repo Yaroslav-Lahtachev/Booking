@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Автосервис</title>
+
+    <style>
+        th, td {
+            padding: 5px;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
+</head>
+
+<body>
+<th:block th:include="/_header"></th:block>
+<th:block th:include="/_menu"></th:block>
+
+<h2>Услуги</h2>
+
+<div>Количество услуг: <span th:utext="${paginationResult.totalRecords}"></span></div>
+<form th:object="${searchOffer}" th:action="@{/prepareResult}"
+      method="POST" enctype="multipart/form-data">
+<table border="1" , style="width: 100%">
+    <tr>
+        <th>Наименование</th>
+        <th>Выбрать список рекомендованных услуг</th>
+    </tr>
+    <tr th:each="offersInfo : ${paginationResult.list}">
+        <td th:utext="${offersInfo.name}">..</td>
+
+        <td>
+            <input type="checkbox" th:field="*{offer}" th:value="|${offersInfo.idOffer}|" />
+            <label
+                    th:for="${#ids.prev('offer')}">
+            </label>
+        </td>
+        <!--<td><a th:href="@{|/signUp?id=${offersInfo.idOffer}|}">Reserve</a></td>-->
+    </tr>
+</table>
+    <button type="submit">Подтвердить</button>
+    <button type="reset">Очистить</button>
+</form>
+<div class="page-navigator" th:if="${paginationResult.totalPages > 1}">
+    <th:block th:each="page: ${paginationResult.navigationPages}">
+        <a th:if="${page != -1}" class="nav-item" th:href="@{/checkupForAdmin(page=${page})}" th:utext="${page}">
+        </a>
+        <span th:if="${page == -1}" class="nav-item"> ... </span>
+    </th:block>
+</div>
+</body>
+</html>
