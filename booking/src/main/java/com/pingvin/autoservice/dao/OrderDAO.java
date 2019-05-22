@@ -45,7 +45,7 @@ public class OrderDAO {
         String sql = "Select new " + OrderInfo.class.getName()
                 + " (o.id, o.offer.id, f.name, f.price, m.name, o.dateStart, o.dateFinish, o.status, o.needKit) "
                 + " From " + Order.class.getName() + " as o, " + Offer.class.getName() + " as f, " + Master.class.getName() + " as m "
-                + " where f.id=o.offer and o.customer.id =: idUser ";
+                + " where f.id=o.offer and o.customer.id =: idUser and m.id = o.master";
         Query<OrderInfo> query = session.createQuery(sql, OrderInfo.class);
         query.setParameter("idUser", user.getIdUser());
         return new PaginationResult<OrderInfo>(query, page, maxResult, maxNavPage);
