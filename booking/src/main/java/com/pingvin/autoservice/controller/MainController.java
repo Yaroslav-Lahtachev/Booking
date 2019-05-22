@@ -313,16 +313,17 @@ public class MainController {
 
     @RequestMapping(value = "/signUp", method = RequestMethod.GET)
     public String reserve(Model model,
-                          @RequestParam(value = "id", defaultValue = "0") String id) {
-        int idOffer = 0;
+                          @RequestParam(value = "id", defaultValue = "-1") String id) {
+        int idOffer = -1;
         try {
             idOffer = Integer.parseInt(id);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         Offer offer = null;
-        if (idOffer != 0)
+        if (idOffer != -1){
             offer = offerDAO.findByIdOffer(idOffer);
+        }
         OffersInfo offersInfo = null;
         SignUpForm signUpForm = null;
         if (offer != null) {

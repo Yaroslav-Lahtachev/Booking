@@ -49,9 +49,6 @@
         </td>
         <!--<td><a th:href="@{|/signUp?id=${offersInfo.idOffer}|}">Reserve</a></td>-->
     </tr>
-    <tr th:each="offersInfo : ${paginationResult.list}">
-        <a th:if="${searchOffer.offer == '1'}">kek</a>
-    </tr>
 </table>
     <Br>Пожалуйста, выберите дату начала услуги<Br>
     <input type="date" style= "text-align: center;color: white;margin: auto;" th:field="${signUpForm.dateStart}"/>
