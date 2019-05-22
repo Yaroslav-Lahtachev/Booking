@@ -369,7 +369,7 @@ public class MainController {
 
                 int isNeedParts = 0;
                 for (int j = 0; j < needKit.size(); j++) {
-                    if (offer.getIdOffer() == needKit.get(i)) {
+                    if (offer.getIdOffer() == needKit.get(j)) {
                         isNeedParts = 1;
                         break;
                     }
@@ -413,7 +413,7 @@ public class MainController {
 
                 int isNeedParts = 0;
                 for (int j = 0; j < needKit.size(); j++) {
-                    if (offer.getIdOffer() == needKit.get(i)) {
+                    if (offer.getIdOffer() == needKit.get(j)) {
                         isNeedParts = 1;
                         break;
                     }
