@@ -10,7 +10,7 @@
 <th:block th:include="/_header"></th:block>
 <th:block th:include="/_menu"></th:block>
 
-<h2>Changes</h2>
+<h2>Изменения</h2>
 
 <div>Сменить дату окончания заказа</div>
 <table border="1" , style="width: 100%">
@@ -51,12 +51,12 @@
             <input type="hidden" th:field="${orderInfo.dateFinish}"/>
         </td>
         <tr>
-            <td><p><input name="status" type="radio" value="Agree" th:field="${utilForm.textField}"/>Accept</p></td>
-            <td><p><input name="status" type="radio" value="Reject" th:field="${utilForm.textField}"/>Reject</p></td>
+            <td><p><input name="status" type="radio" value="Agree" th:field="${utilForm.textField}"/>Согласится с изменениями</p></td>
+            <td><p><input name="status" type="radio" value="Reject" th:field="${utilForm.textField}"/>Отказаться от заказа</p></td>
         </tr>
         <tr>
             <td>
-                <button type="submit">Перейти к смене</button>
+                <button type="submit">Сохранить</button>
                 <button type="reset">Очистить</button>
             </td>
         </tr>

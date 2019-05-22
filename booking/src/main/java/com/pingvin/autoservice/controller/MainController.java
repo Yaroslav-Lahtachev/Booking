@@ -366,6 +366,7 @@ public class MainController {
             for (int i = 0; i < offers.size(); i++) {
                 Offer offer = offerDAO.findByIdOffer(offers.get(i));
                 Master master = masterDAO.findByIdMaster(masterDAO.getFreeMaster(offer.getIdOffer()));
+                OrderInfo orderInfo = new OrderInfo(offers.get(i), signUpForm.getDateStart(), signUpForm.getDateFinish());
 
                 int isNeedParts = 0;
                 for (int j = 0; j < needKit.size(); j++) {
@@ -374,9 +375,12 @@ public class MainController {
                         break;
                     }
                 }
-
-
-                orderDAO.reserve(buyer, master, offer, isNeedParts, new Date(), new Date(), Consts.CREATED_STATUS);
+                long timeFinish = orderInfo.getDateStart().getTime() + TimeUnit.SECONDS.toMillis(offer.getTime());
+                if (isNeedParts == 1){
+                    timeFinish += TIME_FOR_DELIVER_KIT;
+                }
+                Date dateFinish = new Date(timeFinish);
+                orderDAO.reserve(buyer, master, offer, isNeedParts, orderInfo.getDateStart(), dateFinish, Consts.CREATED_STATUS);
             }
         }
         return "redirect:/buyerOrders";
@@ -410,6 +414,7 @@ public class MainController {
             for (int i = 0; i < offers.size(); i++) {
                 Offer offer = offerDAO.findByIdOffer(offers.get(i));
                 Master master = masterDAO.findByIdMaster(masterDAO.getFreeMaster(offer.getIdOffer()));
+                OrderInfo orderInfo = new OrderInfo(offers.get(i), signUpForm.getDateStart(), signUpForm.getDateFinish());
 
                 int isNeedParts = 0;
                 for (int j = 0; j < needKit.size(); j++) {
@@ -418,7 +423,12 @@ public class MainController {
                         break;
                     }
                 }
-                orderDAO.reserve(buyer, master, offer, isNeedParts, new Date(), new Date(), Consts.CREATED_STATUS);
+                long timeFinish = orderInfo.getDateStart().getTime() + TimeUnit.SECONDS.toMillis(offer.getTime());
+                if (isNeedParts == 1){
+                    timeFinish += TIME_FOR_DELIVER_KIT;
+                }
+                Date dateFinish = new Date(timeFinish);
+                orderDAO.reserve(buyer, master, offer, isNeedParts, orderInfo.getDateStart(), dateFinish, Consts.CREATED_STATUS);
             }
         }
         return "redirect:/buyerOrders";
@@ -501,6 +511,9 @@ public class MainController {
                                    BindingResult result,
                                    final RedirectAttributes redirectAttributes,
                                    @ModelAttribute("orderInfo") OrderInfo orderInfo) {
+        if (utilForm.getTextField() == null){
+            return "redirect:/buyerOrders";
+        }
         if (utilForm.getTextField().equals("Agree")) {
             orderDAO.changeOrderDate(orderInfo.getId(), orderInfo.getDateFinish());
         } else {
