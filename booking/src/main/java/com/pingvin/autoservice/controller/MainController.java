@@ -368,15 +368,13 @@ public class MainController {
                 Master master = masterDAO.findByIdMaster(masterDAO.getFreeMaster(offer.getIdOffer()));
 
                 int isNeedParts = 0;
-                if (!needKit.isEmpty()) {
-                    for (int j = 0; j < needKit.size(); j++) {
-                        if (offer.getIdOffer() == needKit.get(i)) {
-                            isNeedParts = 1;
-                            break;
-                        }
+                for (int j = 0; j < needKit.size(); j++) {
+                    if (offer.getIdOffer() == needKit.get(i)) {
+                        isNeedParts = 1;
+                        break;
                     }
-
                 }
+
 
                 orderDAO.reserve(buyer, master, offer, isNeedParts, new Date(), new Date(), Consts.CREATED_STATUS);
             }
