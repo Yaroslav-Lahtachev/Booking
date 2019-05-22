@@ -114,11 +114,80 @@ public class MainController {
 
     @RequestMapping(value = "/cancelOrder", method = RequestMethod.POST)
     public String cancelConfirm(Model model, @ModelAttribute("UtilForm") UtilForm utilForm) {
-        if (utilForm.getTextField().equals("CONFIRM")) {
+        if (utilForm.getTextField().equals("ПОДТВЕРЖДАЮ")) {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             orderDAO.removeOrder(utilForm.getIntField());
         }
         return "index";
+    }
+
+    @RequestMapping(value = "/prepareResult", method = RequestMethod.GET)
+    public String prepareResult(Model model,
+                                  @RequestParam(value = "page", defaultValue = "1") int page,
+                                  @RequestParam(value = "id", defaultValue = "0") String id) {
+        int idOrder = 0;
+        try {
+            idOrder = Integer.parseInt(id);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        Order order = null;
+        if (idOrder != 0)
+            order = orderDAO.findOrderByIdOrder(idOrder);
+        OrderInfo orderInfo = null;
+        OffersInfo searchOffer = new OffersInfo();
+        //UtilForm utilForm = new UtilForm();
+        //ArrayList arrayList = new ArrayList();
+        PaginationResult<OffersInfo> paginationResult = offerDAO.findOffersInfo(searchOffer, page, MAX_RESULT, MAX_NAVIGATION_PAGE);
+        SignUpForm signUpForm = new SignUpForm();
+        signUpForm.setDateStart(new Date());
+        signUpForm.setDateFinish(new Date());
+        model.addAttribute("paginationResult", paginationResult);
+        //model.addAttribute("utilForm", utilForm);
+        model.addAttribute("signUpForm", signUpForm);
+        //model.addAttribute("arrayList", arrayList);
+        model.addAttribute("searchOffer", searchOffer);
+        if (order != null) {
+            orderInfo = new OrderInfo(order);
+            model.addAttribute("orderInfo", orderInfo);
+            model.addAttribute("error", new Boolean(false));
+        } else return "redirect:/admin/usersList";
+        return "checkupForAdmin";
+    }
+
+    @RequestMapping(value = "/prepareResult", method = RequestMethod.POST)
+    public String prepareResult(Model model,
+                                @ModelAttribute("searchOffer")
+                                @Validated OffersInfo searchOffer,
+                                BindingResult result,
+                                final RedirectAttributes redirectAttributes,
+                                @ModelAttribute("offersInfo") OffersInfo offersInfo,
+                                @ModelAttribute("signUpForm") SignUpForm signUpForm) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User buyer = usersDAO.findByLogin(authentication.getName());
+        List<Integer> offers = new ArrayList();
+        try {
+            for (int i = 0; i < searchOffer.getOffer().size(); i++) {
+                offers.add(Integer.parseInt(searchOffer.getOffer().get(i)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String sendTo = buyer.getEmail();
+        if (offers.isEmpty()){
+            sendSimpleMessage(String.format(Consts.MESSAGE_ABOUT_RESULT_OF_CHECKUP_LUCKY, buyer.getIdUser()), sendTo, "yo, dude");
+        }
+        else {
+            for (int i = 0; i < offers.size(); i++) {
+                Offer offer = offerDAO.findByIdOffer(offers.get(i));
+                Master master = masterDAO.findByIdMaster(masterDAO.getFreeMaster(offer.getIdOffer()));
+
+                int isNeedParts = 0;
+                orderDAO.reserve(buyer, master, offer, isNeedParts, new Date(), new Date(), Consts.WAITING_FOR_RESULTION_STATUS);
+            }
+            sendSimpleMessage(String.format(Consts.MESSAGE_ABOUT_RESULT_OF_CHECKUP, buyer.getIdUser()), sendTo, "yo, dude");
+        }
+        return "redirect:/admin/usersList";
     }
 
     @RequestMapping(value = "/removeUser", method = RequestMethod.GET)
@@ -131,7 +200,7 @@ public class MainController {
 
     @RequestMapping(value = "/removeUser", method = RequestMethod.POST)
     public String removeUser(Model model, @ModelAttribute("UtilForm") UtilForm utilForm) {
-        if (utilForm.getTextField().equals("CONFIRM")) {
+        if (utilForm.getTextField().equals("ПОДТВЕРЖДАЮ")) {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             int idUser = utilForm.getIntField();
             List allOrdersByUser = orderDAO.findOrderByCustomer(idUser);
@@ -139,8 +208,9 @@ public class MainController {
                 orderDAO.removeOrders(allOrdersByUser);
             }
             usersDAO.removeUser(utilForm.getIntField());
+            return "redirect:/admin/logout";
         }
-        return "redirect:/admin/logout";
+        return "redirect:/admin/userInfo";
     }
 
     @RequestMapping(value = "/changeOrderStatus", method = RequestMethod.GET)
@@ -205,6 +275,22 @@ public class MainController {
         return "redirect:/admin/login";
     }
 
+    @RequestMapping(value = "/checkupForUser", method = RequestMethod.GET)
+    public String offersPageResultOfCheckupForUser(Model model,
+                             @RequestParam(value = "page", defaultValue = "1") int page
+    ) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User buyer = usersDAO.findByLogin(authentication.getName());
+        OffersInfo searchOffer = new OffersInfo();
+        PaginationResult<OffersInfo> paginationResult = orderDAO.findOfferByCustomerByStatus(buyer, Consts.WAITING_FOR_RESULTION_STATUS, page, MAX_RESULT, MAX_NAVIGATION_PAGE);
+        SignUpForm signUpForm = new SignUpForm();
+        signUpForm.setDateStart(new Date());
+        signUpForm.setDateFinish(new Date());
+        model.addAttribute("paginationResult", paginationResult);
+        model.addAttribute("signUpForm", signUpForm);
+        model.addAttribute("searchOffer", searchOffer);
+        return "checkupForUser";
+    }
 
     @RequestMapping(value = "/offersPage", method = RequestMethod.GET)
     public String showOffers(Model model,
@@ -278,7 +364,6 @@ public class MainController {
         }
         if (!offers.isEmpty()) {
             for (int i = 0; i < offers.size(); i++) {
-                OrderInfo orderInfo = new OrderInfo(offers.get(i), signUpForm.getDateStart(), signUpForm.getDateFinish());
                 Offer offer = offerDAO.findByIdOffer(offers.get(i));
                 Master master = masterDAO.findByIdMaster(masterDAO.getFreeMaster(offer.getIdOffer()));
 
@@ -286,13 +371,47 @@ public class MainController {
                 if(!needKit.isEmpty()) {
                     isNeedParts = needKit.get(i);
                 }
-                long timeFinish = orderInfo.getDateStart().getTime() + TimeUnit.SECONDS.toMillis(offer.getTime());
-                if (isNeedParts == 1){
-                    timeFinish += TIME_FOR_DELIVER_KIT;
-                }
-                Date dateFinish = new Date(timeFinish);
 
-                orderDAO.reserve(buyer, master, offer, isNeedParts, orderInfo.getDateStart(), dateFinish);
+                orderDAO.reserve(buyer, master, offer, isNeedParts, new Date(), new Date(), Consts.CREATED_STATUS);
+            }
+        }
+        return "redirect:/buyerOrders";
+    }
+
+    @RequestMapping(value = "/submitResult", method = RequestMethod.POST)
+    public String submitResult(Model model,
+                                 @ModelAttribute("searchOffer")
+                                 @Validated OffersInfo searchOffer,
+                                 BindingResult result,
+                                 final RedirectAttributes redirectAttributes,
+                                 @ModelAttribute("offerInfo") OffersInfo offersInfo,
+                                 @ModelAttribute("signUpForm") SignUpForm signUpForm) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User buyer = usersDAO.findByLogin(authentication.getName());
+        List<Integer> offers = new ArrayList();
+        List<Integer> needKit = new ArrayList();
+        orderDAO.removeOrdersByStatus(Consts.WAITING_FOR_RESULTION_STATUS, buyer.getIdUser());
+        try {
+            for (int i = 0; i < searchOffer.getOffer().size(); i++) {
+                offers.add(Integer.parseInt(searchOffer.getOffer().get(i)));
+            }
+            for (int i = 0; i < searchOffer.getNeedKit().size(); i++) {
+                needKit.add(Integer.parseInt(searchOffer.getNeedKit().get(i)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (!offers.isEmpty()) {
+            for (int i = 0; i < offers.size(); i++) {
+                Offer offer = offerDAO.findByIdOffer(offers.get(i));
+                Master master = masterDAO.findByIdMaster(masterDAO.getFreeMaster(offer.getIdOffer()));
+
+                int isNeedParts = 0;
+                if(!needKit.isEmpty()) {
+                    isNeedParts = needKit.get(i);
+                }
+                orderDAO.reserve(buyer, master, offer, isNeedParts, new Date(), new Date(), Consts.CREATED_STATUS);
             }
         }
         return "redirect:/buyerOrders";
