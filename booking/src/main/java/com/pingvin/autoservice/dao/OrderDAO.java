@@ -57,7 +57,7 @@ public class OrderDAO {
     public PaginationResult<OffersInfo> findOfferByCustomerByStatus(User user, String status, int page, int maxResult, int maxNavPage) {
         Session session = this.sessionFactory.getCurrentSession();
         String sql = "Select new " + OffersInfo.class.getName()
-                + " (f.id, f.name, f.prof, f.price, f.time, p.name ) "
+                + " (f.id, f.name, f.prof, f.price, f.time, p.name, p.id ) "
                 + " from "  + Order.class.getName() + " as o, " + Offer.class.getName() + " as f, " + Parts.class.getName() + " as p "
                 + " where p.id =f.kit and o.customer.id =: idUser and o.status =: text_status and o.offer = f.id order by f.id ";
         Query<OffersInfo> query = session.createQuery(sql, OffersInfo.class);

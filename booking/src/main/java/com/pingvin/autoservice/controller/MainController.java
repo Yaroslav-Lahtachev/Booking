@@ -143,7 +143,9 @@ public class MainController {
                                     BindingResult result,
                                     final RedirectAttributes redirectAttributes,
                                     @ModelAttribute("orderInfo") OrderInfo orderInfo) {
+
         return ManagerCase.changeOrderStatusPost(masterDAO, orderDAO, orderInfo, signUpForm);
+
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -255,6 +257,7 @@ public class MainController {
                                    BindingResult result,
                                    final RedirectAttributes redirectAttributes,
                                    @ModelAttribute("orderInfo") OrderInfo orderInfo) {
+
         return UserCase.changeOrderResponsePost(masterDAO, orderDAO, utilForm, orderInfo);
     }
 

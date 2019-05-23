@@ -29,7 +29,7 @@ public class OfferDAO {
 
     public PaginationResult<OffersInfo> findOffersInfo(OffersInfo request, int page, int maxResult, int maxNavPage) {
         String sql = "Select new " + OffersInfo.class.getName()
-                + " (o.id, o.name, o.prof, o.price, o.time, p.name ) "
+                + " (o.id, o.name, o.prof, o.price, o.time, p.name, p.id ) "
                 + " from " + Offer.class.getName() + " as o, " + Parts.class.getName() + " as p " +
                 " where p.id =o.kit order by o.id ";
         Session session = this.sessionFactory.getCurrentSession();

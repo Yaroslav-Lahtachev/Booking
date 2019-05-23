@@ -43,7 +43,7 @@ public class MasterDAO {
             query.setParameter("dateStart", dateStart);
             query.setParameter("dateFinish", dateFinish);
             List<Master> busyInThatTime = query.list();
-            sql = "from Master as m, Order as o where m.prof =: prof and m.occupied=1";
+            sql = "from Master as m where m.prof =: prof and m.occupied=1";
             query = session.createQuery(sql, Master.class);
             query.setParameter("prof", prof);
             List<Master> allAvailableMasters = query.list();
