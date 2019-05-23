@@ -61,7 +61,6 @@ public class MainController {
         if (target == null) {
             return;
         }
-
         if (target.getClass() == UsersForm.class) {
             dataBinder.setValidator(userValidator);
         }
@@ -79,83 +78,35 @@ public class MainController {
 
     @RequestMapping(value = {"/admin/userInfo"}, method = RequestMethod.GET)
     public String userInfo(Model model) {
+        return UserCase.getUserInfo(usersDAO, model);
+    }
 
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UsersInfo userInfo = new UsersInfo(usersDAO.findByLogin(userDetails.getUsername()));
-
-        model.addAttribute("userDetails", userDetails);
-        model.addAttribute("userInfo", userInfo);
-        return "userInfo";
+    @RequestMapping(value = "/admin/usersList", method = RequestMethod.GET)
+    public String usersList(Model model, @RequestParam(value = "page", defaultValue = "1") String pageStr) {
+        return ManagerCase.getUsersList(usersDAO, pageStr, model);
     }
 
     @RequestMapping(value = "/buyerOrders", method = RequestMethod.GET)
     public String findActiveOrderByBuyer(Model model,
                                          @RequestParam(value = "page", defaultValue = "1") String pageStr) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        int page = 1;
-        try {
-            page = Integer.parseInt(pageStr);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        User user = usersDAO.findByLogin(authentication.getName());
-        PaginationResult<OrderInfo> paginationResult =
-                orderDAO.findOrderByCustomer(user, page, MAX_RESULT, MAX_NAVIGATION_PAGE);
-        model.addAttribute("paginationResult", paginationResult);
-        return "buyerOrders";
+        return UserCase.getOrders(usersDAO, orderDAO, pageStr, model);
     }
 
     @RequestMapping(value = "/cancelOrder", method = RequestMethod.GET)
     public String cancelOrder(Model model, @RequestParam(value = "id", defaultValue = "0") int idOrder) {
-        UtilForm utilForm = new UtilForm();
-        utilForm.setIntField(idOrder);
-        model.addAttribute("utilForm", utilForm);
-        return "cancelOrder";
+        return ManagerCase.cancelOrder(idOrder, model);
     }
 
     @RequestMapping(value = "/cancelOrder", method = RequestMethod.POST)
     public String cancelConfirm(Model model, @ModelAttribute("UtilForm") UtilForm utilForm) {
-        if (utilForm.getTextField().equals("ПОДТВЕРЖДАЮ")) {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            Order order = orderDAO.findOrderByIdOrder(utilForm.getIntField());
-            masterDAO.checkIfMasterIsFree(order.getIdOrder(), order.getMaster());
-            orderDAO.removeOrder(order);
-        }
-        return "index";
+        return ManagerCase.cancelOrderPost(masterDAO, orderDAO, utilForm);
     }
 
     @RequestMapping(value = "/prepareResult", method = RequestMethod.GET)
     public String prepareResult(Model model,
                                 @RequestParam(value = "page", defaultValue = "1") int page,
                                 @RequestParam(value = "id", defaultValue = "0") String id) {
-        int idOrder = 0;
-        try {
-            idOrder = Integer.parseInt(id);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        Order order = null;
-        if (idOrder != 0)
-            order = orderDAO.findOrderByIdOrder(idOrder);
-        OrderInfo orderInfo = null;
-        OffersInfo searchOffer = new OffersInfo();
-        //UtilForm utilForm = new UtilForm();
-        //ArrayList arrayList = new ArrayList();
-        PaginationResult<OffersInfo> paginationResult = offerDAO.findOffersInfo(searchOffer, page, MAX_RESULT, MAX_NAVIGATION_PAGE);
-        SignUpForm signUpForm = new SignUpForm();
-        signUpForm.setDateStart(new Date());
-        signUpForm.setDateFinish(new Date());
-        model.addAttribute("paginationResult", paginationResult);
-        //model.addAttribute("utilForm", utilForm);
-        model.addAttribute("signUpForm", signUpForm);
-        //model.addAttribute("arrayList", arrayList);
-        model.addAttribute("searchOffer", searchOffer);
-        if (order != null) {
-            orderInfo = new OrderInfo(order);
-            model.addAttribute("orderInfo", orderInfo);
-            model.addAttribute("error", new Boolean(false));
-        } else return "redirect:/admin/usersList";
-        return "checkupForAdmin";
+        return ManagerCase.checkupForAdmin(offerDAO, orderDAO, id, page, model);
     }
 
     @RequestMapping(value = "/prepareResult", method = RequestMethod.POST)
@@ -166,78 +117,23 @@ public class MainController {
                                 final RedirectAttributes redirectAttributes,
                                 @ModelAttribute("offersInfo") OffersInfo offersInfo,
                                 @ModelAttribute("signUpForm") SignUpForm signUpForm) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User buyer = usersDAO.findByLogin(authentication.getName());
-        List<Integer> offers = new ArrayList();
-        try {
-            for (int i = 0; i < searchOffer.getOffer().size(); i++) {
-                offers.add(Integer.parseInt(searchOffer.getOffer().get(i)));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        String sendTo = buyer.getEmail();
-        if (offers.isEmpty()) {
-            sendSimpleMessage(String.format(Consts.MESSAGE_ABOUT_RESULT_OF_CHECKUP_LUCKY, buyer.getIdUser()), sendTo, "yo, dude");
-        } else {
-            for (int i = 0; i < offers.size(); i++) {
-                Offer offer = offerDAO.findByIdOffer(offers.get(i));
-                Master master = masterDAO.findByIdMaster(1);
-
-                int isNeedParts = 0;
-                orderDAO.reserve(buyer, master, offer, isNeedParts, new Date(), new Date(), Consts.WAITING_FOR_RESULTION_STATUS);
-            }
-            sendSimpleMessage(String.format(Consts.MESSAGE_ABOUT_RESULT_OF_CHECKUP, buyer.getIdUser()), sendTo, "yo, dude");
-        }
-        return "redirect:/admin/usersList";
+        return ManagerCase.checkupForAdminPost(usersDAO, offerDAO, masterDAO, orderDAO, emailSender, searchOffer);
     }
 
     @RequestMapping(value = "/removeUser", method = RequestMethod.GET)
     public String removeUser(Model model, @RequestParam(value = "id", defaultValue = "0") int userId) {
-        UtilForm utilForm = new UtilForm();
-        utilForm.setIntField(userId);
-        model.addAttribute("utilForm", utilForm);
-        return "removeUser";
+        return UserCase.removeUser(userId, model);
     }
 
     @RequestMapping(value = "/removeUser", method = RequestMethod.POST)
     public String removeUser(Model model, @ModelAttribute("UtilForm") UtilForm utilForm) {
-        if (utilForm.getTextField().equals("ПОДТВЕРЖДАЮ")) {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            int idUser = utilForm.getIntField();
-            List allOrdersByUser = orderDAO.findOrderByCustomer(idUser);
-            if (allOrdersByUser.size() > 0) {
-                orderDAO.removeOrders(allOrdersByUser);
-            }
-            usersDAO.removeUser(utilForm.getIntField());
-            return "redirect:/admin/logout";
-        }
-        return "redirect:/admin/userInfo";
+        return UserCase.removeUserPost(usersDAO, orderDAO, utilForm);
     }
 
     @RequestMapping(value = "/changeOrderStatus", method = RequestMethod.GET)
     public String changeOrderStatus(Model model,
                                     @RequestParam(value = "id", defaultValue = "0") String id) {
-        int idOrder = 0;
-        try {
-            idOrder = Integer.parseInt(id);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        Order order = null;
-        if (idOrder != 0)
-            order = orderDAO.findOrderByIdOrder(idOrder);
-        OrderInfo orderInfo = null;
-        SignUpForm signUpForm = null;
-        if (order != null) {
-            orderInfo = new OrderInfo(order);
-            signUpForm = new SignUpForm();
-            signUpForm.setStatus(order.getStatus());
-            model.addAttribute("orderInfo", orderInfo);
-            model.addAttribute("signUpForm", signUpForm);
-            model.addAttribute("error", new Boolean(false));
-        } else return "redirect:/admin/usersList";
-        return "changeOrderStatus";
+        return ManagerCase.changeOrderStatus(orderDAO, id, model);
     }
 
     @RequestMapping(value = "/changeOrderStatus", method = RequestMethod.POST)
@@ -247,20 +143,12 @@ public class MainController {
                                     BindingResult result,
                                     final RedirectAttributes redirectAttributes,
                                     @ModelAttribute("orderInfo") OrderInfo orderInfo) {
-
-        Order order = orderDAO.findOrderByIdOrder(orderInfo.getId());
-        orderDAO.changeOrderStatus(order, signUpForm.getStatus());
-        if(signUpForm.getStatus() == "DONE"){
-            masterDAO.checkIfMasterIsFree(order.getIdOrder(), order.getMaster());
-        }
-        return "redirect:/admin/usersList";
+        return ManagerCase.changeOrderStatusPost(masterDAO, orderDAO, orderInfo, signUpForm);
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String viewRegister(Model model) {
-        UsersForm form = new UsersForm();
-        model.addAttribute("usersForm", form);
-        return "registerPage";
+        return UserCase.registerUser(model);
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -269,81 +157,48 @@ public class MainController {
                                @Validated UsersForm usersForm,
                                BindingResult result,
                                final RedirectAttributes redirectAttributes) {
-        if (result.hasErrors()) {
-            return "registerPage";
-        }
-        try {
-            usersDAO.addNewUser(usersForm);
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", "Error: " + e.getMessage());
-            return "registerPage";
-        }
-        return "redirect:/admin/login";
+        return UserCase.registerUserPost(usersDAO, usersForm, result, model);
     }
 
     @RequestMapping(value = "/checkupForUser", method = RequestMethod.GET)
     public String offersPageResultOfCheckupForUser(Model model,
-                                                   @RequestParam(value = "page", defaultValue = "1") int page
-    ) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User buyer = usersDAO.findByLogin(authentication.getName());
-        OffersInfo searchOffer = new OffersInfo();
-        PaginationResult<OffersInfo> paginationResult = orderDAO.findOfferByCustomerByStatus(buyer, Consts.WAITING_FOR_RESULTION_STATUS, page, MAX_RESULT, MAX_NAVIGATION_PAGE);
-        SignUpForm signUpForm = new SignUpForm();
-        signUpForm.setDateStart(new Date());
-        signUpForm.setDateFinish(new Date());
-        model.addAttribute("paginationResult", paginationResult);
-        model.addAttribute("signUpForm", signUpForm);
-        model.addAttribute("searchOffer", searchOffer);
-        return "checkupForUser";
+                                                   @RequestParam(value = "page", defaultValue = "1") int page) {
+        return UserCase.checkupForUser(usersDAO, orderDAO, page, model);
     }
 
     @RequestMapping(value = "/offersPage", method = RequestMethod.GET)
     public String showOffers(Model model,
-                             @RequestParam(value = "page", defaultValue = "1") int page
-    ) {
-        OffersInfo searchOffer = new OffersInfo();
-        //UtilForm utilForm = new UtilForm();
-        //ArrayList arrayList = new ArrayList();
-        PaginationResult<OffersInfo> paginationResult = offerDAO.findOffersInfo(searchOffer, page, MAX_RESULT, MAX_NAVIGATION_PAGE);
-        SignUpForm signUpForm = new SignUpForm();
-        signUpForm.setDateStart(new Date());
-        signUpForm.setDateFinish(new Date());
-        model.addAttribute("paginationResult", paginationResult);
-        //model.addAttribute("utilForm", utilForm);
-        model.addAttribute("signUpForm", signUpForm);
-        //model.addAttribute("arrayList", arrayList);
-        model.addAttribute("searchOffer", searchOffer);
-        return "offersPage";
+                             @RequestParam(value = "page", defaultValue = "1") int page) {
+        return UserCase.getOffers(offerDAO, page, model);
     }
 
-    @RequestMapping(value = "/signUp", method = RequestMethod.GET)
-    public String reserve(Model model,
-                          @RequestParam(value = "id", defaultValue = "-1") String id) {
-        int idOffer = -1;
-        try {
-            idOffer = Integer.parseInt(id);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        Offer offer = null;
-        if (idOffer != -1) {
-            offer = offerDAO.findByIdOffer(idOffer);
-        }
-        OffersInfo offersInfo = null;
-        SignUpForm signUpForm = null;
-        if (offer != null) {
-            offersInfo = new OffersInfo(offer);
-            signUpForm = new SignUpForm();
-            signUpForm.setIdOffer(idOffer);
-            signUpForm.setDateStart(new Date());
-            signUpForm.setDateFinish(new Date());
-            model.addAttribute("offersInfo", offersInfo);
-            model.addAttribute("signUpForm", signUpForm);
-            model.addAttribute("error", new Boolean(false));
-        } else return "redirect:/offersPage";
-        return "signup";
-    }
+    //@RequestMapping(value = "/signUp", method = RequestMethod.GET)
+    //public String reserve(Model model,
+    //                      @RequestParam(value = "id", defaultValue = "-1") String id) {
+    //    int idOffer = -1;
+    //    try {
+    //        idOffer = Integer.parseInt(id);
+    //    } catch (Exception ex) {
+    //        ex.printStackTrace();
+    //    }
+    //    Offer offer = null;
+    //    if (idOffer != -1) {
+    //        offer = offerDAO.findByIdOffer(idOffer);
+    //    }
+    //    OffersInfo offersInfo = null;
+    //    SignUpForm signUpForm = null;
+    //    if (offer != null) {
+    //        offersInfo = new OffersInfo(offer);
+    //        signUpForm = new SignUpForm();
+    //        signUpForm.setIdOffer(idOffer);
+    //        signUpForm.setDateStart(new Date());
+    //        signUpForm.setDateFinish(new Date());
+    //        model.addAttribute("offersInfo", offersInfo);
+    //        model.addAttribute("signUpForm", signUpForm);
+    //        model.addAttribute("error", new Boolean(false));
+    //    } else return "redirect:/offersPage";
+    //    return "signup";
+    //}
 
 
     @RequestMapping(value = "/signUp", method = RequestMethod.POST)
@@ -355,12 +210,7 @@ public class MainController {
                                  @ModelAttribute("offersInfo") OffersInfo offersInfo,
                                  @ModelAttribute("signUpForm") SignUpForm signUpForm) {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User buyer = usersDAO.findByLogin(authentication.getName());
-        List<Integer> offers = new ArrayList();
-        List<Integer> needKit = new ArrayList();
-        reserveOrder(offers, needKit, searchOffer, signUpForm, buyer);
-        return "redirect:/buyerOrders";
+        return UserCase.addOrder(usersDAO, offerDAO, masterDAO, orderDAO, searchOffer, signUpForm);
     }
 
     @RequestMapping(value = "/submitResult", method = RequestMethod.POST)
@@ -372,39 +222,13 @@ public class MainController {
                                @ModelAttribute("offerInfo") OffersInfo offersInfo,
                                @ModelAttribute("signUpForm") SignUpForm signUpForm) {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User buyer = usersDAO.findByLogin(authentication.getName());
-        List<Integer> offers = new ArrayList();
-        List<Integer> needKit = new ArrayList();
-        orderDAO.removeOrdersByStatus(Consts.WAITING_FOR_RESULTION_STATUS, buyer.getIdUser());
-        reserveOrder(offers, needKit, searchOffer, signUpForm, buyer);
-        return "redirect:/buyerOrders";
+        return UserCase.submitResultСheckup(usersDAO, offerDAO, masterDAO, orderDAO, searchOffer, signUpForm);
     }
 
     @RequestMapping(value = "/changeOrderTime", method = RequestMethod.GET)
     public String changeOrderTime(Model model,
                                   @RequestParam(value = "id", defaultValue = "0") String id) {
-        int idOrder = 0;
-        try {
-            idOrder = Integer.parseInt(id);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        Order order = null;
-        if (idOrder != 0)
-            order = orderDAO.findOrderByIdOrder(idOrder);
-        OrderInfo orderInfo = null;
-        SignUpForm signUpForm = null;
-        if (order != null) {
-            orderInfo = new OrderInfo(order);
-            signUpForm = new SignUpForm();
-            signUpForm.setDateStart(new Date());
-            signUpForm.setDateFinish(new Date());
-            model.addAttribute("orderInfo", orderInfo);
-            model.addAttribute("signUpForm", signUpForm);
-            model.addAttribute("error", new Boolean(false));
-        } else return "redirect:/admin/usersList";
-        return "changeOrderTime";
+        return ManagerCase.changeOrderTime(orderDAO, id, model);
     }
 
     @RequestMapping(value = "/changeOrderTime", method = RequestMethod.POST)
@@ -414,41 +238,14 @@ public class MainController {
                                   BindingResult result,
                                   final RedirectAttributes redirectAttributes,
                                   @ModelAttribute("orderInfo") OrderInfo orderInfo) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-        Date newdate = timeCut(signUpForm.getDateFinish());
-        String reason = signUpForm.getReason();
-        String sendTo = usersDAO.findByIdUser(orderInfo.getCustomer()).getEmail();
-        sendSimpleMessage(String.format(Consts.MESSAGE_ABOUT_CHANGING_TIME, reason, simpleDateFormat.format(newdate), orderInfo.getId()), sendTo, "yo, dude");
-        return "redirect:/admin/usersList";
+        return ManagerCase.changeOrderTimePost(usersDAO, emailSender, orderInfo, signUpForm);
     }
 
     @RequestMapping(value = "/acceptChangeTime", method = RequestMethod.GET)
     public String acceptChangeTime(Model model,
                                    @RequestParam(value = "order", defaultValue = "-1") String id,
                                    @RequestParam(value = "date", defaultValue = "null") String time) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        int idOrder = 0;
-        Date date = null;
-        try {
-            idOrder = Integer.parseInt(id);
-            date = format.parse(time);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        if (date != null && idOrder != -1) {
-            Order order = orderDAO.findOrderByIdOrder(idOrder);
-            if (order != null) {
-                UtilForm utilForm = new UtilForm();
-                OrderInfo orderInfo = new OrderInfo(order);
-                orderInfo.setDateFinish(date);
-                model.addAttribute("orderInfo", orderInfo);
-                model.addAttribute("utilForm", utilForm);
-                model.addAttribute("error", new Boolean(false));
-            } else return "redirect:/admin/usersList";
-        }
-        return "acceptChangeTime";
+        return UserCase.changeOrderResponse(orderDAO, id, time, model);
     }
 
 
@@ -458,114 +255,22 @@ public class MainController {
                                    BindingResult result,
                                    final RedirectAttributes redirectAttributes,
                                    @ModelAttribute("orderInfo") OrderInfo orderInfo) {
-        if (utilForm.getTextField() == null){
-            return "redirect:/buyerOrders";
-        }
-        if (utilForm.getTextField().equals("Agree")) {
-            orderDAO.changeOrderDate(orderInfo.getId(), orderInfo.getDateFinish());
-        } else {
-            System.out.println("customer is gay, lets delete his order");
-            Order order = orderDAO.findOrderByIdOrder(utilForm.getIntField());
-            masterDAO.checkIfMasterIsFree(order.getIdOrder(), order.getMaster());
-            orderDAO.removeOrder(order);
-        }
-        return "redirect:/buyerOrders";
+        return UserCase.changeOrderResponsePost(masterDAO, orderDAO, utilForm, orderInfo);
     }
 
-    @RequestMapping(value = "/admin/usersList", method = RequestMethod.GET)
-    public String usersList(Model model, @RequestParam(value = "page", defaultValue = "1") String pageStr) {
-        int page = 1;
-        try {
-            page = Integer.parseInt(pageStr);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        PaginationResult<UsersInfo> paginationResult = usersDAO.listUsersInfo(page, MAX_RESULT, MAX_NAVIGATION_PAGE);
-
-        model.addAttribute("paginationResult", paginationResult);
-        return "usersList";
-    }
 
     @RequestMapping(value = "/admin/viewAllUsersOrdersForAdmin", method = RequestMethod.GET)
     public String userOffersForAdmin(Model model,
                                      @RequestParam(value = "page", defaultValue = "1") String pageStr) {
-        int page = 1;
-        try {
-            page = Integer.parseInt(pageStr);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        PaginationResult<OrderInfo> paginationResult = orderDAO.findAllOrders(page, MAX_RESULT, MAX_NAVIGATION_PAGE);
-        model.addAttribute("paginationResult", paginationResult);
-        return "viewAllUsersOrdersForAdmin";
+        return ManagerCase.getUsersOrdersList(orderDAO, pageStr, model);
     }
 
-    @RequestMapping(value = "/admin/viewUserOrdersForAdmin", method = RequestMethod.GET)          //todo
+    @RequestMapping(value = "/admin/viewUserOrdersForAdmin", method = RequestMethod.GET)
     public String userOrdersForAdmin(Model model,
                                      @RequestParam(value = "page", defaultValue = "1") String pageStr,
                                      @RequestParam(value = "id", defaultValue = "0") int id) {
-        int page = 1;
-        try {
-            page = Integer.parseInt(pageStr);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        if (id != 0) {
-            User buyer = usersDAO.findByIdUser(id);
-
-            PaginationResult<OrderInfo> paginationResult = orderDAO.findOrderByCustomer(buyer, page, MAX_RESULT, MAX_NAVIGATION_PAGE);
-
-            model.addAttribute("paginationResult", paginationResult);
-            model.addAttribute("id", id);
-        } else return "redirect:/usersList";
-        return "viewUserOrdersForAdmin";
+        return ManagerCase.getConcreteUserOrdersList(usersDAO, orderDAO, pageStr, id, model);
     }
 
-    private void sendSimpleMessage(
-            String text, String to, String subject) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(to);
-        message.setSubject(subject);
-        message.setText(text);
-        emailSender.send(message);
-    }
 
-    private void reserveOrder(List<Integer> offers, List<Integer> needKit, OffersInfo searchOffer, SignUpForm signUpForm, User buyer){
-        try {
-            for (int i = 0; i < searchOffer.getOffer().size(); i++) {
-                offers.add(Integer.parseInt(searchOffer.getOffer().get(i)));
-            }
-            for (int i = 0; i < searchOffer.getNeedKit().size(); i++) {
-                needKit.add(Integer.parseInt(searchOffer.getNeedKit().get(i)));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if (!offers.isEmpty()) {
-            for (int i = 0; i < offers.size(); i++) {
-                OrderInfo orderInfo = new OrderInfo(offers.get(i), signUpForm.getDateStart(), signUpForm.getDateFinish());
-                Offer offer = offerDAO.findByIdOffer(offers.get(i));
-
-                int isNeedParts = 0;
-                for (int j = 0; j < needKit.size(); j++) {
-                    if (offer.getIdOffer() == needKit.get(j)) {
-                        isNeedParts = 1;
-                        break;
-                    }
-                }
-                long timeFinish = orderInfo.getDateStart().getTime() + TimeUnit.SECONDS.toMillis(offer.getTime());
-                if (isNeedParts == 1){
-                    timeFinish += TIME_FOR_DELIVER_KIT;
-                }
-                long timeStart = orderInfo.getDateStart().getTime();
-                if (isNeedParts == 1){
-                    timeStart += TIME_FOR_DELIVER_KIT;
-                }
-                Date dateFinish = new Date(timeFinish);
-                Date dateStart = new Date(timeStart);
-                Master master = masterDAO.getFreeMaster(offer, dateStart, dateFinish);
-                orderDAO.reserve(buyer, master, offer, isNeedParts, orderInfo.getDateStart(), dateFinish, Consts.CREATED_STATUS);
-            }
-        }
-    }
 }
