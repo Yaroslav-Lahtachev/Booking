@@ -56,7 +56,7 @@ public class MasterDAO {
 
     public void checkIfMasterIsFree(int orderID, int masterId) {
         Session session = this.sessionFactory.getCurrentSession();
-        String sql = "from Order as o where o.master=m.id and m.id =: masterID and o.id != : orderID";
+        String sql = "Select new Order(o.id, o.customer, o.offer, o.dateStart, o.dateFinish, o.master, o.needKit, o.status) from Order as o, Master as m where o.master=m.id and m.id =: masterID and o.id != : orderID";
         Query<Order> query = session.createQuery(sql, Order.class);
         query.setParameter("masterID", masterId);
         query.setParameter("orderID", orderID);
