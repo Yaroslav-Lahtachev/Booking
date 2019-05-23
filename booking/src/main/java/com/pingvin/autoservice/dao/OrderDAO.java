@@ -66,9 +66,8 @@ public class OrderDAO {
         return new PaginationResult<OffersInfo>(query, page, maxResult, maxNavPage);
     }
 
-    public void removeOrder(int OrderId) {
+    public void removeOrder(Order order) {
         Session session = this.sessionFactory.getCurrentSession();
-        Order order = session.get(Order.class, OrderId);
         session.remove(order);
     }
 
@@ -85,6 +84,7 @@ public class OrderDAO {
 
     public void reserve(User customer, Master master, Offer offer, int needParts, Date dateStart, Date dateFinish, String status) {
         Session session = this.sessionFactory.getCurrentSession();
+        master.setOccupied(1);
         Order order = new Order();
         order.setCustomer(customer);
         order.setOffer(offer);
@@ -114,8 +114,7 @@ public class OrderDAO {
         return query.list();
     }
 
-    public void changeOrderStatus(int idOrder, String status) {
-        Order order = findOrderByIdOrder(idOrder);
+    public void changeOrderStatus(Order order, String status) {
         order.setStatus(status);
     }
 

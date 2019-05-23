@@ -2,6 +2,7 @@ package com.pingvin.autoservice.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(name = "masters")
@@ -19,7 +20,7 @@ public class Master implements Serializable {
     private String name;
 
     @Column(name = "occupied", nullable = false)
-    private String occupied;
+    private int occupied;
 
     public int getMaster() {
         return id;
@@ -45,12 +46,11 @@ public class Master implements Serializable {
         this.name = name;
     }
 
-    // TODO: WHY char(255) in database, should it be boolean?
-    public String isOccupied() {
+    public int getOccupied() {
         return occupied;
     }
 
-    public void setOccupied(String occupied) {
+    public void setOccupied(int occupied) {
         this.occupied = occupied;
     }
 

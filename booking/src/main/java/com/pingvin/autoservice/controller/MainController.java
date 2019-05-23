@@ -1,5 +1,6 @@
 package com.pingvin.autoservice.controller;
 
+import org.hibernate.Session;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import com.pingvin.autoservice.config.Consts;
@@ -116,7 +117,9 @@ public class MainController {
     public String cancelConfirm(Model model, @ModelAttribute("UtilForm") UtilForm utilForm) {
         if (utilForm.getTextField().equals("ПОДТВЕРЖДАЮ")) {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            orderDAO.removeOrder(utilForm.getIntField());
+            Order order = orderDAO.findOrderByIdOrder(utilForm.getIntField());
+            masterDAO.checkIfMasterIsFree(order.getIdOrder(), order.getMaster());
+            orderDAO.removeOrder(order);
         }
         return "index";
     }
@@ -179,7 +182,7 @@ public class MainController {
         } else {
             for (int i = 0; i < offers.size(); i++) {
                 Offer offer = offerDAO.findByIdOffer(offers.get(i));
-                Master master = masterDAO.findByIdMaster(masterDAO.getFreeMaster(offer.getIdOffer()));
+                Master master = masterDAO.findByIdMaster(1);
 
                 int isNeedParts = 0;
                 orderDAO.reserve(buyer, master, offer, isNeedParts, new Date(), new Date(), Consts.WAITING_FOR_RESULTION_STATUS);
@@ -245,7 +248,11 @@ public class MainController {
                                     final RedirectAttributes redirectAttributes,
                                     @ModelAttribute("orderInfo") OrderInfo orderInfo) {
 
-        orderDAO.changeOrderStatus(orderInfo.getId(), signUpForm.getStatus());
+        Order order = orderDAO.findOrderByIdOrder(orderInfo.getId());
+        orderDAO.changeOrderStatus(order, signUpForm.getStatus());
+        if(signUpForm.getStatus() == "DONE"){
+            masterDAO.checkIfMasterIsFree(order.getIdOrder(), order.getMaster());
+        }
         return "redirect:/admin/usersList";
     }
 
@@ -352,37 +359,7 @@ public class MainController {
         User buyer = usersDAO.findByLogin(authentication.getName());
         List<Integer> offers = new ArrayList();
         List<Integer> needKit = new ArrayList();
-        try {
-            for (int i = 0; i < searchOffer.getOffer().size(); i++) {
-                offers.add(Integer.parseInt(searchOffer.getOffer().get(i)));
-            }
-            for (int i = 0; i < searchOffer.getNeedKit().size(); i++) {
-                needKit.add(Integer.parseInt(searchOffer.getNeedKit().get(i)));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if (!offers.isEmpty()) {
-            for (int i = 0; i < offers.size(); i++) {
-                Offer offer = offerDAO.findByIdOffer(offers.get(i));
-                Master master = masterDAO.findByIdMaster(masterDAO.getFreeMaster(offer.getIdOffer()));
-                OrderInfo orderInfo = new OrderInfo(offers.get(i), signUpForm.getDateStart(), signUpForm.getDateFinish());
-
-                int isNeedParts = 0;
-                for (int j = 0; j < needKit.size(); j++) {
-                    if (offer.getIdOffer() == needKit.get(j)) {
-                        isNeedParts = 1;
-                        break;
-                    }
-                }
-                long timeFinish = orderInfo.getDateStart().getTime() + TimeUnit.SECONDS.toMillis(offer.getTime());
-                if (isNeedParts == 1){
-                    timeFinish += TIME_FOR_DELIVER_KIT;
-                }
-                Date dateFinish = new Date(timeFinish);
-                orderDAO.reserve(buyer, master, offer, isNeedParts, orderInfo.getDateStart(), dateFinish, Consts.CREATED_STATUS);
-            }
-        }
+        reserveOrder(offers, needKit, searchOffer, signUpForm, buyer);
         return "redirect:/buyerOrders";
     }
 
@@ -400,37 +377,7 @@ public class MainController {
         List<Integer> offers = new ArrayList();
         List<Integer> needKit = new ArrayList();
         orderDAO.removeOrdersByStatus(Consts.WAITING_FOR_RESULTION_STATUS, buyer.getIdUser());
-        try {
-            for (int i = 0; i < searchOffer.getOffer().size(); i++) {
-                offers.add(Integer.parseInt(searchOffer.getOffer().get(i)));
-            }
-            for (int i = 0; i < searchOffer.getNeedKit().size(); i++) {
-                needKit.add(Integer.parseInt(searchOffer.getNeedKit().get(i)));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if (!offers.isEmpty()) {
-            for (int i = 0; i < offers.size(); i++) {
-                Offer offer = offerDAO.findByIdOffer(offers.get(i));
-                Master master = masterDAO.findByIdMaster(masterDAO.getFreeMaster(offer.getIdOffer()));
-                OrderInfo orderInfo = new OrderInfo(offers.get(i), signUpForm.getDateStart(), signUpForm.getDateFinish());
-
-                int isNeedParts = 0;
-                for (int j = 0; j < needKit.size(); j++) {
-                    if (offer.getIdOffer() == needKit.get(j)) {
-                        isNeedParts = 1;
-                        break;
-                    }
-                }
-                long timeFinish = orderInfo.getDateStart().getTime() + TimeUnit.SECONDS.toMillis(offer.getTime());
-                if (isNeedParts == 1){
-                    timeFinish += TIME_FOR_DELIVER_KIT;
-                }
-                Date dateFinish = new Date(timeFinish);
-                orderDAO.reserve(buyer, master, offer, isNeedParts, orderInfo.getDateStart(), dateFinish, Consts.CREATED_STATUS);
-            }
-        }
+        reserveOrder(offers, needKit, searchOffer, signUpForm, buyer);
         return "redirect:/buyerOrders";
     }
 
@@ -518,7 +465,9 @@ public class MainController {
             orderDAO.changeOrderDate(orderInfo.getId(), orderInfo.getDateFinish());
         } else {
             System.out.println("customer is gay, lets delete his order");
-            orderDAO.removeOrder(orderInfo.getId());
+            Order order = orderDAO.findOrderByIdOrder(utilForm.getIntField());
+            masterDAO.checkIfMasterIsFree(order.getIdOrder(), order.getMaster());
+            orderDAO.removeOrder(order);
         }
         return "redirect:/buyerOrders";
     }
@@ -581,4 +530,42 @@ public class MainController {
         emailSender.send(message);
     }
 
+    private void reserveOrder(List<Integer> offers, List<Integer> needKit, OffersInfo searchOffer, SignUpForm signUpForm, User buyer){
+        try {
+            for (int i = 0; i < searchOffer.getOffer().size(); i++) {
+                offers.add(Integer.parseInt(searchOffer.getOffer().get(i)));
+            }
+            for (int i = 0; i < searchOffer.getNeedKit().size(); i++) {
+                needKit.add(Integer.parseInt(searchOffer.getNeedKit().get(i)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (!offers.isEmpty()) {
+            for (int i = 0; i < offers.size(); i++) {
+                OrderInfo orderInfo = new OrderInfo(offers.get(i), signUpForm.getDateStart(), signUpForm.getDateFinish());
+                Offer offer = offerDAO.findByIdOffer(offers.get(i));
+
+                int isNeedParts = 0;
+                for (int j = 0; j < needKit.size(); j++) {
+                    if (offer.getIdOffer() == needKit.get(j)) {
+                        isNeedParts = 1;
+                        break;
+                    }
+                }
+                long timeFinish = orderInfo.getDateStart().getTime() + TimeUnit.SECONDS.toMillis(offer.getTime());
+                if (isNeedParts == 1){
+                    timeFinish += TIME_FOR_DELIVER_KIT;
+                }
+                long timeStart = orderInfo.getDateStart().getTime();
+                if (isNeedParts == 1){
+                    timeStart += TIME_FOR_DELIVER_KIT;
+                }
+                Date dateFinish = new Date(timeFinish);
+                Date dateStart = new Date(timeStart);
+                Master master = masterDAO.getFreeMaster(offer, dateStart, dateFinish);
+                orderDAO.reserve(buyer, master, offer, isNeedParts, orderInfo.getDateStart(), dateFinish, Consts.CREATED_STATUS);
+            }
+        }
+    }
 }
