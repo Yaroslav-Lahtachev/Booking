@@ -114,7 +114,8 @@ public class OrderDAO {
         return query.list();
     }
 
-    public void changeOrderStatus(Order order, String status) {
+    public void changeOrderStatus(int orderId, String status) {
+        Order order = findOrderByIdOrder(orderId);
         order.setStatus(status);
     }
 

@@ -36,13 +36,13 @@ public class MasterDAO {
         if (!query.list().isEmpty()) {
             return query.list().get(0);
         } else {
-            sql = "from Master as m, Order as o where m.prof =: prof and m.occupied=1 and o.master=m.id and o.finishDate <=: dateFinish and o.dateStart >=: dateStart";
+            sql = "Select new Master(m.id, m.prof, m.name, m.occupied) from Master as m, Order as o where m.prof =: prof and m.occupied=1 and o.master=m.id and o.dateFinish <=: dateFinish and o.dateStart >=: dateStart";
             query = session.createQuery(sql, Master.class);
             query.setParameter("prof", prof);
             query.setParameter("dateStart", dateStart);
             query.setParameter("dateFinish", dateFinish);
             List<Master> busyInThatTime = query.list();
-            sql = "from Master as m, Order as o where m.prof =: prof and m.occupied=1";
+            sql = "from Master as m where m.prof =: prof and m.occupied=1";
             query = session.createQuery(sql, Master.class);
             query.setParameter("prof", prof);
             List<Master> allAvailableMasters = query.list();
@@ -54,12 +54,13 @@ public class MasterDAO {
         }
     }
 
-    public void checkIfMasterIsFree(int orderID, Master master) {
+    public void checkIfMasterIsFree(int orderID, int masterId) {
         Session session = this.sessionFactory.getCurrentSession();
         String sql = "from Order as o where o.master=m.id and m.id =: masterID and o.id != : orderID";
         Query<Order> query = session.createQuery(sql, Order.class);
-        query.setParameter("masterID", master.getMaster());
+        query.setParameter("masterID", masterId);
         query.setParameter("orderID", orderID);
+        Master master = findByIdMaster(masterId);
         if (query.list().isEmpty()) {
             master.setOccupied(0);
         }

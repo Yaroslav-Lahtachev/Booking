@@ -118,7 +118,7 @@ public class MainController {
         if (utilForm.getTextField().equals("ПОДТВЕРЖДАЮ")) {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             Order order = orderDAO.findOrderByIdOrder(utilForm.getIntField());
-            masterDAO.checkIfMasterIsFree(order.getIdOrder(), order.getMaster());
+            masterDAO.checkIfMasterIsFree(order.getIdOrder(), order.getMaster().getMaster());
             orderDAO.removeOrder(order);
         }
         return "index";
@@ -249,9 +249,9 @@ public class MainController {
                                     @ModelAttribute("orderInfo") OrderInfo orderInfo) {
 
         Order order = orderDAO.findOrderByIdOrder(orderInfo.getId());
-        orderDAO.changeOrderStatus(order, signUpForm.getStatus());
+        orderDAO.changeOrderStatus(order.getIdOrder(), signUpForm.getStatus());
         if(signUpForm.getStatus() == "DONE"){
-            masterDAO.checkIfMasterIsFree(order.getIdOrder(), order.getMaster());
+            masterDAO.checkIfMasterIsFree(order.getIdOrder(), order.getMaster().getMaster());
         }
         return "redirect:/admin/usersList";
     }
@@ -466,7 +466,7 @@ public class MainController {
         } else {
             System.out.println("customer is gay, lets delete his order");
             Order order = orderDAO.findOrderByIdOrder(utilForm.getIntField());
-            masterDAO.checkIfMasterIsFree(order.getIdOrder(), order.getMaster());
+            masterDAO.checkIfMasterIsFree(order.getIdOrder(), order.getMaster().getMaster());
             orderDAO.removeOrder(order);
         }
         return "redirect:/buyerOrders";
