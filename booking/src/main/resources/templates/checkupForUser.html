@@ -26,8 +26,8 @@
             <th>Проффесия</th>
             <th>Цена</th>
             <th>Запчасти</th>
-            <th>Нужны запчасти?</th>
             <th>Выбрать услугу</th>
+            <th>Нужны запчасти?</th>
         </tr>
         <tr th:each="offersInfo : ${paginationResult.list}">
             <td th:utext="${offersInfo.name}">..</td>
@@ -36,15 +36,15 @@
             <td th:utext="${offersInfo.kitName}">..</td>
 
             <td>
-                <input type="checkbox" th:field="*{needKit}" th:value="|${offersInfo.idOffer}|" />
-                <label
-                        th:for="${#ids.prev('needKit')}">
-                </label>
-            </td>
-            <td>
                 <input type="checkbox" th:field="*{offer}" th:value="|${offersInfo.idOffer}|" />
                 <label
                         th:for="${#ids.prev('offer')}">
+                </label>
+            </td>
+            <td th:if="${offersInfo.kitId != 0}">
+                <input type="checkbox" th:field="*{needKit}" th:value="|${offersInfo.idOffer}|" />
+                <label
+                        th:for="${#ids.prev('needKit')}">
                 </label>
             </td>
             <!--<td><a th:href="@{|/signUp?id=${offersInfo.idOffer}|}">Reserve</a></td>-->

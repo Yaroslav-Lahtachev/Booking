@@ -12,6 +12,7 @@ public class OffersInfo {
     private double price;
     private int time;
     private String kitName;
+    private int kitId;
     private List<String> offer = new ArrayList<>();
     private List<String> needKit = new ArrayList<>();
 
@@ -49,13 +50,14 @@ public class OffersInfo {
         this.time = time;
     }
 
-    public OffersInfo(int id, String name, String prof, double price, int time, String kitName) {
+    public OffersInfo(int id, String name, String prof, double price, int time, String kitName, int kitId) {
         this.id = id;
         this.name = name;
         this.prof = prof;
         this.price = price;
         this.time = time;
         this.kitName = kitName;
+        this.kitId = kitId;
     }
 
     public OffersInfo(Offer offer) {
@@ -65,6 +67,7 @@ public class OffersInfo {
         this.price = offer.getPrice();
         this.time = offer.getTime();
         this.kitName = offer.getKit().getName();
+        this.kitId = offer.getKit().getId();
     }
 
     public String getKitName() {
@@ -73,6 +76,14 @@ public class OffersInfo {
 
     public void setKitName (String kitName) {
         this.kitName = kitName;
+    }
+
+    public int getKitId() {
+        return kitId;
+    }
+
+    public void setKitId (int kitId) {
+        this.kitId = kitId;
     }
 
     public int getIdOffer() {
