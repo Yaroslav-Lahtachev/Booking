@@ -249,9 +249,11 @@ public class MainController {
                                     @ModelAttribute("orderInfo") OrderInfo orderInfo) {
 
         Order order = orderDAO.findOrderByIdOrder(orderInfo.getId());
-        orderDAO.changeOrderStatus(order.getIdOrder(), signUpForm.getStatus());
-        if(signUpForm.getStatus() == "DONE"){
-            masterDAO.checkIfMasterIsFree(order.getIdOrder(), order.getMaster().getMaster());
+        if(signUpForm.getStatus() !=  null){
+            orderDAO.changeOrderStatus(order.getIdOrder(), signUpForm.getStatus());
+            if (signUpForm.getStatus() == "DONE") {
+                masterDAO.checkIfMasterIsFree(order.getIdOrder(), order.getMaster().getMaster());
+            }
         }
         return "redirect:/admin/usersList";
     }
