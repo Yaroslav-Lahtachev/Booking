@@ -83,15 +83,15 @@ public class ManagerCase {
     }
 
     public static String cancelOrderPost(MasterDAO masterDAO, OrderDAO orderDAO, UtilForm utilForm) {
+        Order order = orderDAO.findOrderByIdOrder(utilForm.getIntField());
         if (utilForm.getTextField().equals("ПОДТВЕРЖДАЮ")) {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            Order order = orderDAO.findOrderByIdOrder(utilForm.getIntField());
             if(order != null){
                 masterDAO.checkIfMasterIsFree(order.getIdOrder(), order.getMaster().getMaster());
                 orderDAO.removeOrder(order);
             }
         }
-        return "index";
+        return "redirect:/admin/viewUserOrdersForAdmin?id=" + order.getCustomer().getIdUser();
     }
 
     public static String checkupForAdmin(OfferDAO offerDAO, OrderDAO orderDAO, String id, int page, Model model) {
@@ -206,7 +206,7 @@ public class ManagerCase {
             model.addAttribute("orderInfo", orderInfo);
             model.addAttribute("signUpForm", signUpForm);
             model.addAttribute("error", new Boolean(false));
-        } else return "redirect:/admin/usersList";
+        } else return "redirect:/admin/viewUserOrdersForAdmin?id=" + order.getCustomer().getIdUser();
         return "changeOrderTime";
     }
 
