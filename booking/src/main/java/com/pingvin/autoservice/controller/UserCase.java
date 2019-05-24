@@ -151,7 +151,7 @@ public class UserCase {
         if (utilForm.getTextField().equals("Agree")) {
             orderDAO.changeOrderDate(orderInfo.getId(), orderInfo.getDateFinish());
         } else {
-            System.out.println("customer is gay, lets delete his order");
+            System.out.println("No way, dude, customer is gay, lets delete his order");
             Order order = orderDAO.findOrderByIdOrder(utilForm.getIntField());
             masterDAO.checkIfMasterIsFree(order.getIdOrder(), order.getMaster().getMaster());
             orderDAO.removeOrder(order);
@@ -170,7 +170,10 @@ public class UserCase {
         model.addAttribute("paginationResult", paginationResult);
         model.addAttribute("signUpForm", signUpForm);
         model.addAttribute("searchOffer", searchOffer);
-        return "checkupForUser";
+        if (paginationResult.getTotalRecords() != 0) {
+            return "checkupForUser";
+        }
+        return "index";
     }
 
 
