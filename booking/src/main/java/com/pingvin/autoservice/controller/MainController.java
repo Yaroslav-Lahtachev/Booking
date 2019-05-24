@@ -249,7 +249,7 @@ public class MainController {
     public String acceptChangeTime(Model model,
                                    @RequestParam(value = "order", defaultValue = "-1") String id,
                                    @RequestParam(value = "date", defaultValue = "null") String time) {
-        return UserCase.changeOrderResponse(orderDAO, id, time, model);
+        return UserCase.changeOrderResponse(usersDAO, orderDAO, id, time, model);
     }
 
 
