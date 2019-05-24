@@ -119,7 +119,7 @@ public class UserCase {
         return "redirect:/buyerOrders";
     }
 
-    public static String changeOrderResponse(OrderDAO orderDAO, String id, String time, Model model) {
+    public static String changeOrderResponse(UserDAO usersDAO, OrderDAO orderDAO, String id, String time, Model model) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         int idOrder = 0;
         Date date = null;
@@ -129,17 +129,18 @@ public class UserCase {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User buyer = usersDAO.findByLogin(authentication.getName());
         if (date != null && idOrder != -1) {
             Order order = orderDAO.findOrderByIdOrder(idOrder);
-            if (order != null) {
+            if (order != null && order.getCustomer().getIdUser() == buyer.getIdUser()) {
                 UtilForm utilForm = new UtilForm();
                 OrderInfo orderInfo = new OrderInfo(order);
                 orderInfo.setDateFinish(date);
                 model.addAttribute("orderInfo", orderInfo);
                 model.addAttribute("utilForm", utilForm);
                 model.addAttribute("error", new Boolean(false));
-            } else return "redirect:/admin/usersList";
+            } else return "index";
         }
         return "acceptChangeTime";
     }
@@ -151,7 +152,7 @@ public class UserCase {
         if (utilForm.getTextField().equals("Agree")) {
             orderDAO.changeOrderDate(orderInfo.getId(), orderInfo.getDateFinish());
         } else {
-            System.out.println("customer is gay, lets delete his order");
+            System.out.println("No way, dude, customer is gay, lets delete his order");
             Order order = orderDAO.findOrderByIdOrder(utilForm.getIntField());
             masterDAO.checkIfMasterIsFree(order.getIdOrder(), order.getMaster().getMaster());
             orderDAO.removeOrder(order);
@@ -170,7 +171,10 @@ public class UserCase {
         model.addAttribute("paginationResult", paginationResult);
         model.addAttribute("signUpForm", signUpForm);
         model.addAttribute("searchOffer", searchOffer);
-        return "checkupForUser";
+        if (paginationResult.getTotalRecords() != 0) {
+            return "checkupForUser";
+        }
+        return "index";
     }
 
 

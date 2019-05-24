@@ -60,7 +60,9 @@
 </form>
 <div class="page-navigator" th:if="${paginationResult.totalPages > 1}">
     <th:block th:each="page: ${paginationResult.navigationPages}">
-        <a th:if="${page != -1}" class="nav-item" th:href="@{/offersPage(page=${page})}" th:utext="${page}">
+        <a th:if="${page != -1 && page != paginationResult.currentPage }" class="nav-item" th:href="@{/offersPage(page=${page})}" th:utext="${page}">
+        </a>
+        <a th:if="${page == paginationResult.currentPage}" style= "color: gray;"  class="nav-item" th:href="@{/offersPage(page=${page})}" th:utext="${page}">
         </a>
         <span th:if="${page == -1}" class="nav-item"> ... </span>
     </th:block>
