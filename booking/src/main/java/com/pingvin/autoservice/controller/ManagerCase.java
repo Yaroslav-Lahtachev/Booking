@@ -183,7 +183,7 @@ public class ManagerCase {
                 masterDAO.checkIfMasterIsFree(order.getIdOrder(), order.getMaster().getMaster());
             }
         }
-        return "redirect:/admin/usersList";
+        return "redirect:/admin/viewUserOrdersForAdmin?id=" + order.getCustomer().getIdUser();
     }
 
     public static String changeOrderTime(OrderDAO orderDAO, String id, Model model) {
