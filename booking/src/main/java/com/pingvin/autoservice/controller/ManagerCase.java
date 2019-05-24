@@ -149,7 +149,7 @@ public class ManagerCase {
             }
             sendSimpleMessage(emailSender, String.format(Consts.MESSAGE_ABOUT_RESULT_OF_CHECKUP, buyer.getIdUser()), sendTo, "yo, dude");
         }
-        return "redirect:/admin/usersList";
+        return "redirect:/admin/viewUserOrdersForAdmin?id=" + buyer.getIdUser();
     }
 
     public static String changeOrderStatus(OrderDAO orderDAO, String id, Model model) {
