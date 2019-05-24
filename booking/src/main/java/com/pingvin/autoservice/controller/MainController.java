@@ -121,8 +121,10 @@ public class MainController {
     }
 
     @RequestMapping(value = "/removeUser", method = RequestMethod.GET)
-    public String removeUser(Model model, @RequestParam(value = "id", defaultValue = "0") int userId) {
-        return UserCase.removeUser(userId, model);
+    public String removeUser(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User activeUser = usersDAO.findByLogin(authentication.getName());
+        return UserCase.removeUser(activeUser.getIdUser(), model);
     }
 
     @RequestMapping(value = "/removeUser", method = RequestMethod.POST)
