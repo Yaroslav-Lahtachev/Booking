@@ -53,7 +53,8 @@
     </tr>
 </table>
     <Br>Пожалуйста, выберите дату начала услуги<Br>
-    <input type="date" style= "text-align: center;color: white;margin: auto;" th:field="${signUpForm.dateStart}"/>
+    <input type="date" style="text-align: center;color: white;margin: auto;"
+           th:attr="min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" th:field="${signUpForm.dateStart}"/>
     <button type="submit">Подтвердить</button>
     <button type="reset">Очистить</button>
 </form>
