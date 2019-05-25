@@ -2,7 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Автосервис</title>
-
+    <script language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        function  showHide(checked, orderid) {
+            orderid='needKit'+orderid;
+            if(checked == true){
+                $('#'+orderid).fadeIn();
+            }else{
+                $('#'+orderid).fadeOut();
+            }
+        }
+    </script>
     <style>
         th, td {
             padding: 5px;
@@ -36,7 +46,7 @@
             <td th:utext="${offersInfo.kitName}">..</td>
 
             <td>
-                <input type="checkbox" th:field="*{offer}" th:value="|${offersInfo.idOffer}|" />
+                <input type="checkbox" th:onchange="showHide(this.checked, this.value)" th:field="*{offer}" th:value="|${offersInfo.idOffer}|" />
                 <label
                         th:for="${#ids.prev('offer')}">
                 </label>

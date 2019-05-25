@@ -121,8 +121,10 @@ public class MainController {
     }
 
     @RequestMapping(value = "/removeUser", method = RequestMethod.GET)
-    public String removeUser(Model model, @RequestParam(value = "id", defaultValue = "0") int userId) {
-        return UserCase.removeUser(userId, model);
+    public String removeUser(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User activeUser = usersDAO.findByLogin(authentication.getName());
+        return UserCase.removeUser(activeUser.getIdUser(), model);
     }
 
     @RequestMapping(value = "/removeUser", method = RequestMethod.POST)
@@ -247,7 +249,7 @@ public class MainController {
     public String acceptChangeTime(Model model,
                                    @RequestParam(value = "order", defaultValue = "-1") String id,
                                    @RequestParam(value = "date", defaultValue = "null") String time) {
-        return UserCase.changeOrderResponse(orderDAO, id, time, model);
+        return UserCase.changeOrderResponse(usersDAO, orderDAO, id, time, model);
     }
 
 
