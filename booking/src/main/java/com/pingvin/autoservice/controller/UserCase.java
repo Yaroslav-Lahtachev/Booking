@@ -132,7 +132,7 @@ public class UserCase {
             e.printStackTrace();
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User isNeedBuyer = usersDAO.findByIdUser(idUser);;
+        User isNeedBuyer = usersDAO.findByIdUser(idUser);
         User currBuyer = usersDAO.findByLogin(authentication.getName());
         if (isNeedBuyer.equals(currBuyer)) {
             if (date != null && idOrder != -1) {
@@ -162,7 +162,7 @@ public class UserCase {
             orderDAO.changeOrderDate(orderInfo.getId(), orderInfo.getDateFinish());
         } else {
             System.out.println("No way, dude, customer is gay, lets delete his order");
-            Order order = orderDAO.findOrderByIdOrder(utilForm.getIntField());
+            Order order = orderDAO.findOrderByIdOrder(orderInfo.getId());
             masterDAO.checkIfMasterIsFree(order.getIdOrder(), order.getMaster().getMaster());
             orderDAO.removeOrder(order);
         }
