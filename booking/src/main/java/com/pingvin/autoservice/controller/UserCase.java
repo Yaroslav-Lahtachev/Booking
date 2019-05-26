@@ -119,28 +119,37 @@ public class UserCase {
         return "redirect:/buyerOrders";
     }
 
-    public static String changeOrderResponse(UserDAO usersDAO, OrderDAO orderDAO, String id, String time, Model model) {
+    public static String changeOrderResponse(UserDAO usersDAO, OrderDAO orderDAO, String id, String time, String userId, Model model) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         int idOrder = 0;
         Date date = null;
+        int idUser = 0;
         try {
             idOrder = Integer.parseInt(id);
             date = format.parse(time);
+            idUser = Integer.parseInt(userId);
         } catch (Exception e) {
             e.printStackTrace();
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User buyer = usersDAO.findByLogin(authentication.getName());
-        if (date != null && idOrder != -1) {
-            Order order = orderDAO.findOrderByIdOrder(idOrder);
-            if (order != null && order.getCustomer().getIdUser() == buyer.getIdUser()) {
-                UtilForm utilForm = new UtilForm();
-                OrderInfo orderInfo = new OrderInfo(order);
-                orderInfo.setDateFinish(date);
-                model.addAttribute("orderInfo", orderInfo);
-                model.addAttribute("utilForm", utilForm);
-                model.addAttribute("error", new Boolean(false));
-            } else return "index";
+        User isNeedBuyer = usersDAO.findByIdUser(idUser);;
+        User currBuyer = usersDAO.findByLogin(authentication.getName());
+        if (isNeedBuyer.equals(currBuyer)) {
+            if (date != null && idOrder != -1) {
+                Order order = orderDAO.findOrderByIdOrder(idOrder);
+                if (order != null && order.getCustomer().getIdUser() == currBuyer.getIdUser()) {
+                    UtilForm utilForm = new UtilForm();
+                    OrderInfo orderInfo = new OrderInfo(order);
+                    orderInfo.setDateFinish(date);
+                    model.addAttribute("orderInfo", orderInfo);
+                    model.addAttribute("utilForm", utilForm);
+                    model.addAttribute("error", new Boolean(false));
+                } else return "index";
+            }
+        }
+        else {
+            System.out.println("no no no");
+            return "index";
         }
         return "acceptChangeTime";
     }
