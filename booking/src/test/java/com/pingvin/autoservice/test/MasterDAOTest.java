@@ -27,13 +27,21 @@ public class MasterDAOTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void findByIdMaster() {
-        Session session = this.sessionFactory.getCurrentSession();
-        Master masterExpected = new Master(9999,"test","test",0);
-        session.persist(masterExpected);
-        session.flush();
-        Master MasterActual = new MasterDAO().findByIdMaster(9999);
-        Assert.assertEquals(masterExpected, MasterActual);
+    public void findByIdMasterWhenIdExists() {
+            Session session = this.sessionFactory.getCurrentSession();
+            Master masterExpected = new Master(9999,"test","test",0);
+            session.persist(masterExpected);
+            session.flush();
+            Master masterActual = new MasterDAO().findByIdMaster(9999);
+            Assert.assertEquals(masterExpected, masterActual);
+    }
+
+    @Test
+    @Transactional
+    @Rollback(true)
+    public void findByIdMasterWhenIdNotExists() {
+        Master masterActual = new MasterDAO().findByIdMaster(9999);
+        Assert.assertNull(masterActual);
     }
 
     @Test
@@ -105,8 +113,11 @@ public class MasterDAOTest {
         Master masterExpected = new Master(1,"test","test",1);
         session.persist(masterExpected);
         User user = new User(1,"test","test","test","test");
+        session.persist(user);
         Parts parts = new Parts(1,"test","test",9999);
+        session.persist(parts);
         Offer offer = new Offer(1,"test",9999,"test",9999, parts);
+        session.persist(offer);
         Order order1 = new Order(
                 9998, user, offer,
                 new Date(1970,01,01),
