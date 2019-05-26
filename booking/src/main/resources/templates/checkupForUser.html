@@ -71,13 +71,13 @@
         </tr>
     </table>
     <Br>Пожалуйста, выберите дату начала услуги<Br>
-    <input type="date" style= "text-align: center;color: white;margin: auto;" th:field="${signUpForm.dateStart}"/>
+    <input type="date" th:attr="min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" style= "text-align: center;color: white;margin: auto;" th:field="${signUpForm.dateStart}"/>
     <button type="submit">Подтвердить</button>
     <button type="reset">Очистить</button>
 </form>
 <div class="page-navigator" th:if="${paginationResult.totalPages > 1}">
     <th:block th:each="page: ${paginationResult.navigationPages}">
-        <a th:if="${page != -1}" class="nav-item" th:href="@{/checkupForUser(page=${page})}" th:utext="${page}">
+        <a th:if="${page != -1}" class="nav-item" th:href="@{/submitResult(page=${page})}" th:utext="${page}">
         </a>
         <span th:if="${page == -1}" class="nav-item"> ... </span>
     </th:block>
