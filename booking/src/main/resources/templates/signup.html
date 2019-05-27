@@ -40,7 +40,7 @@
             </td>
         </tr>
         <tr>
-            <td><input type="date" th:field="${signUpForm.dateStart}"/></td>
+            <td><input type="date" th:attr="min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" th:field="${signUpForm.dateStart}"/></td>
             </td>
 
         </tr>

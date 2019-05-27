@@ -5,7 +5,7 @@
     <script language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
         function  showHide(checked, orderid) {
-            orderid='needKit'+orderid;
+            orderid=orderid.replace("offer","needKit");
             if(checked == true){
                 $('#'+orderid).fadeIn();
             }else{
@@ -46,13 +46,20 @@
             <td th:utext="${offersInfo.kitName}">..</td>
 
             <td>
-                <input type="checkbox" th:onchange="showHide(this.checked, this.value)" th:field="*{offer}" th:value="|${offersInfo.idOffer}|" />
+                <input type="checkbox" th:onchange="showHide(this.checked, this.id)" th:field="*{offer}" th:value="|${offersInfo.idOffer}|" />
                 <label
                         th:for="${#ids.prev('offer')}">
                 </label>
             </td>
+            <td th:if="${offersInfo.kitId == 0}">
+                <div  style="display: none; align-content: center" ><input type="checkbox"  style="display: none;align-content: center" th:field="*{needKit}" th:value="|${offersInfo.idOffer}|" />
+                    <label
+                            th:for="${#ids.prev('needKit')}">
+                    </label>
+                </div>
+            </td>
             <td th:if="${offersInfo.kitId != 0}">
-                <input type="checkbox" th:field="*{needKit}" th:value="|${offersInfo.idOffer}|" />
+                <input type="checkbox"  style="display: none; align-content: center" th:field="*{needKit}" th:value="|${offersInfo.idOffer}|" />
                 <label
                         th:for="${#ids.prev('needKit')}">
                 </label>
@@ -64,13 +71,13 @@
         </tr>
     </table>
     <Br>Пожалуйста, выберите дату начала услуги<Br>
-    <input type="date" style= "text-align: center;color: white;margin: auto;" th:field="${signUpForm.dateStart}"/>
+    <input type="date" th:attr="min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" style= "text-align: center;color: white;margin: auto;" th:field="${signUpForm.dateStart}"/>
     <button type="submit">Подтвердить</button>
     <button type="reset">Очистить</button>
 </form>
 <div class="page-navigator" th:if="${paginationResult.totalPages > 1}">
     <th:block th:each="page: ${paginationResult.navigationPages}">
-        <a th:if="${page != -1}" class="nav-item" th:href="@{/checkupForUser(page=${page})}" th:utext="${page}">
+        <a th:if="${page != -1}" class="nav-item" th:href="@{/submitResult(page=${page})}" th:utext="${page}">
         </a>
         <span th:if="${page == -1}" class="nav-item"> ... </span>
     </th:block>
