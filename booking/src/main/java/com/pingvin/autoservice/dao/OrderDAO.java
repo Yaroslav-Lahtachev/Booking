@@ -93,6 +93,7 @@ public class OrderDAO {
         order.setDateStart(dateStart);
         order.setDateFinish(dateFinish);
         order.setStatus(status);
+        session.update(master);
         session.persist(order);
         session.flush();
     }

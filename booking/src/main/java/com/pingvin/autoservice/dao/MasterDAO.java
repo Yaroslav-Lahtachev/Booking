@@ -43,8 +43,9 @@ public class MasterDAO {
             query1.setParameter("prof", prof);
             Long value = query1.getSingleResult();
             if (value != null && value != 0) {
-                sql = "Select new" + Master.class.getName() +
-                        "(m.id, m.prof, m.name, m.occupied) from Master as m, Order as o where m.prof =: prof and m.occupied=1 and o.master=m.id and o.dateFinish <=: dateFinish and o.dateStart >=: dateStart";
+                sql = "Select new " + Master.class.getName() +
+                        " (m.id, m.prof, m.name, m.occupied) from " + Master.class.getName() +" as m, "+ Order.class.getName() +
+                        " as o where m.prof =: prof and m.occupied=1 and o.master.id=m.id and o.dateFinish <=: dateFinish and o.dateStart >=: dateStart";
                 query = session.createQuery(sql, Master.class);
                 query.setParameter("prof", prof);
                 query.setParameter("dateStart", dateStart);
