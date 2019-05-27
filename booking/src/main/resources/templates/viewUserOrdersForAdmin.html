@@ -46,10 +46,30 @@
             <td th:case="'WAITING FOR KIT'">Ожидает заказа запчастей</td>
             <td th:case="'CREATED'">Создана</td>
         </th:block>
-        <td th:if="${ordersInfo.offer == 2 and ordersInfo.status=='DONE'}"><a th:href="@{|/prepareResult?id=${ordersInfo.id}|}">Сообщить результат техосмотра</a></td>
-        <td><a th:href="@{|/changeOrderStatus?id=${ordersInfo.id}|}">Сменить статус заказа</a></td>
-        <td><a th:href="@{|/changeOrderTime?id=${ordersInfo.id}|}">Сменить дату окончания</a></td>
-        <td><a th:href="@{|/cancelOrder?id=${ordersInfo.id}|}">Отменить заказ</a></td>
+        <td th:if="${ordersInfo.status != 'DONE'}">
+            <a th:href="@{|/changeOrderStatus?id=${ordersInfo.id}|}">Сменить статус заказа</a>
+        </td>
+        <td th:if="${ordersInfo.status == 'DONE'}">
+            <a style="display: none" th:href="@{|/changeOrderStatus?id=${ordersInfo.id}|}">Сменить статус заказа</a>
+        </td>
+        <td th:if="${ordersInfo.status != 'DONE'}">
+            <a th:href="@{|/changeOrderTime?id=${ordersInfo.id}|}">Сменить дату окончания</a>
+        </td>
+        <td th:if="${ordersInfo.status == 'DONE'}">
+            <a style="display: none" th:href="@{|/changeOrderTime?id=${ordersInfo.id}|}">Сменить дату окончания</a>
+        </td>
+        <td th:if="${ordersInfo.status != 'DONE'}">
+            <a th:href="@{|/cancelOrder?id=${ordersInfo.id}|}">Отменить заказ</a>
+        </td>
+        <td th:if="${ordersInfo.status == 'DONE'}">
+            <a style="display: none" th:href="@{|/cancelOrder?id=${ordersInfo.id}|}">Отменить заказ</a>
+        </td>
+        <td th:if="${ordersInfo.offer == 1 and ordersInfo.status=='DONE'}">
+            <a th:href="@{|/prepareResult?id=${ordersInfo.id}|}">Сообщить результат техосмотра</a>
+        </td>
+        <td th:if="${ordersInfo.offer != 1 or ordersInfo.status!='DONE'}">
+            <a style="display: none" th:href="@{|/prepareResult?id=${ordersInfo.id}|}">Сообщить результат техосмотра</a>
+        </td>
     </tr>
 
 
