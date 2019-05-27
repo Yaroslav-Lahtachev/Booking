@@ -7,6 +7,7 @@ import com.pingvin.autoservice.model.UsersInfo;
 import com.pingvin.autoservice.pagination.PaginationResult;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,12 +24,14 @@ import static org.junit.Assert.*;
 public class UserDAOTest {
     @Autowired
     private SessionFactory sessionFactory;
+    @Autowired
+    private UserDAO userDAO;
 
     @Test
     @Transactional
     @Rollback(true)
     public void findByIdUserWhenIdNotExists() {
-        User userActual = new UserDAO().findByIdUser(9999);
+        User userActual = userDAO.findByIdUser(1);
         Assert.assertNull(userActual);
     }
 
@@ -37,10 +40,10 @@ public class UserDAOTest {
     @Rollback(true)
     public void findByIdUserWhenIdExists() {
         Session session = this.sessionFactory.getCurrentSession();
-        User userExpected = new User(9999,"test","test","test","test");
+        User userExpected = new User("test1","test","test","test");
         session.persist(userExpected);
         session.flush();
-        User userActual = new UserDAO().findByIdUser(9999);
+        User userActual = userDAO.findByIdUser(userExpected.getIdUser());
         Assert.assertEquals(userExpected, userActual);
     }
 
@@ -48,7 +51,7 @@ public class UserDAOTest {
     @Transactional
     @Rollback(true)
     public void findByLoginWhenLoginNotExists() {
-        User userActual = new UserDAO().findByLogin("test");
+        User userActual = userDAO.findByLogin("test");
         Assert.assertNull(userActual);
     }
 
@@ -57,10 +60,10 @@ public class UserDAOTest {
     @Rollback(true)
     public void findByLoginWhenLoginExists() {
         Session session = this.sessionFactory.getCurrentSession();
-        User userExpected = new User(9999,"test","test","test","test");
+        User userExpected = new User("test2","test","test","test");
         session.persist(userExpected);
         session.flush();
-        User userActual = new UserDAO().findByLogin("test");
+        User userActual = userDAO.findByLogin("test2");
         Assert.assertEquals(userExpected, userActual);
     }
 
@@ -69,27 +72,29 @@ public class UserDAOTest {
     @Rollback(true)
     public void listUsersInfoWhenUsersExists() {
         Session session = this.sessionFactory.getCurrentSession();
-        User user9996 = new User(9996,"test","test","test","test");
-        session.persist(user9996);
-        User user9997 = new User(9997,"test","test","test","test");
-        session.persist(user9997);
-        UsersInfo usersInfo = new UsersInfo(user9997);
-        User user9998 = new User(9998,"test","test","test","test");
-        session.persist(user9998);
-        User user9999 = new User(9999,"test","test","test","test");
-        session.persist(user9999);
+        User user1 = new User("test3","test","test","test");
+        session.persist(user1);
+        User user2 = new User("test4","test","test","test");
+        session.persist(user2);
+        User user3 = new User("test5","test","test","test");
+        session.persist(user3);
+        User user4 = new User("test6","test","test","test");
+        session.persist(user4);
         session.flush();
 
-        PaginationResult<UsersInfo> pagination = new UserDAO().listUsersInfo(2,1,10);
-        Assert.assertEquals(usersInfo, pagination.getList().get(0));
+        PaginationResult<UsersInfo> pagination = userDAO.listUsersInfo(1,5,10);
+        Assert.assertEquals(4, pagination.getList().size());
+
+        PaginationResult<UsersInfo> pagination2 = userDAO.listUsersInfo(2,3,10);
+        Assert.assertEquals(1, pagination2.getList().size());
     }
 
     @Test
     @Transactional
     @Rollback(true)
     public void listUsersInfoWhenUsersNotExists() {
-        PaginationResult<UsersInfo> pagination = new UserDAO().listUsersInfo(2,1,10);
-        Assert.assertNull(pagination);
+        PaginationResult<UsersInfo> pagination = userDAO.listUsersInfo(2,1,10);
+        Assert.assertEquals(0,pagination.getList().size());
     }
 
     @Test
@@ -97,22 +102,28 @@ public class UserDAOTest {
     @Rollback(true)
     public void addNewUserWhenUserNotExists() {
         UsersForm userForm = new UsersForm();
-        userForm.setLogin("test");
+        userForm.setLogin("test7");
         userForm.setPassword("test");
         userForm.setEmail("test");
-        new UserDAO().addNewUser(userForm);
+        userDAO.addNewUser(userForm);
 
         Session session = this.sessionFactory.getCurrentSession();
-        User user = session.get(User.class, new UserDAO().getUsersCount());
+        User user = session.get(User.class, userDAO.getUsersCount());
         Assert.assertNotNull(user);
+    }
+
+    @After
+    public void afterEveryTest() {
+        Session session = this.sessionFactory.getCurrentSession();
+        session.createQuery("DELETE FROM " + User.class.getName()).executeUpdate();
+        session.getTransaction().commit();
     }
 
     @Test
     @Transactional
     @Rollback(true)
     public void getUsersCountWhenUsersNotExists() {
-        int nextId = new UserDAO().getUsersCount();
-        Assert.assertEquals(0, nextId);
+        Assert.assertEquals(0, userDAO.listUsersInfo(1,10,10).getList().size());
     }
 
     @Test
@@ -120,18 +131,17 @@ public class UserDAOTest {
     @Rollback(true)
     public void getUsersCountWhenUsersExists() {
         Session session = this.sessionFactory.getCurrentSession();
-        User user9996 = new User(9996,"test","test","test","test");
-        session.persist(user9996);
-        User user9997 = new User(9997,"test","test","test","test");
-        session.persist(user9997);
-        User user9998 = new User(9998,"test","test","test","test");
-        session.persist(user9998);
-        User user9999 = new User(9999,"test","test","test","test");
-        session.persist(user9999);
+        User user1 = new User("test8","test","test","test");
+        session.persist(user1);
+        User user2 = new User("test9","test","test","test");
+        session.persist(user2);
+        User user3 = new User("test10","test","test","test");
+        session.persist(user3);
+        User user4 = new User("test11","test","test","test");
+        session.persist(user4);
         session.flush();
 
-        int nextId = new UserDAO().getUsersCount();
-        Assert.assertEquals(4, nextId);
+        Assert.assertEquals(4, userDAO.listUsersInfo(1,10,10).getList().size());
     }
 
     @Test
@@ -139,11 +149,11 @@ public class UserDAOTest {
     @Rollback(true)
     public void removeUserWhenUserExists() {
         Session session = this.sessionFactory.getCurrentSession();
-        User user9996 = new User(9996,"test","test","test","test");
-        session.persist(user9996);
+        User user1 = new User("test12","test","test","test");
+        session.persist(user1);
 
-        new UserDAO().removeUser(9996);
-        Assert.assertNull(session.get(User.class, 9996));
+        userDAO.removeUser(user1.getIdUser());
+        Assert.assertNull(session.get(User.class, user1.getIdUser()));
     }
 
     @Test
@@ -151,10 +161,10 @@ public class UserDAOTest {
     @Rollback(true)
     public void changeUserRole() {
         Session session = this.sessionFactory.getCurrentSession();
-        User user9996 = new User(9996,"test","test","test","test");
-        session.persist(user9996);
+        User user1 = new User("test13","test","test","test");
+        session.persist(user1);
 
-        new UserDAO().changeUserRole(9996,"test2");
-        Assert.assertEquals(session.get(User.class, 9996).getRole(), "test2");
+        userDAO.changeUserRole(user1.getIdUser(),"test2");
+        Assert.assertEquals(session.get(User.class, user1.getIdUser()).getRole(), "test2");
     }
 }

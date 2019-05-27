@@ -18,9 +18,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
@@ -28,18 +25,20 @@ import static org.junit.Assert.*;
 public class OfferDAOTest {
     @Autowired
     private SessionFactory sessionFactory;
+    @Autowired
+    private OfferDAO offerDAO;
 
     @Test
     @Transactional
     @Rollback(true)
     public void findByIdOfferWhenIdExists() {
         Session session = this.sessionFactory.getCurrentSession();
-        Parts partsExpected = new Parts(9999,"test","test",9999);
+        Parts partsExpected = new Parts("test","test",9999);
         session.persist(partsExpected);
-        Offer offerExpected = new Offer(9999,"test",9999,"rightProf",9999,partsExpected);
+        Offer offerExpected = new Offer("test",9999,"rightProf",9999,partsExpected);
         session.persist(offerExpected);
         session.flush();
-        Offer offerActual = new OfferDAO().findByIdOffer(9999);
+        Offer offerActual = offerDAO.findByIdOffer(offerExpected.getIdOffer());
         Assert.assertEquals(offerExpected, offerActual);
     }
 
@@ -47,7 +46,7 @@ public class OfferDAOTest {
     @Transactional
     @Rollback(true)
     public void findByIdOfferWhenIdNotExists() {
-        Offer offerActual = new OfferDAO().findByIdOffer(9999);
+        Offer offerActual = offerDAO.findByIdOffer(1);
         Assert.assertNull(offerActual);
     }
 
@@ -55,8 +54,8 @@ public class OfferDAOTest {
     @Transactional
     @Rollback(true)
     public void findOffersInfoWhenOffersNotExists() {
-        PaginationResult<OffersInfo> pagination = new OfferDAO().findOffersInfo(new OffersInfo(),2,1,10);
-        Assert.assertNull(pagination);
+        PaginationResult<OffersInfo> pagination = offerDAO.findOffersInfo(new OffersInfo(),2,1,10);
+        Assert.assertEquals(0,pagination.getList().size());
     }
 
     @Test
@@ -64,21 +63,21 @@ public class OfferDAOTest {
     @Rollback(true)
     public void findOffersInfoWhenOffersExists() {
         Session session = this.sessionFactory.getCurrentSession();
-        Parts parts9997 = new Parts(9997,"test","test",9999);
-        session.persist(parts9997);
-        Offer offer9997 = new Offer(9997,"test",9999,"rightProf",9999,parts9997);
-        session.persist(offer9997);
-        Parts parts9998 = new Parts(9998,"test","test",9999);
-        session.persist(parts9998);
-        Offer offer9998 = new Offer(9998,"test",9999,"rightProf",9999,parts9998);
-        session.persist(offer9998);
-        OffersInfo offersInfo9998 = new OffersInfo(offer9998);
-        Parts parts9999 = new Parts(9999,"test","test",9999);
-        session.persist(parts9999);
-        Offer offer9999 = new Offer(9999,"test",9999,"rightProf",9999,parts9999);
-        session.persist(offer9999);
+        Parts parts1 = new Parts("test","test",9999);
+        session.persist(parts1);
+        Offer offer1 = new Offer("test",9999,"rightProf",9999,parts1);
+        session.persist(offer1);
+        Parts parts2 = new Parts("test","test",9999);
+        session.persist(parts2);
+        Offer offer2 = new Offer("test",9999,"rightProf",9999,parts2);
+        session.persist(offer2);
+        OffersInfo offersInfo2 = new OffersInfo(offer2);
+        Parts parts3 = new Parts("test","test",9999);
+        session.persist(parts3);
+        Offer offer3 = new Offer("test",9999,"rightProf",9999,parts3);
+        session.persist(offer3);
 
-        PaginationResult<OffersInfo> pagination = new OfferDAO().findOffersInfo(new OffersInfo(),2,1,10);
-        Assert.assertEquals(offersInfo9998, pagination.getList().get(0));
+        PaginationResult<OffersInfo> pagination = offerDAO.findOffersInfo(new OffersInfo(),2,1,10);
+        Assert.assertEquals(offersInfo2, pagination.getList().get(0));
     }
 }
