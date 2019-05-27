@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 public class OrderInfo {
     private int id;
@@ -129,6 +130,31 @@ public class OrderInfo {
     }
 
     public OrderInfo() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderInfo orderInfo = (OrderInfo) o;
+        return id == orderInfo.id &&
+                customer == orderInfo.customer &&
+                offer == orderInfo.offer &&
+                Double.compare(orderInfo.price, price) == 0 &&
+                masterId == orderInfo.masterId &&
+                needKit == orderInfo.needKit &&
+                nameOffer.equals(orderInfo.nameOffer) &&
+                status.equals(orderInfo.status) &&
+                masterName.equals(orderInfo.masterName) &&
+                customerName.equals(orderInfo.customerName) &&
+                kitName.equals(orderInfo.kitName) &&
+                dateStart.equals(orderInfo.dateStart) &&
+                dateFinish.equals(orderInfo.dateFinish);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, customer, offer, nameOffer, price, masterId, needKit, status, masterName, customerName, kitName, dateStart, dateFinish);
     }
 
     public OrderInfo(Date dateStart, Date dateFinish) {

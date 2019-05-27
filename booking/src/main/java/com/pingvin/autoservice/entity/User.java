@@ -70,8 +70,7 @@ public class User {
     public User() {
     }
 
-    public User(int id, String login, String password, String role, String email) {
-        this.id = id;
+    public User(String login, String password, String role, String email) {
         this.login = login;
         this.password = password;
         this.role = role;
