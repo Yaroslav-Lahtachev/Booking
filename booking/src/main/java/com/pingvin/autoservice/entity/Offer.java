@@ -79,8 +79,7 @@ public class Offer implements Serializable {
     public Offer() {
     }
 
-    public Offer(int id, String name, int price, String prof, int time, Parts kit) {
-        this.id = id;
+    public Offer(String name, int price, String prof, int time, Parts kit) {
         this.name = name;
         this.price = price;
         this.prof = prof;

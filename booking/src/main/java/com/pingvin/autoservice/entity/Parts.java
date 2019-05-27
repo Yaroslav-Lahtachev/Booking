@@ -55,8 +55,7 @@ public class Parts {
     public Parts() {
     }
 
-    public Parts(int id, String name, String description, double price) {
-        this.id = id;
+    public Parts(String name, String description, double price) {
         this.name = name;
         this.description = description;
         this.price = price;

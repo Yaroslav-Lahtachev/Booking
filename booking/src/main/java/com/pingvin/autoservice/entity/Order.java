@@ -105,8 +105,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(int id, User customer, Offer offer, Date dateStart, Date dateFinish, Master master, int needKit, String status) {
-        this.id = id;
+    public Order(User customer, Offer offer, Date dateStart, Date dateFinish, Master master, int needKit, String status) {
         this.customer = customer;
         this.offer = offer;
         this.dateStart = dateStart;

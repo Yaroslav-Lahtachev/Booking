@@ -57,8 +57,7 @@ public class Master implements Serializable {
     public Master() {
     }
 
-    public Master(int id, String prof, String name, int occupied) {
-        this.id = id;
+    public Master(String prof, String name, int occupied) {
         this.prof = prof;
         this.name = name;
         this.occupied = occupied;

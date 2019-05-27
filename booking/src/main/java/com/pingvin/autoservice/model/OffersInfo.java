@@ -4,6 +4,7 @@ import com.pingvin.autoservice.entity.Offer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class OffersInfo {
     private int id;
@@ -15,6 +16,27 @@ public class OffersInfo {
     private int kitId;
     private List<String> offer = new ArrayList<>();
     private List<String> needKit = new ArrayList<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OffersInfo that = (OffersInfo) o;
+        return id == that.id &&
+                Double.compare(that.price, price) == 0 &&
+                time == that.time &&
+                kitId == that.kitId &&
+                name.equals(that.name) &&
+                prof.equals(that.prof) &&
+                kitName.equals(that.kitName) &&
+                offer.equals(that.offer) &&
+                needKit.equals(that.needKit);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, prof, price, time, kitName, kitId, offer, needKit);
+    }
 
     public List<String> getOffer() {
         return offer;

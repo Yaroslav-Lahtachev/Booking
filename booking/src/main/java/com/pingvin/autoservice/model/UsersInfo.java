@@ -2,6 +2,8 @@ package com.pingvin.autoservice.model;
 
 import com.pingvin.autoservice.entity.User;
 
+import java.util.Objects;
+
 public class UsersInfo {
     private int idUser;
     private String login;
@@ -10,6 +12,23 @@ public class UsersInfo {
     private String role;
 
     public UsersInfo() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UsersInfo usersInfo = (UsersInfo) o;
+        return idUser == usersInfo.idUser &&
+                login.equals(usersInfo.login) &&
+                password.equals(usersInfo.password) &&
+                email.equals(usersInfo.email) &&
+                role.equals(usersInfo.role);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idUser, login, password, email, role);
     }
 
     public UsersInfo(int idUser, String login, String password, String email, String role) {
