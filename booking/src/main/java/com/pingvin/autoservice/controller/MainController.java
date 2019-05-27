@@ -248,8 +248,9 @@ public class MainController {
     @RequestMapping(value = "/acceptChangeTime", method = RequestMethod.GET)
     public String acceptChangeTime(Model model,
                                    @RequestParam(value = "order", defaultValue = "-1") String id,
-                                   @RequestParam(value = "date", defaultValue = "null") String time) {
-        return UserCase.changeOrderResponse(usersDAO, orderDAO, id, time, model);
+                                   @RequestParam(value = "date", defaultValue = "null") String time,
+                                   @RequestParam(value = "userId", defaultValue = "-1") String userId) {
+        return UserCase.changeOrderResponse(usersDAO, orderDAO, id, time, userId, model);
     }
 
 

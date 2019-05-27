@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1fe9dff6-d9fb-451d-9493-e5211f0b9688" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/booking/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/booking/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/booking/src/main/resources/static/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/booking/src/main/resources/static/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/booking/src/main/resources/templates/offersPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/booking/src/main/resources/templates/offersPage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/booking/src/main/resources/templates/changeOrderTime.html" beforeDir="false" afterPath="$PROJECT_DIR$/booking/src/main/resources/templates/changeOrderTime.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/booking/src/main/resources/templates/checkupForUser.html" beforeDir="false" afterPath="$PROJECT_DIR$/booking/src/main/resources/templates/checkupForUser.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/booking/src/main/resources/templates/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/booking/src/main/resources/templates/signup.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/booking/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,8 +26,8 @@
         <counts>
           <entry key="class" value="2" />
           <entry key="css" value="2" />
-          <entry key="html" value="27" />
-          <entry key="java" value="212" />
+          <entry key="html" value="29" />
+          <entry key="java" value="218" />
           <entry key="properties" value="6" />
           <entry key="xml" value="1" />
         </counts>
@@ -36,8 +36,8 @@
         <counts>
           <entry key="CLASS" value="2" />
           <entry key="CSS" value="2" />
-          <entry key="HTML" value="27" />
-          <entry key="JAVA" value="212" />
+          <entry key="HTML" value="29" />
+          <entry key="JAVA" value="218" />
           <entry key="Properties" value="6" />
           <entry key="XML" value="1" />
         </counts>
@@ -45,39 +45,30 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="css" value="54" />
-          <entry key="html" value="1099" />
-          <entry key="java" value="4721" />
-          <entry key="properties" value="108" />
+          <entry key="html" value="1120" />
+          <entry key="java" value="4897" />
+          <entry key="properties" value="128" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CSS" value="54" />
-          <entry key="HTML" value="1099" />
-          <entry key="JAVA" value="4721" />
-          <entry key="Properties" value="108" />
+          <entry key="HTML" value="1120" />
+          <entry key="JAVA" value="4897" />
+          <entry key="Properties" value="128" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5095332">
+    <splitter split-orientation="horizontal" split-proportion="0.4395543">
       <split-first>
         <leaf>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/booking/src/main/resources/application.properties">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="119">
-                  <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/controller/UserCase.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="223">
-                  <caret line="177" column="25" selection-start-line="177" selection-start-column="25" selection-end-line="177" selection-end-column="25" />
+                <state relative-caret-position="139">
+                  <caret line="171" column="25" selection-start-line="171" selection-start-column="25" selection-end-line="171" selection-end-column="25" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -85,14 +76,45 @@
               </provider>
             </entry>
           </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/booking/src/main/resources/templates/acceptChangeTime.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="289">
+                  <caret line="43" column="27" selection-start-line="43" selection-start-column="19" selection-end-line="43" selection-end-column="27" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/dao/OfferDAO.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="306">
+                  <caret line="29" column="11" selection-start-line="29" selection-start-column="11" selection-end-line="29" selection-end-column="11" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/BookingApplication.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="833">
+                  <caret line="67" column="35" selection-start-line="67" selection-start-column="35" selection-end-line="67" selection-end-column="35" />
+                </state>
+              </provider>
+            </entry>
+          </file>
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/booking/src/main/resources/templates/offersPage.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-433">
-                  <caret line="10" column="68" selection-start-line="10" selection-start-column="68" selection-end-line="10" selection-end-column="68" />
+                <state relative-caret-position="256">
+                  <caret line="68" column="54" lean-forward="true" selection-start-line="68" selection-start-column="54" selection-end-line="68" selection-end-column="54" />
                   <folding>
                     <element signature="n#style#0;n#table#0;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#div#0;n#td#5;n#tr#1;n#table#0;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#input#0;n#div#0;n#td#5;n#tr#1;n#table#0;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#input#0;n#td#6;n#tr#1;n#table#0;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                     <element signature="n#style#0;n#input#0;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#a#1;n#th:block#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -103,18 +125,6 @@
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="697">
                   <caret line="59" column="55" selection-start-line="59" selection-start-column="55" selection-end-line="59" selection-end-column="55" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/controller/ManagerCase.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="808">
-                  <caret line="188" column="85" lean-forward="true" selection-start-line="188" selection-start-column="85" selection-end-line="188" selection-end-column="85" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
                 </state>
               </provider>
             </entry>
@@ -150,8 +160,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/controller/MainController.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="325">
-                  <caret line="175" column="30" selection-start-line="175" selection-start-column="30" selection-end-line="175" selection-end-column="30" />
+                <state relative-caret-position="292">
+                  <caret line="119" column="28" selection-start-line="119" selection-start-column="28" selection-end-line="119" selection-end-column="28" />
                   <folding>
                     <element signature="imports" expanded="true" />
                     <element signature="e#2337#2338#0" expanded="true" />
@@ -170,22 +180,87 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/booking/src/main/resources/templates/checkupForUser.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="39">
-                  <caret line="20" column="59" selection-start-line="20" selection-start-column="47" selection-end-line="20" selection-end-column="59" />
+                <state relative-caret-position="231">
+                  <caret line="79" column="74" selection-start-line="79" selection-start-column="74" selection-end-line="79" selection-end-column="74" />
+                  <folding>
+                    <element signature="n#style#0;n#table#0;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#div#0;n#td#5;n#tr#1;n#table#0;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#input#0;n#div#0;n#td#5;n#tr#1;n#table#0;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#input#0;n#td#6;n#tr#1;n#table#0;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/booking/src/main/resources/templates/checkupForAdmin.html">
-              <provider selected="true" editor-type-id="text-editor" />
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="340">
+                  <caret line="20" column="60" lean-forward="true" selection-start-line="20" selection-start-column="47" selection-end-line="20" selection-end-column="60" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/controller/ManagerCase.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="319">
+                  <caret line="149" column="79" lean-forward="true" selection-start-line="149" selection-start-column="79" selection-end-line="149" selection-end-column="79" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/booking/src/main/resources/static/styles.css">
+            <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/config/Consts.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="567">
-                  <caret line="263" lean-forward="true" selection-start-line="263" selection-end-line="263" />
+                <state relative-caret-position="85">
+                  <caret line="5" column="149" lean-forward="true" selection-start-line="5" selection-start-column="149" selection-end-line="5" selection-end-column="185" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/entity/User.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="326">
+                  <caret line="81" column="37" selection-start-line="81" selection-start-column="37" selection-end-line="81" selection-end-column="37" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                    <element signature="e#1266#1267#0" expanded="true" />
+                    <element signature="e#1294#1295#0" expanded="true" />
+                    <element signature="e#2154#2155#0" expanded="true" />
+                    <element signature="e#2243#2244#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/form/SignUpForm.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="284">
+                  <caret line="29" column="18" selection-start-line="29" selection-start-column="18" selection-end-line="29" selection-end-column="18" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                    <element signature="e#741#742#0" expanded="true" />
+                    <element signature="e#770#771#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/booking/src/main/resources/templates/changeOrderTime.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="298">
+                  <caret line="45" column="61" lean-forward="true" selection-start-line="45" selection-start-column="46" selection-end-line="45" selection-end-column="61" />
+                  <folding>
+                    <element signature="n#style#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                    <element signature="n#style#0;n#table#0;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -203,16 +278,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>spring-boot-starter-mail</find>
-      <find>mail</find>
-      <find>sendSimpleMessage</find>
-      <find>socool</find>
-      <find>changeOrderStatus</find>
-      <find>&gt;</find>
-      <find>offersInfo</find>
-      <find>changeOrderTime</find>
-      <find>checkb</find>
-      <find>@ModelAttribute</find>
       <find>(Str</find>
       <find>register</find>
       <find>String sendTo = usersDAO.findByIdUser(orderInfo.getCustomer()).getEmail();</find>
@@ -228,11 +293,21 @@
       <find>delete</find>
       <find>remove</find>
       <find>private</find>
-      <find>acceptChangeTime</find>
       <find>getMaste</find>
-      <find>signUpForm.getStatus() == &quot;DONE&quot;</find>
       <find>cancelConfirm</find>
+      <find>PaginationResult&lt;OffersInfo&gt; findOffersInfo</find>
       <find>needkit</find>
+      <find>changeOrderTime</find>
+      <find>signUpForm.getStatus() == &quot;DONE&quot;</find>
+      <find>acceptChangeTime</find>
+      <find>error</find>
+      <find>utilForm</find>
+      <find>changeOrderResponsePost</find>
+      <find>recomm</find>
+      <find>checkupForUser</find>
+      <find>submitResult</find>
+      <find>prepareResult</find>
+      <find>input type=&quot;date</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -253,19 +328,21 @@
         <option value="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/model/OrderInfo.java" />
         <option value="$PROJECT_DIR$/booking/src/main/resources/templates/changeOrderTime.html" />
         <option value="$PROJECT_DIR$/booking/src/main/resources/templates/acceptChangeTime.html" />
-        <option value="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/config/Consts.java" />
         <option value="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/form/UtilForm.java" />
         <option value="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/model/OffersInfo.java" />
         <option value="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/entity/Master.java" />
-        <option value="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/controller/UserCase.java" />
         <option value="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/dao/MasterDAO.java" />
-        <option value="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/controller/ManagerCase.java" />
         <option value="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/dao/OrderDAO.java" />
-        <option value="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/controller/MainController.java" />
-        <option value="$PROJECT_DIR$/booking/src/main/resources/application.properties" />
         <option value="$PROJECT_DIR$/booking/src/main/resources/templates/signup.html" />
         <option value="$PROJECT_DIR$/booking/src/main/resources/static/styles.css" />
+        <option value="$PROJECT_DIR$/booking/src/main/resources/application.properties" />
         <option value="$PROJECT_DIR$/booking/src/main/resources/templates/offersPage.html" />
+        <option value="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/config/Consts.java" />
+        <option value="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/controller/ManagerCase.java" />
+        <option value="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/controller/MainController.java" />
+        <option value="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/entity/User.java" />
+        <option value="$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/controller/UserCase.java" />
+        <option value="$PROJECT_DIR$/booking/src/main/resources/templates/checkupForUser.html" />
       </list>
     </option>
   </component>
@@ -301,9 +378,9 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-318" />
-    <option name="y" value="449" />
-    <option name="width" value="1936" />
+    <option name="x" value="29" />
+    <option name="y" value="-23" />
+    <option name="width" value="1934" />
     <option name="height" value="945" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -414,14 +491,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="booking" type="b2602c69:ProjectViewProjectNode" />
-              <item name="booking" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -437,7 +506,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558733646656" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558888124626" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
@@ -472,12 +541,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558269756242</updated>
-      <workItem from="1558269759129" duration="62916000" />
+      <workItem from="1558269759129" duration="69663000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="62916000" />
+    <option name="totallyTimeSpent" value="69663000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
@@ -489,7 +558,7 @@
       <window_info id="Favorites" side_tool="true" />
       <window_info id="Capture Tool" />
       <window_info id="Web" sideWeight="0.5013369" side_tool="true" weight="0.18923241" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4986631" visible="true" weight="0.17643923" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4986631" visible="true" weight="0.17910448" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Spring" />
       <window_info anchor="bottom" id="Terminal" />
@@ -500,7 +569,7 @@
       <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32973504" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.265947" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.29048085" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.20510304" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -607,34 +676,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/5.1.3.RELEASE/spring-web-5.1.3.RELEASE-sources.jar!/org/springframework/web/filter/OncePerRequestFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="113" selection-start-line="113" selection-end-line="113" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/embed/tomcat-embed-core/9.0.13/tomcat-embed-core-9.0.13-sources.jar!/org/apache/catalina/core/StandardWrapperValve.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="294" selection-start-line="294" selection-end-line="294" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/embed/tomcat-embed-core/9.0.13/tomcat-embed-core-9.0.13-sources.jar!/org/apache/catalina/core/StandardContextValve.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="451">
-          <caret line="96" selection-start-line="96" selection-end-line="96" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/embed/tomcat-embed-core/9.0.13/tomcat-embed-core-9.0.13-sources.jar!/org/apache/catalina/authenticator/AuthenticatorBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="490" selection-start-line="490" selection-end-line="490" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/embed/tomcat-embed-core/9.0.13/tomcat-embed-core-9.0.13-sources.jar!/org/apache/catalina/core/StandardHostValve.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="392">
@@ -796,13 +837,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/BookingApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="67" column="35" selection-start-line="67" selection-start-column="35" selection-end-line="67" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/form/UtilForm.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
@@ -931,26 +965,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/booking/src/main/resources/templates/changeOrderTime.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="901">
-          <caret line="53" column="67" selection-start-line="53" selection-start-column="67" selection-end-line="53" selection-end-column="67" />
-          <folding>
-            <element signature="n#style#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#table#0;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/booking/src/main/resources/templates/viewUserOrdersForAdmin.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="495">
           <caret line="43" selection-start-line="42" selection-start-column="9" selection-end-line="43" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/booking/src/main/resources/templates/checkupForAdmin.html">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/entity/Master.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -979,51 +999,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/controller/ManagerCase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="808">
-          <caret line="188" column="85" lean-forward="true" selection-start-line="188" selection-start-column="85" selection-end-line="188" selection-end-column="85" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/booking/src/main/resources/templates/checkupForUser.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="39">
-          <caret line="20" column="59" selection-start-line="20" selection-start-column="47" selection-end-line="20" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/controller/MainController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="175" column="30" selection-start-line="175" selection-start-column="30" selection-end-line="175" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2337#2338#0" expanded="true" />
-            <element signature="e#2367#2368#0" expanded="true" />
-            <element signature="e#2481#2482#0" expanded="true" />
-            <element signature="e#2516#2517#0" expanded="true" />
-            <element signature="e#2636#2637#0" expanded="true" />
-            <element signature="e#2696#2697#0" expanded="true" />
-            <element signature="e#7323#7324#0" expanded="true" />
-            <element signature="e#7374#7375#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/controller/UserCase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="177" column="25" selection-start-line="177" selection-start-column="25" selection-end-line="177" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/entity/Offer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-439">
@@ -1038,32 +1013,154 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/booking/src/main/resources/templates/acceptChangeTime.html">
+    <entry file="file://$PROJECT_DIR$/booking/src/main/resources/static/styles.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-459" />
+        <state relative-caret-position="567">
+          <caret line="262" column="1" lean-forward="true" selection-start-line="262" selection-start-column="1" selection-end-line="262" selection-end-column="1" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/booking/src/main/resources/application.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        <state relative-caret-position="102">
+          <caret line="6" column="42" selection-start-line="6" selection-start-column="42" selection-end-line="6" selection-end-column="42" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/booking/src/main/resources/static/styles.css">
+    <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/dao/OfferDAO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="567">
-          <caret line="263" lean-forward="true" selection-start-line="263" selection-end-line="263" />
+        <state relative-caret-position="306">
+          <caret line="29" column="11" selection-start-line="29" selection-start-column="11" selection-end-line="29" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/booking/src/main/resources/templates/changeOrderTime.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="45" column="61" lean-forward="true" selection-start-line="45" selection-start-column="46" selection-end-line="45" selection-end-column="61" />
+          <folding>
+            <element signature="n#style#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#table#0;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/form/SignUpForm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="284">
+          <caret line="29" column="18" selection-start-line="29" selection-start-column="18" selection-end-line="29" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#741#742#0" expanded="true" />
+            <element signature="e#770#771#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/entity/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="326">
+          <caret line="81" column="37" selection-start-line="81" selection-start-column="37" selection-end-line="81" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1266#1267#0" expanded="true" />
+            <element signature="e#1294#1295#0" expanded="true" />
+            <element signature="e#2154#2155#0" expanded="true" />
+            <element signature="e#2243#2244#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/BookingApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="833">
+          <caret line="67" column="35" selection-start-line="67" selection-start-column="35" selection-end-line="67" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/booking/src/main/resources/templates/acceptChangeTime.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="43" column="27" selection-start-line="43" selection-start-column="19" selection-end-line="43" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/booking/src/main/resources/templates/checkupForUser.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="79" column="74" selection-start-line="79" selection-start-column="74" selection-end-line="79" selection-end-column="74" />
+          <folding>
+            <element signature="n#style#0;n#table#0;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#td#5;n#tr#1;n#table#0;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#0;n#td#5;n#tr#1;n#table#0;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#td#6;n#tr#1;n#table#0;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/booking/src/main/resources/templates/checkupForAdmin.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="60" lean-forward="true" selection-start-line="20" selection-start-column="47" selection-end-line="20" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/controller/MainController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="292">
+          <caret line="119" column="28" selection-start-line="119" selection-start-column="28" selection-end-line="119" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2337#2338#0" expanded="true" />
+            <element signature="e#2367#2368#0" expanded="true" />
+            <element signature="e#2481#2482#0" expanded="true" />
+            <element signature="e#2516#2517#0" expanded="true" />
+            <element signature="e#2636#2637#0" expanded="true" />
+            <element signature="e#2696#2697#0" expanded="true" />
+            <element signature="e#7323#7324#0" expanded="true" />
+            <element signature="e#7374#7375#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/controller/ManagerCase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="319">
+          <caret line="149" column="79" lean-forward="true" selection-start-line="149" selection-start-column="79" selection-end-line="149" selection-end-column="79" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/config/Consts.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="149" lean-forward="true" selection-start-line="5" selection-start-column="149" selection-end-line="5" selection-end-column="185" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/booking/src/main/java/com/pingvin/autoservice/controller/UserCase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="171" column="25" selection-start-line="171" selection-start-column="25" selection-end-line="171" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/booking/src/main/resources/templates/offersPage.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-433">
-          <caret line="10" column="68" selection-start-line="10" selection-start-column="68" selection-end-line="10" selection-end-column="68" />
+        <state relative-caret-position="256">
+          <caret line="68" column="54" lean-forward="true" selection-start-line="68" selection-start-column="54" selection-end-line="68" selection-end-column="54" />
           <folding>
             <element signature="n#style#0;n#table#0;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#td#5;n#tr#1;n#table#0;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#0;n#td#5;n#tr#1;n#table#0;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#td#6;n#tr#1;n#table#0;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#input#0;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#1;n#th:block#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

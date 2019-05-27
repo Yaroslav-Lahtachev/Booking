@@ -215,7 +215,7 @@ public class ManagerCase {
         Date newdate = timeCut(signUpForm.getDateFinish());
         String reason = signUpForm.getReason();
         String sendTo = usersDAO.findByIdUser(orderInfo.getCustomer()).getEmail();
-        sendSimpleMessage(emailSender, String.format(Consts.MESSAGE_ABOUT_CHANGING_TIME, reason, simpleDateFormat.format(newdate), orderInfo.getId()), sendTo, "yo, dude");
+        sendSimpleMessage(emailSender, String.format(Consts.MESSAGE_ABOUT_CHANGING_TIME, reason, simpleDateFormat.format(newdate), orderInfo.getId(), orderInfo.getCustomer()), sendTo, "yo, dude");
         return "redirect:/admin/usersList";
     }
 
