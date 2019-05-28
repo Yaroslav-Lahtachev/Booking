@@ -65,7 +65,7 @@ public class MasterDAO {
 
     public void checkIfMasterIsFree(int orderID, int masterId) {
         Session session = this.sessionFactory.getCurrentSession();
-        String sql = "Select count(o.id) from Order as o, Master as m where o.master=m.id and m.id =: masterID and o.id != : orderID";
+        String sql = "Select count(o.id) from Order as o, Master as m where o.master=m.id and m.id =: masterID and o.id != : orderID and o.status != 'DONE'";
         Query<Long> query = session.createQuery(sql, Long.class);
         query.setParameter("masterID", masterId);
         query.setParameter("orderID", orderID);

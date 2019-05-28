@@ -179,7 +179,7 @@ public class ManagerCase {
         Order order = orderDAO.findOrderByIdOrder(orderInfo.getId());
         if(signUpForm.getStatus() !=  null){
             orderDAO.changeOrderStatus(order.getIdOrder(), signUpForm.getStatus());
-            if (signUpForm.getStatus() == "DONE") {
+            if (signUpForm.getStatus().equals("DONE")) {
                 masterDAO.checkIfMasterIsFree(order.getIdOrder(), order.getMaster().getMaster());
             }
         }
