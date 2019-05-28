@@ -125,9 +125,8 @@ public class ManagerCase {
         return "checkupForAdmin";
     }
 
-    public static String checkupForAdminPost(UserDAO usersDAO, OfferDAO offerDAO, MasterDAO masterDAO, OrderDAO orderDAO, JavaMailSender emailSender, OffersInfo searchOffer) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User buyer = usersDAO.findByLogin(authentication.getName());
+    public static String checkupForAdminPost(UserDAO usersDAO, OfferDAO offerDAO, MasterDAO masterDAO, OrderDAO orderDAO, JavaMailSender emailSender, OffersInfo searchOffer, OrderInfo orderInfo) {
+        User buyer = usersDAO.findByIdUser(orderInfo.getCustomer());
         List<Integer> offers = new ArrayList();
         try {
             for (int i = 0; i < searchOffer.getOffer().size(); i++) {

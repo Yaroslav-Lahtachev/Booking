@@ -116,8 +116,8 @@ public class MainController {
                                 BindingResult result,
                                 final RedirectAttributes redirectAttributes,
                                 @ModelAttribute("offersInfo") OffersInfo offersInfo,
-                                @ModelAttribute("signUpForm") SignUpForm signUpForm) {
-        return ManagerCase.checkupForAdminPost(usersDAO, offerDAO, masterDAO, orderDAO, emailSender, searchOffer);
+                                @ModelAttribute("orderInfo") OrderInfo orderInfo) {
+        return ManagerCase.checkupForAdminPost(usersDAO, offerDAO, masterDAO, orderDAO, emailSender, searchOffer, orderInfo);
     }
 
     @RequestMapping(value = "/removeUser", method = RequestMethod.GET)
