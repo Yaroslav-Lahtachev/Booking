@@ -43,21 +43,20 @@ public class MasterDAO {
             query1.setParameter("prof", prof);
             Long value = query1.getSingleResult();
             if (value != null && value != 0) {
-                sql = "Select new " + Master.class.getName() +
-                        " (m.id, m.prof, m.name, m.occupied) from " + Master.class.getName() +" as m, "+ Order.class.getName() +
+                sql = "Select distinct m.id from " + Master.class.getName() +" as m, "+ Order.class.getName() +
                         " as o where m.prof =: prof and m.occupied=1 and o.master.id=m.id and o.dateFinish <=: dateFinish and o.dateStart >=: dateStart";
-                query = session.createQuery(sql, Master.class);
-                query.setParameter("prof", prof);
-                query.setParameter("dateStart", dateStart);
-                query.setParameter("dateFinish", dateFinish);
-                List<Master> busyInThatTime = query.list();
-                sql = "from Master as m where m.prof =: prof and m.occupied=1";
-                query = session.createQuery(sql, Master.class);
-                query.setParameter("prof", prof);
-                List<Master> allAvailableMasters = query.list();
+                Query<Integer> query2 = session.createQuery(sql, Integer.class);
+                query2.setParameter("prof", prof);
+                query2.setParameter("dateStart", dateStart);
+                query2.setParameter("dateFinish", dateFinish);
+                List<Integer> busyInThatTime = query2.list();
+                sql = "Select m.id from Master as m where m.prof =: prof and m.occupied=1";
+                query2 = session.createQuery(sql, Integer.class);
+                query2.setParameter("prof", prof);
+                List<Integer> allAvailableMasters = query2.list();
                 allAvailableMasters.removeAll(busyInThatTime);
                 if (!allAvailableMasters.isEmpty()) {
-                    return allAvailableMasters.get(0);
+                    return findByIdMaster(allAvailableMasters.get(0));
                 }
             }
             return findByIdMaster(1);
